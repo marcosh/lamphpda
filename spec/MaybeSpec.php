@@ -26,7 +26,6 @@ describe('Maybe', function () {
         $result = $maybe->eval(
             0,
             (fn($value) => $value * 2)
-            }
         );
 
         expect($result)->toEqual(84);

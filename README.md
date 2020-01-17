@@ -1,3 +1,3 @@
 # lamphpda
 
-A collection of functional programming data structures
+A collection of type-safe functional data structures

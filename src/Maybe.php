@@ -33,7 +33,7 @@ final class Maybe
      * @param mixed $value
      * @psalm-param A $value
      * @return self
-     * @psalm-return Maybe<A>
+     * @psalm-return self<A>
      */
     public static function just($value): self
     {
@@ -42,7 +42,7 @@ final class Maybe
 
     /**
      * @return self
-     * @psalm-return Maybe<A>
+     * @psalm-return self<A>
      */
     public static function nothing(): self
     {

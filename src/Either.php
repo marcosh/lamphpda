@@ -67,25 +67,23 @@ final class Either
 
     /**
      * @template C
-     * @template D
-     * @template E
      * @param callable $ifLeft
-     * @psalm-param callable(C): E $ifLeft
+     * @psalm-param callable(A): C $ifLeft
      * @param callable $ifRight
-     * @psalm-param callable(D): E $ifRight
+     * @psalm-param callable(B): C $ifRight
      * @return mixed
-     * @psalm-return E
+     * @psalm-return C
      */
     public function eval(
         callable $ifLeft,
         callable $ifRight
     ) {
         if ($this->isRight) {
-            /** @psalm-suppress PossiblyInvalidArgument */
+            /** @psalm-suppress PossiblyNullArgument */
             return $ifRight($this->rightValue);
         }
 
-        /** @psalm-suppress PossiblyInvalidArgument */
+        /** @psalm-suppress PossiblyNullArgument */
         return $ifLeft($this->leftValue);
     }
 }

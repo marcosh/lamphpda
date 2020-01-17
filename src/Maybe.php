@@ -53,20 +53,19 @@ final class Maybe
 
     /**
      * @template B
-     * @template C
      * @param mixed $ifNothing
-     * @psalm-param C $ifNothing
+     * @psalm-param B $ifNothing
      * @param callable $ifJust
-     * @psalm-param callable(B): C $ifJust
+     * @psalm-param callable(A): B $ifJust
      * @return mixed
-     * @psalm-return C
+     * @psalm-return B
      */
     public function eval(
         $ifNothing,
         callable $ifJust
     ) {
         if ($this->isJust) {
-            /** @psalm-suppress PossiblyInvalidArgument */
+            /** @psalm-suppress PossiblyNullArgument */
             return $ifJust($this->value);
         }
 

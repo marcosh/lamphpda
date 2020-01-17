@@ -63,13 +63,12 @@ final class LinkedList
 
     /**
      * @template B
-     * @template C
      * @param callable $op
-     * @psalm-param callable(B, C): C $op
+     * @psalm-param callable(A, B): B $op
      * @param mixed $unit
-     * @psalm-param C $unit
+     * @psalm-param B $unit
      * @return mixed
-     * @psalm-return C
+     * @psalm-return B
      */
     public function foldr(callable $op, $unit)
     {
@@ -78,7 +77,7 @@ final class LinkedList
         }
 
         /**
-         * @psalm-suppress PossiblyInvalidArgument
+         * @psalm-suppress PossiblyNullArgument
          * @psalm-suppress PossiblyNullReference
          */
         return $op($this->head, $this->tail->foldr($op, $unit));

@@ -1,5 +1,7 @@
 {
-  "symbol-whitelist": [],
+  "symbol-whitelist": [
+    "null", "bool", "self", "true", "false", "callable"
+  ],
   "php-core-extensions" : [
     "Core",
     "date",

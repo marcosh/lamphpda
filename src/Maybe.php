@@ -30,10 +30,11 @@ final class Maybe
     }
 
     /**
+     * @template B
      * @param mixed $value
-     * @psalm-param A $value
+     * @psalm-param B $value
      * @return self
-     * @psalm-return self<A>
+     * @psalm-return self<B>
      */
     public static function just($value): self
     {
@@ -41,8 +42,9 @@ final class Maybe
     }
 
     /**
+     * @template B
      * @return self
-     * @psalm-return self<A>
+     * @psalm-return self<B>
      */
     public static function nothing(): self
     {
@@ -51,19 +53,20 @@ final class Maybe
 
     /**
      * @template B
+     * @template C
      * @param mixed $ifNothing
-     * @psalm-param B $ifNothing
+     * @psalm-param C $ifNothing
      * @param callable $ifJust
-     * @psalm-param callable(A): B $ifJust
+     * @psalm-param callable(B): C $ifJust
      * @return mixed
-     * @psalm-return B
+     * @psalm-return C
      */
     public function eval(
         $ifNothing,
         callable $ifJust
     ) {
         if ($this->isJust) {
-            /** @psalm-suppress PossiblyNullArgument */
+            /** @psalm-suppress PossiblyInvalidArgument */
             return $ifJust($this->value);
         }
 

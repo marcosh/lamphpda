@@ -38,19 +38,23 @@ final class LinkedList
         $this->tail = $tail;
     }
 
-    /** @psalm-return self<A> */
+    /**
+     * @template B
+     * @psalm-return self<B>
+     */
     public static function empty(): self
     {
         return new self(true);
     }
 
     /**
+     * @template B
      * @param mixed $head
-     * @psalm-param A $head
+     * @psalm-param B $head
      * @param self $tail
-     * @psalm-param self<A> $tail
+     * @psalm-param self<B> $tail
      * @return self
-     * @psalm-return self<A>
+     * @psalm-return self<B>
      */
     public static function cons($head, self $tail): self
     {
@@ -59,12 +63,13 @@ final class LinkedList
 
     /**
      * @template B
+     * @template C
      * @param callable $op
-     * @psalm-param callable(A, B): B $op
+     * @psalm-param callable(B, C): C $op
      * @param mixed $unit
-     * @psalm-param B $zero
+     * @psalm-param C $unit
      * @return mixed
-     * @psalm-return B
+     * @psalm-return C
      */
     public function foldr(callable $op, $unit)
     {
@@ -73,7 +78,7 @@ final class LinkedList
         }
 
         /**
-         * @psalm-suppress PossiblyNullArgument
+         * @psalm-suppress PossiblyInvalidArgument
          * @psalm-suppress PossiblyNullReference
          */
         return $op($this->head, $this->tail->foldr($op, $unit));

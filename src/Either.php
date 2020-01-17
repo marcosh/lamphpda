@@ -40,10 +40,12 @@ final class Either
     }
 
     /**
+     * @template C
+     * @template D
      * @param mixed $value
-     * @psalm-param A $value
+     * @psalm-param C $value
      * @return self
-     * @psalm-return Either<A,B>
+     * @psalm-return Either<C,D>
      */
     public static function left($value): self
     {
@@ -51,10 +53,12 @@ final class Either
     }
 
     /**
+     * @template C
+     * @template D
      * @param mixed $value
-     * @psalm-param B $value
+     * @psalm-param D $value
      * @return Either
-     * @psalm-return Either<A,B>
+     * @psalm-return Either<C,D>
      */
     public static function right($value): self
     {
@@ -63,23 +67,25 @@ final class Either
 
     /**
      * @template C
+     * @template D
+     * @template E
      * @param callable $ifLeft
-     * @psalm-param callable(A): C $ifLeft
+     * @psalm-param callable(C): E $ifLeft
      * @param callable $ifRight
-     * @psalm-param callable(B): C $ifRight
+     * @psalm-param callable(D): E $ifRight
      * @return mixed
-     * @psalm-return C
+     * @psalm-return E
      */
     public function eval(
         callable $ifLeft,
         callable $ifRight
     ) {
         if ($this->isRight) {
-            /** @psalm-suppress PossiblyNullArgument */
+            /** @psalm-suppress PossiblyInvalidArgument */
             return $ifRight($this->rightValue);
         }
 
-        /** @psalm-suppress PossiblyNullArgument */
+        /** @psalm-suppress PossiblyInvalidArgument */
         return $ifLeft($this->leftValue);
     }
 }

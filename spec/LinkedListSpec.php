@@ -11,9 +11,7 @@ describe('LinkedList', function () {
         $list = LinkedList::empty();
 
         $result = $list->foldr(
-            function ($a, $b) {
-                return $a + $b;
-            },
+            (fn($a, $b) => $a + $b),
             0
         );
 
@@ -24,9 +22,7 @@ describe('LinkedList', function () {
         $list = LinkedList::cons("a", LinkedList::cons("b", LinkedList::cons("c", LinkedList::empty())));
 
         $result = $list->foldr(
-            function ($a, $b) {
-                return $a . $b;
-            },
+            (fn($a, $b) => $a . $b),
             ""
         );
 

@@ -11,12 +11,8 @@ describe('Either', function () {
         $either = Either::left(42);
 
         $result = $either->eval(
-            function ($value) {
-                return $value * 2;
-            },
-            function ($value) {
-                return $value / 2;
-            }
+            (fn($value) => $value * 2),
+            (fn($value) => $value / 2)
         );
 
         expect($result)->toEqual(84);
@@ -26,12 +22,8 @@ describe('Either', function () {
         $either = Either::right(42);
 
         $result = $either->eval(
-            function ($value) {
-                return $value * 2;
-            },
-            function ($value) {
-                return $value / 2;
-            }
+            (fn($value) => $value * 2),
+            (fn($value) => $value / 2)
         );
 
         expect($result)->toEqual(21);

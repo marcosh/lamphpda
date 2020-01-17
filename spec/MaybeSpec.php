@@ -25,8 +25,7 @@ describe('Maybe', function () {
 
         $result = $maybe->eval(
             0,
-            function ($value) {
-                return $value * 2;
+            (fn($value) => $value * 2)
             }
         );
 

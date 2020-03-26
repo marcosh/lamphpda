@@ -7,6 +7,7 @@ namespace Marcosh\LamPHPda;
 /**
  * @template A
  * @implements Functor<A>
+ * @psalm-immutable
  */
 final class Maybe implements Functor
 {
@@ -23,6 +24,7 @@ final class Maybe implements Functor
      * @param bool $isJust
      * @param mixed $value
      * @psalm-param A|null $value
+     * @psalm-pure
      */
     private function __construct(bool $isJust, $value = null)
     {
@@ -36,6 +38,7 @@ final class Maybe implements Functor
      * @psalm-param B $value
      * @return self
      * @psalm-return self<B>
+     * @psalm-pure
      */
     public static function just($value): self
     {
@@ -46,6 +49,7 @@ final class Maybe implements Functor
      * @template B
      * @return self
      * @psalm-return self<B>
+     * @psalm-pure
      */
     public static function nothing(): self
     {
@@ -60,6 +64,7 @@ final class Maybe implements Functor
      * @psalm-param callable(A): B $ifJust
      * @return mixed
      * @psalm-return B
+     * @psalm-pure
      */
     public function eval(
         $ifNothing,
@@ -79,6 +84,7 @@ final class Maybe implements Functor
      * @psalm-param callable(A): B $f
      * @return self
      * @psalm-return self<B>
+     * @psalm-pure
      */
     public function map(callable $f): self
     {

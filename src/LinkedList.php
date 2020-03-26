@@ -7,6 +7,7 @@ namespace Marcosh\LamPHPda;
 /**
  * @template A
  * @implements Functor<A>
+ * @psalm-immutable
  */
 final class LinkedList implements Functor
 {
@@ -31,6 +32,7 @@ final class LinkedList implements Functor
      * @psalm-param A|null $head
      * @param self|null $tail
      * @psalm-param self<A>|null $tail
+     * @psalm-pure
      */
     private function __construct(bool $isNil, $head = null, self $tail = null)
     {
@@ -42,6 +44,7 @@ final class LinkedList implements Functor
     /**
      * @template B
      * @psalm-return self<B>
+     * @psalm-pure
      */
     public static function empty(): self
     {
@@ -56,6 +59,7 @@ final class LinkedList implements Functor
      * @psalm-param self<B> $tail
      * @return self
      * @psalm-return self<B>
+     * @psalm-pure
      */
     public static function cons($head, self $tail): self
     {
@@ -70,6 +74,7 @@ final class LinkedList implements Functor
      * @psalm-param B $unit
      * @return mixed
      * @psalm-return B
+     * @psalm-pure
      */
     public function foldr(callable $op, $unit)
     {
@@ -90,6 +95,7 @@ final class LinkedList implements Functor
      * @psalm-param callable(A): B $f
      * @return self
      * @psalm-return self<B>
+     * @psalm-pure
      */
     public function map(callable $f): self
     {

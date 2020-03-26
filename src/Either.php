@@ -8,6 +8,7 @@ namespace Marcosh\LamPHPda;
  * @template A
  * @template B
  * @implements Functor<B>
+ * @psalm-immutable
  */
 final class Either implements Functor
 {
@@ -47,6 +48,7 @@ final class Either implements Functor
      * @psalm-param C $value
      * @return self
      * @psalm-return self<C,D>
+     * @psalm-pure
      */
     public static function left($value): self
     {
@@ -60,6 +62,7 @@ final class Either implements Functor
      * @psalm-param D $value
      * @return self
      * @psalm-return self<C,D>
+     * @psalm-pure
      */
     public static function right($value): self
     {
@@ -74,6 +77,7 @@ final class Either implements Functor
      * @psalm-param callable(B): C $ifRight
      * @return mixed
      * @psalm-return C
+     * @psalm-pure
      */
     public function eval(
         callable $ifLeft,
@@ -94,6 +98,7 @@ final class Either implements Functor
      * @psalm-param callable(B): C $f
      * @return self
      * @psalm-return self<A,C>
+     * @psalm-pure
      */
     public function map(callable $f): self
     {

@@ -8,6 +8,7 @@ namespace Marcosh\LamPHPda;
  * @template A
  * @template W
  * @implements Functor<A>
+ * @psalm-immutable
  */
 final class Writer implements Functor
 {
@@ -20,6 +21,7 @@ final class Writer implements Functor
     /**
      * @param Pair $runWriter
      * @psalm-param Pair<A,W> $runWriter
+     * @psalm-pure
      */
     private function __construct(Pair $runWriter)
     {
@@ -33,6 +35,7 @@ final class Writer implements Functor
      * @psalm-param Pair<B,X> $runWriter
      * @return self
      * @psalm-return self<B,X>
+     * @psalm-pure
      */
     public static function writer(Pair $runWriter): self
     {
@@ -42,6 +45,7 @@ final class Writer implements Functor
     /**
      * @return Pair
      * @psalm-return Pair<A, W>
+     * @psalm-pure
      */
     public function exec(): Pair
     {
@@ -54,6 +58,7 @@ final class Writer implements Functor
      * @param callable(A): B $f
      * @return self
      * @psalm-return self<B,W>
+     * @psalm-pure
      */
     public function map(callable $f): self
     {

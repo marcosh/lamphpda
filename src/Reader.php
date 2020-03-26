@@ -8,7 +8,7 @@ namespace Marcosh\LamPHPda;
  * @template R
  * @template A
  * @implements Functor<A>
- *
+ * @psalm-immutable
  */
 final class Reader implements Functor
 {
@@ -21,6 +21,7 @@ final class Reader implements Functor
     /**
      * @param callable $runReader
      * @psalm-param callable(R): A $runReader
+     * @psalm-pure
      */
     private function __construct(callable $runReader)
     {
@@ -34,6 +35,7 @@ final class Reader implements Functor
      * @psalm-param callable(S): B $runReader
      * @return self
      * @psalm-return self<S, B>
+     * @psalm-pure
      */
     public static function reader(callable $runReader): self
     {
@@ -45,6 +47,7 @@ final class Reader implements Functor
      * @psalm-param R $state
      * @return mixed
      * @psalm-return A
+     * @psalm-pure
      */
     public function runReader($state)
     {
@@ -57,6 +60,7 @@ final class Reader implements Functor
      * @psalm-param callable(A): B $f
      * @return self
      * @psalm-return self<R,B>
+     * @psalm-pure
      */
     public function map(callable $f): self
     {

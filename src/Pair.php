@@ -8,6 +8,7 @@ namespace Marcosh\LamPHPda;
  * @template A
  * @template B
  * @implements Functor<B>
+ * @psalm-immutable
  */
 final class Pair implements Functor
 {
@@ -28,6 +29,7 @@ final class Pair implements Functor
      * @psalm-param A $left
      * @param mixed $right
      * @psalm-param B $right
+     * @psalm-pure
      */
     private function __construct($left, $right)
     {
@@ -44,6 +46,7 @@ final class Pair implements Functor
      * @psalm-param D $right
      * @return self
      * @psalm-return self<C,D>
+     * @psalm-pure
      */
     public static function pair($left, $right)
     {
@@ -56,6 +59,7 @@ final class Pair implements Functor
      * @psalm-param callable(A, B): C $f
      * @return mixed
      * @psalm-return C
+     * @psalm-pure
      */
     public function uncurry(callable $f)
     {
@@ -68,6 +72,7 @@ final class Pair implements Functor
      * @psalm-param callable(B): C $f
      * @return self
      * @psalm-return self<A,C>
+     * @psalm-pure
      */
     public function map(callable $f): self
     {
@@ -88,6 +93,7 @@ final class Pair implements Functor
      * @psalm-param callable(A): C $f
      * @return self
      * @psalm-return self<C,B>
+     * @psalm-pure
      */
     public function lmap(callable $f): self
     {

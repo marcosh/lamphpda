@@ -54,7 +54,8 @@ final class State implements Functor
      * @template B
      * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return self<B,S>
+     * @return self
+     * @psalm-return self<B,S>
      */
     public function map(callable $f): self
     {

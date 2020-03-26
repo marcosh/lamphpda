@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 /**
- * @template S
  * @template A
+ * @template S
+ * @implements Functor<A>
  */
-final class State
+final class State implements Functor
 {
     /**
      * @var callable
@@ -42,10 +43,28 @@ final class State
      * @param mixed $state
      * @psalm-param S $state
      * @return Pair
-     * @psalm-return Pair<A, S>
+     * @psalm-return Pair<A,S>
      */
     public function runState($state): Pair
     {
         return ($this->runState)($state);
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): B $f
+     * @return self<B,S>
+     */
+    public function map(callable $f): self
+    {
+        $newRunState =
+            /**
+             * @psalm-param S $s
+             * @psalm-return Pair<B,S>
+             */
+            fn($s) => $this->runState($s)->lmap($f);
+
+        return self::state($newRunState);
     }
 }

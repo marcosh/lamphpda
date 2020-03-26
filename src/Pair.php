@@ -7,8 +7,9 @@ namespace Marcosh\LamPHPda;
 /**
  * @template A
  * @template B
+ * @implements Functor<B>
  */
-final class Pair
+final class Pair implements Functor
 {
     /**
      * @var mixed
@@ -59,5 +60,45 @@ final class Pair
     public function uncurry(callable $f)
     {
         return $f($this->left, $this->right);
+    }
+
+    /**
+     * @template C
+     * @param callable $f
+     * @psalm-param callable(B): C $f
+     * @return self
+     * @psalm-return self<A,C>
+     */
+    public function map(callable $f): self
+    {
+        $fPair =
+            /**
+             * @psalm-param A $left
+             * @psalm-param B $right
+             * @psalm-return Pair<A,C>
+             */
+            fn($left, $right) => self::pair($left, $f($right));
+
+        return $this->uncurry($fPair);
+    }
+
+    /**
+     * @template C
+     * @param callable $f
+     * @psalm-param callable(A): C $f
+     * @return self
+     * @psalm-return self<C,B>
+     */
+    public function lmap(callable $f): self
+    {
+        $fPair =
+            /**
+             * @psalm-param A $left
+             * @psalm-param B $right
+             * @psalm-return Pair<C,B>
+             */
+            fn($left, $right) => self::pair($f($left), $right);
+
+        return $this->uncurry($fPair);
     }
 }

@@ -7,8 +7,10 @@ namespace Marcosh\LamPHPda;
 /**
  * @template R
  * @template A
+ * @implements Functor<A>
+ *
  */
-final class Reader
+final class Reader implements Functor
 {
     /**
      * @var callable
@@ -47,5 +49,24 @@ final class Reader
     public function runReader($state)
     {
         return ($this->runReader)($state);
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): B $f
+     * @return self
+     * @psalm-return self<R,B>
+     */
+    public function map(callable $f): self
+    {
+        $newRunReader =
+            /**
+             * @psalm-param R $r
+             * @psalm-return B
+             */
+            fn($r) => $f($this->runReader($r));
+
+        return self::reader($newRunReader);
     }
 }

@@ -6,8 +6,9 @@ namespace Marcosh\LamPHPda;
 
 /**
  * @template A
+ * @implements Functor<A>
  */
-final class LinkedList
+final class LinkedList implements Functor
 {
     /** @var bool */
     private $isNil;
@@ -81,5 +82,28 @@ final class LinkedList
          * @psalm-suppress PossiblyNullReference
          */
         return $op($this->head, $this->tail->foldr($op, $unit));
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): B $f
+     * @return self
+     * @psalm-return self<B>
+     */
+    public function map(callable $f): self
+    {
+        $rec =
+            /**
+              * @psalm-param A $head
+              * @psalm-param LinkedList<B> $tail
+              * @psalm-return LinkedList<B>
+              */
+            fn($head, self $tail) => self::cons($f($head), $tail);
+
+        return $this->foldr(
+            $rec,
+            self::empty()
+        );
     }
 }

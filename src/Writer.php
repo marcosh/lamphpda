@@ -7,8 +7,9 @@ namespace Marcosh\LamPHPda;
 /**
  * @template A
  * @template W
+ * @implements Functor<A>
  */
-final class Writer
+final class Writer implements Functor
 {
     /**
      * @var Pair
@@ -45,5 +46,17 @@ final class Writer
     public function exec(): Pair
     {
         return $this->runWriter;
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @param callable(A): B $f
+     * @return self
+     * @psalm-return self<B,W>
+     */
+    public function map(callable $f): self
+    {
+        return self::writer($this->runWriter->lmap($f));
     }
 }

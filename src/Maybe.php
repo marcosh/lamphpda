@@ -6,8 +6,9 @@ namespace Marcosh\LamPHPda;
 
 /**
  * @template A
+ * @implements Functor<A>
  */
-final class Maybe
+final class Maybe implements Functor
 {
     /** @var bool */
     private $isJust;
@@ -70,5 +71,24 @@ final class Maybe
         }
 
         return $ifNothing;
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): B $f
+     * @return self
+     * @psalm-return self<B>
+     */
+    public function map(callable $f): self
+    {
+        return $this->eval(
+            Maybe::nothing(),
+            /**
+             * @psalm-param A $value
+             * @psalm-return self<B>
+             */
+            fn($value) => self::just($f($value))
+        );
     }
 }

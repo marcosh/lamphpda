@@ -112,4 +112,20 @@ final class LinkedList implements Functor
             self::empty()
         );
     }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return $this->foldr(
+            /**
+             * @psalm-param A $head
+             * @psalm-param bool $tail
+             * @psalm-return bool
+             */
+            fn($head, $tail) => false,
+            true
+        );
+    }
 }

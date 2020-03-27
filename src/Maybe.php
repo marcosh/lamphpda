@@ -97,4 +97,34 @@ final class Maybe implements Functor
             fn($value) => self::just($f($value))
         );
     }
+
+    /**
+     * @return bool
+     */
+    public function isJust(): bool
+    {
+        return $this->eval(
+            false,
+            /**
+             * @psalm-param A $value
+             * @psalm-return bool
+             */
+            fn($value) => true
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNothing(): bool
+    {
+        return $this->eval(
+            true,
+            /**
+             * @psalm-param A $value
+             * @psalm-return bool
+             */
+            fn($value) => false
+        );
+    }
 }

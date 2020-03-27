@@ -12,9 +12,7 @@ describe('Maybe', function () {
 
         $result = $maybe->eval(
             42,
-            function ($value) {
-                return $value;
-            }
+            fn($value) => $value
         );
 
         expect($result)->toEqual(42);
@@ -29,5 +27,25 @@ describe('Maybe', function () {
         );
 
         expect($result)->toEqual(84);
+    });
+
+    it('maps a nothing to a nothing', function () {
+        $maybe = Maybe::nothing();
+
+        $mapped = $maybe->map(
+            fn($value) => $value * 2
+        );
+
+        expect($mapped->isNothing())->toBe(true);
+    });
+
+    it('maps a just to a mapped just', function () {
+        $maybe = Maybe::just(42);
+
+        $mapped = $maybe->map(
+            fn($value) => $value * 2
+        );
+
+        expect($mapped)->toEqual(Maybe::just(84));
     });
 });

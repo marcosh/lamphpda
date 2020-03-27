@@ -36,7 +36,7 @@ describe('Maybe', function () {
             fn($value) => $value * 2
         );
 
-        expect($mapped->isNothing())->toBe(true);
+        expect($mapped)->toEqual(Maybe::nothing());
     });
 
     it('maps a just to a mapped just', function () {
@@ -47,5 +47,19 @@ describe('Maybe', function () {
         );
 
         expect($mapped)->toEqual(Maybe::just(84));
+    });
+
+    it('recognises a nothing', function () {
+       $maybe = Maybe::nothing();
+
+       expect($maybe->isNothing())->toBeTruthy();
+       expect($maybe->isJust())->toBeFalsy();
+    });
+
+    it('recognises a just', function () {
+        $maybe = Maybe::just(42);
+
+        expect($maybe->isNothing())->toBeFalsy();
+        expect($maybe->isJust())->toBeTruthy();
     });
 });

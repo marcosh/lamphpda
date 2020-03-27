@@ -115,4 +115,42 @@ final class Either implements Functor
             fn($value) => self::right($f($value))
         );
     }
+
+    /**
+     * @return bool
+     */
+    public function isLeft(): bool
+    {
+        return $this->eval(
+            /**
+             * @psalm-param A $left
+             * @psalm-return bool
+             */
+            fn($left) => true,
+            /**
+             * @psalm-param B $right
+             * @psalm-return bool
+             */
+            fn($right) => false
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRight(): bool
+    {
+        return $this->eval(
+            /**
+             * @psalm-param A $left
+             * @psalm-return bool
+             */
+            fn($left) => false,
+            /**
+             * @psalm-param A $right
+             * @psalm-return bool
+             */
+            fn($right) => true
+        );
+    }
 }

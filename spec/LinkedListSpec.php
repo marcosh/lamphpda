@@ -50,4 +50,16 @@ describe('LinkedList', function () {
             LinkedList::cons(0, LinkedList::cons(2, LinkedList::cons(4, LinkedList::empty())))
         );
     });
+
+    it('detects empty lists', function () {
+        $list = LinkedList::empty();
+
+        expect($list->isEmpty())->toBeTruthy();
+    });
+
+    it('detects non-empty lists', function() {
+        $list = LinkedList::cons(0, LinkedList::cons(1, LinkedList::cons(2, LinkedList::empty())));
+
+        expect($list->isEmpty())->toBeFalsy();
+    });
 });

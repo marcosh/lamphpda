@@ -16,4 +16,24 @@ describe('Pair', function () {
 
         expect($result)->toEqual("hi!hi!hi!");
     });
+
+    it('maps on the second component', function () {
+        $maybe = Pair::pair(3, "hi!");
+
+        $result = $maybe->map(
+            fn($right) => str_repeat($right, 2)
+        );
+
+        expect($result)->toEqual(Pair::pair(3, "hi!hi!"));
+    });
+
+    it('lmaps on the first component', function () {
+        $maybe = Pair::pair(3, "hi!");
+
+        $result = $maybe->lmap(
+            fn($left) => $left * 2
+        );
+
+        expect($result)->toEqual(Pair::pair(6, "hi!"));
+    });
 });

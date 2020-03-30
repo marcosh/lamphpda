@@ -28,4 +28,26 @@ describe('LinkedList', function () {
 
         expect($result)->toEqual("abc");
     });
+
+    it('maps the empty list to the empty list', function () {
+        $list = LinkedList::empty();
+
+        $result = $list->map(
+            (fn($a) => $a * 2)
+        );
+
+        expect($result)->toEqual(LinkedList::empty());
+    });
+
+    it('maps a non empty list applying the function to each element', function () {
+        $list = LinkedList::cons(0, LinkedList::cons(1, LinkedList::cons(2, LinkedList::empty())));
+
+        $result = $list->map(
+            fn($a) => $a * 2
+        );
+
+        expect($result)->toEqual(
+            LinkedList::cons(0, LinkedList::cons(2, LinkedList::cons(4, LinkedList::empty())))
+        );
+    });
 });

@@ -14,4 +14,14 @@ describe('Reader', function () {
 
         expect($result)->toEqual('42');
     });
+
+    it('maps the result of a context dependent computation', function () {
+        $reader = Reader::reader(fn($state) => (string) $state);
+
+        $mappedReader = $reader->map(fn($value) => $value *2);
+
+        $result = $mappedReader->runReader(42);
+
+        expect($result)->toEqual('84');
+    });
 });

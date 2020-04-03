@@ -16,5 +16,5 @@ interface Functor
      * @return Functor
      * @psalm-return Functor<B>
      */
-    public function map(callable $f);
+    public function map(callable $f): Functor;
 }

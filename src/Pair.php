@@ -48,7 +48,7 @@ final class Pair implements Functor
      * @psalm-return self<C,D>
      * @psalm-pure
      */
-    public static function pair($left, $right)
+    public static function pair($left, $right): self
     {
         return new self($left, $right);
     }

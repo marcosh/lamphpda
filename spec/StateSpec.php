@@ -15,4 +15,14 @@ describe('State', function () {
 
         expect($result)->toEqual(Pair::pair(21, 84));
     });
+
+    it('maps the result of a stateful computation', function () {
+        $state = State::state(fn($state) => Pair::pair($state / 2, $state * 2));
+
+        $mappedState = $state->map(fn($value) => $value / 3);
+
+        $result = $mappedState->runState(42);
+
+        expect($result)->toEqual(Pair::pair(7, 84));
+    });
 });

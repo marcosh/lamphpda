@@ -13,8 +13,8 @@ interface Functor
      * @template B
      * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return Functor
-     * @psalm-return Functor<B>
+     * @return self
+     * @psalm-return self&Functor<B>
      */
-    public function map(callable $f): Functor;
+    public function map(callable $f): self;
 }

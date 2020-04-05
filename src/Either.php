@@ -118,6 +118,7 @@ final class Either implements Functor
 
     /**
      * @return bool
+     * @psalm-pure
      */
     public function isLeft(): bool
     {
@@ -137,6 +138,7 @@ final class Either implements Functor
 
     /**
      * @return bool
+     * @psalm-pure
      */
     public function isRight(): bool
     {

@@ -100,6 +100,7 @@ final class Maybe implements Functor
 
     /**
      * @return bool
+     * @psalm-pure
      */
     public function isJust(): bool
     {
@@ -115,6 +116,7 @@ final class Maybe implements Functor
 
     /**
      * @return bool
+     * @psalm-pure
      */
     public function isNothing(): bool
     {

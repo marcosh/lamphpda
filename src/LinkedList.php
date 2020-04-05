@@ -115,6 +115,7 @@ final class LinkedList implements Functor
 
     /**
      * @return bool
+     * @psalm-pure
      */
     public function isEmpty(): bool
     {

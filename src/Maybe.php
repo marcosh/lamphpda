@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\MaybeBrand;
+use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template A
  * @implements Functor<MaybeBrand, A>
+ * @implements Apply<MaybeBrand, A>
  * @psalm-immutable
  */
-final class Maybe implements Functor
+final class Maybe implements Functor, Apply
 {
     /** @var bool */
     private $isJust;
@@ -61,6 +64,20 @@ final class Maybe implements Functor
 
     /**
      * @template B
+     * @param HK $hk
+     * @psalm-param HK<MaybeBrand, B> $hk
+     * @return self
+     * @psalm-return self<B>
+     * @psalm-pure
+     */
+    public static function fromBrand(HK $hk): self
+    {
+        /** @var self $hk */
+        return $hk;
+    }
+
+    /**
+     * @template B
      * @param mixed $ifNothing
      * @psalm-param B $ifNothing
      * @param callable $ifJust
@@ -98,6 +115,28 @@ final class Maybe implements Functor
              * @psalm-return self<B>
              */
             fn($value) => self::just($f($value))
+        );
+    }
+
+    /**
+     * @template B
+     * @param Apply $f
+     * @psalm-param Apply<MaybeBrand, callable(A): B> $f
+     * @return self
+     * @psalm-return self<B>
+     * @psalm-pure
+     */
+    public function apply(Apply $f): self
+    {
+        $f = self::fromBrand($f);
+
+        return $this->eval(
+            self::nothing(),
+            (/**
+             * @psalm-param A $value
+             * @psalm-return self<B>
+             */
+            fn($value) => $f->eval(self::nothing(), fn($g) => self::just($g($value))))
         );
     }
 

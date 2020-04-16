@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\MaybeBrand;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template A
- * @implements Functor<A>
+ * @implements Functor<MaybeBrand, A>
  * @psalm-immutable
  */
 final class Maybe implements Functor

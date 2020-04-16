@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\WriterBrand;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template A
  * @template W
- * @implements Functor<A>
+ * @implements Functor<WriterBrand, A>
  * @psalm-immutable
  */
 final class Writer implements Functor
@@ -20,7 +23,7 @@ final class Writer implements Functor
 
     /**
      * @param Pair $runWriter
-     * @psalm-param Pair<A,W> $runWriter
+     * @psalm-param Pair<A, W> $runWriter
      * @psalm-pure
      */
     private function __construct(Pair $runWriter)
@@ -32,9 +35,9 @@ final class Writer implements Functor
      * @template B
      * @template X
      * @param Pair $runWriter
-     * @psalm-param Pair<B,X> $runWriter
+     * @psalm-param Pair<B, X> $runWriter
      * @return self
-     * @psalm-return self<B,X>
+     * @psalm-return self<B, X>
      * @psalm-pure
      */
     public static function writer(Pair $runWriter): self
@@ -57,7 +60,7 @@ final class Writer implements Functor
      * @param callable $f
      * @param callable(A): B $f
      * @return self
-     * @psalm-return self<B,W>
+     * @psalm-return self<B, W>
      * @psalm-pure
      */
     public function map(callable $f): self

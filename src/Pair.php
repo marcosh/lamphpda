@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\PairBrand;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template A
  * @template B
- * @implements Functor<B>
+ * @implements Functor<PairBrand, B>
  * @psalm-immutable
  */
 final class Pair implements Functor

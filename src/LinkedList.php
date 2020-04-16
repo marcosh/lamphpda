@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\LinkedListBrand;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template A
- * @implements Functor<A>
+ * @implements Functor<LinkedListBrand, A>
  * @psalm-immutable
  */
 final class LinkedList implements Functor

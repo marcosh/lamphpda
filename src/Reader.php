@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\ReaderBrand;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template R
  * @template A
- * @implements Functor<A>
+ * @implements Functor<ReaderBrand, A>
  * @psalm-immutable
  */
 final class Reader implements Functor
@@ -59,7 +62,7 @@ final class Reader implements Functor
      * @param callable $f
      * @psalm-param callable(A): B $f
      * @return self
-     * @psalm-return self<R,B>
+     * @psalm-return self<R, B>
      * @psalm-pure
      */
     public function map(callable $f): self

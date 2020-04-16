@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\StateBrand;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template A
  * @template S
- * @implements Functor<A>
+ * @implements Functor<StateBrand, A>
  * @psalm-immutable
  */
 final class State implements Functor
 {
     /**
      * @var callable
-     * @psalm-var callable(S): Pair<A,S>
+     * @psalm-var callable(S): Pair<A, S>
      */
     private $runState;
 
     /**
      * @param callable $runState
-     * @psalm-param callable(S): Pair<A,S> $runState
+     * @psalm-param callable(S): Pair<A, S> $runState
      * @psalm-pure
      */
     private function __construct(callable $runState)
@@ -32,9 +35,9 @@ final class State implements Functor
      * @template T
      * @template B
      * @param callable $runState
-     * @psalm-param callable(T): Pair<B,T> $runState
+     * @psalm-param callable(T): Pair<B, T> $runState
      * @return self
-     * @psalm-return self<B,T>
+     * @psalm-return self<B, T>
      * @psalm-pure
      */
     public static function state(callable $runState): self
@@ -46,7 +49,7 @@ final class State implements Functor
      * @param mixed $state
      * @psalm-param S $state
      * @return Pair
-     * @psalm-return Pair<A,S>
+     * @psalm-return Pair<A, S>
      * @psalm-pure
      */
     public function runState($state): Pair
@@ -59,7 +62,7 @@ final class State implements Functor
      * @param callable $f
      * @psalm-param callable(A): B $f
      * @return self
-     * @psalm-return self<B,S>
+     * @psalm-return self<B, S>
      * @psalm-pure
      */
     public function map(callable $f): self

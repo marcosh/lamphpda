@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\EitherBrand;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template A
  * @template B
- * @implements Functor<B>
+ * @implements Functor<EitherBrand, B>
  * @psalm-immutable
  */
 final class Either implements Functor
@@ -47,7 +50,7 @@ final class Either implements Functor
      * @param mixed $value
      * @psalm-param C $value
      * @return self
-     * @psalm-return self<C,D>
+     * @psalm-return self<C, D>
      * @psalm-pure
      */
     public static function left($value): self
@@ -61,7 +64,7 @@ final class Either implements Functor
      * @param mixed $value
      * @psalm-param D $value
      * @return self
-     * @psalm-return self<C,D>
+     * @psalm-return self<C, D>
      * @psalm-pure
      */
     public static function right($value): self
@@ -97,7 +100,7 @@ final class Either implements Functor
      * @param callable $f
      * @psalm-param callable(B): C $f
      * @return self
-     * @psalm-return self<A,C>
+     * @psalm-return self<A, C>
      * @psalm-pure
      */
     public function map(callable $f): self
@@ -105,12 +108,12 @@ final class Either implements Functor
         return $this->eval(
             /**
              * @psalm-param A $value
-             * @psalm-return self<A,C>
+             * @psalm-return self<A, C>
              */
             fn($value) => self::left($value),
             /**
              * @psalm-param B $value
-             * @psalm-return self<A,C>
+             * @psalm-return self<A, C>
              */
             fn($value) => self::right($f($value))
         );

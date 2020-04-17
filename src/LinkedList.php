@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\LinkedListBrand;
+use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template A
  * @implements Functor<LinkedListBrand, A>
+ * @implements Apply<LinkedListBrand, A>
  * @psalm-immutable
  */
-final class LinkedList implements Functor
+final class LinkedList implements Functor, Apply
 {
     /** @var bool */
     private $isNil;
@@ -33,11 +36,11 @@ final class LinkedList implements Functor
      * @param bool $isNil
      * @param mixed $head
      * @psalm-param A|null $head
-     * @param self|null $tail
-     * @psalm-param self<A>|null $tail
+     * @param LinkedList|null $tail
+     * @psalm-param LinkedList<A>|null $tail
      * @psalm-pure
      */
-    private function __construct(bool $isNil, $head = null, self $tail = null)
+    private function __construct(bool $isNil, $head = null, LinkedList $tail = null)
     {
         $this->isNil = $isNil;
         $this->head = $head;
@@ -46,10 +49,10 @@ final class LinkedList implements Functor
 
     /**
      * @template B
-     * @psalm-return self<B>
+     * @psalm-return LinkedList<B>
      * @psalm-pure
      */
-    public static function empty(): self
+    public static function empty(): LinkedList
     {
         return new self(true);
     }
@@ -58,15 +61,29 @@ final class LinkedList implements Functor
      * @template B
      * @param mixed $head
      * @psalm-param B $head
-     * @param self $tail
-     * @psalm-param self<B> $tail
-     * @return self
+     * @param LinkedList $tail
+     * @psalm-param LinkedList<B> $tail
+     * @return LinkedList
+     * @psalm-return LinkedList<B>
+     * @psalm-pure
+     */
+    public static function cons($head, LinkedList $tail): LinkedList
+    {
+        return new self(false, $head, $tail);
+    }
+
+    /**
+     * @template B
+     * @param HK $hk
+     * @psalm-param HK<LinkedListBrand, B> $hk
+     * @return LinkedList
      * @psalm-return self<B>
      * @psalm-pure
      */
-    public static function cons($head, self $tail): self
+    private static function fromBrand(HK $hk): LinkedList
     {
-        return new self(false, $head, $tail);
+        /** @var LinkedList $hk */
+        return $hk;
     }
 
     /**
@@ -93,14 +110,36 @@ final class LinkedList implements Functor
     }
 
     /**
+     * @param LinkedList $that
+     * @psalm-param LinkedList<A> $that
+     * @return LinkedList
+     * @psalm-return LinkedList<A>
+     * @psalm-pure
+     */
+    public function append(LinkedList $that): LinkedList
+    {
+        return $this->foldr(
+            /**
+             * @psalm-param A $a
+             * @psalm-param LinkedList<A> $b
+             * @psalm-return LinkedList<A>
+             */
+            function ($a, LinkedList $b) {
+                return self::cons($a, $b);
+            },
+            $that
+        );
+    }
+
+    /**
      * @template B
      * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return self
-     * @psalm-return self<B>
+     * @return LinkedList
+     * @psalm-return LinkedList<B>
      * @psalm-pure
      */
-    public function map(callable $f): self
+    public function map(callable $f): LinkedList
     {
         $rec =
             /**
@@ -108,10 +147,45 @@ final class LinkedList implements Functor
               * @psalm-param LinkedList<B> $tail
               * @psalm-return LinkedList<B>
               */
-            fn($head, self $tail) => self::cons($f($head), $tail);
+            fn($head, LinkedList $tail) => self::cons($f($head), $tail);
 
         return $this->foldr(
             $rec,
+            self::empty()
+        );
+    }
+
+    /**
+     * @template B
+     * @param Apply $f
+     * @psalm-param Apply<LinkedListBrand, callable(A): B> $f
+     * @return LinkedList
+     * @psalm-return LinkedList<B>
+     * @psalm-pure
+     */
+    public function apply(Apply $f): LinkedList
+    {
+        $f = self::fromBrand($f);
+
+        return $f->foldr(
+            /**
+             * @psalm-param callable(A): B $a
+             * @psalm-param LinkedList<B> $b
+             * @psalm-return LinkedList<B>
+             */
+            function (callable $a, LinkedList $b) {
+                return $this->foldr(
+                    /**
+                     * @psalm-param A $c
+                     * @psalm-param LinkedList<B> $d
+                     * @psalm-return LinkedList<B>
+                     */
+                    function ($c, LinkedList $d) use ($a) {
+                        return self::cons($a($c), $d);
+                    },
+                    self::empty()
+                )->append($b);
+            },
             self::empty()
         );
     }
@@ -128,7 +202,7 @@ final class LinkedList implements Functor
              * @psalm-param bool $tail
              * @psalm-return bool
              */
-            fn($head, $tail) => false,
+            fn($head, bool $tail) => false,
             true
         );
     }

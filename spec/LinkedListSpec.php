@@ -29,6 +29,15 @@ describe('LinkedList', function () {
         expect($result)->toEqual("abc");
     });
 
+    it('appends two lists correctly', function () {
+        $list1 = LinkedList::cons("a", LinkedList::cons("b", LinkedList::empty()));
+        $list2 = LinkedList::cons("c", LinkedList::cons("d", LinkedList::empty()));
+
+        $expected = LinkedList::cons("a", LinkedList::cons("b", LinkedList::cons("c", LinkedList::cons("d", LinkedList::empty()))));
+
+        expect($list1->append($list2))->toEqual($expected);
+    });
+
     it('maps the empty list to the empty list', function () {
         $list = LinkedList::empty();
 
@@ -61,5 +70,14 @@ describe('LinkedList', function () {
         $list = LinkedList::cons(0, LinkedList::cons(1, LinkedList::cons(2, LinkedList::empty())));
 
         expect($list->isEmpty())->toBeFalsy();
+    });
+
+    it('applies a list of functions to a list of values', function () {
+        $functions = LinkedList::cons(fn($x) => $x *2, LinkedList::cons(fn($x) => $x / 2, LinkedList::empty()));
+        $values = LinkedList::cons(42, LinkedList::cons(666, LinkedList::empty()));
+
+        $expected = LinkedList::cons(84, LinkedList::cons(1332, LinkedList::cons(21, LinkedList::cons(333, LinkedList::empty()))));
+
+        expect($values->apply($functions))->toEqual($expected);
     });
 });

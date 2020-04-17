@@ -70,7 +70,7 @@ final class Maybe implements Functor, Apply
      * @psalm-return self<B>
      * @psalm-pure
      */
-    public static function fromBrand(HK $hk): self
+    private static function fromBrand(HK $hk): self
     {
         /** @var self $hk */
         return $hk;

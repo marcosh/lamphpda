@@ -136,7 +136,14 @@ final class Maybe implements Functor, Apply
              * @psalm-param A $value
              * @psalm-return self<B>
              */
-            fn($value) => $f->eval(self::nothing(), fn($g) => self::just($g($value))))
+            fn($value) => $f->eval(
+                self::nothing(),
+                /**
+                 * @psalm-param callable(A): B $g
+                 * @psalm-return self<B>
+                 */
+                fn($g) => self::just($g($value))
+            ))
         );
     }
 

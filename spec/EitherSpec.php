@@ -49,6 +49,34 @@ describe('Either', function () {
         expect($result)->toEqual(Either::right(84));
     });
 
+    it('applies correctly a left to a left', function () {
+        $f = Either::left(42);
+        $either = Either::left('a');
+
+        expect($either->apply($f))->toEqual($f);
+    });
+
+    it('applies correctly a left to a right', function () {
+        $f = Either::left(42);
+        $either = Either::right('a');
+
+        expect($either->apply($f))->toEqual($f);
+    });
+
+    it('applies correctly a right to a left', function () {
+        $f = Either::right(fn($x) => $x * 2);
+        $either = Either::left('a');
+
+        expect($either->apply($f))->toEqual($either);
+    });
+
+    it('applies correctly a right to a right', function () {
+        $f = Either::right(fn($x) => $x * 2);
+        $either = Either::right(42);
+
+        expect($either->apply($f))->toEqual(Either::right(84));
+    });
+
     it('recognises a left', function () {
         $either = Either::left(42);
 

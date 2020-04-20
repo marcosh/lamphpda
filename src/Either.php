@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\EitherBrand;
+use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template A
  * @template B
  * @implements Functor<EitherBrand, B>
+ * @implements Apply<EitherBrand, B>
  * @psalm-immutable
  */
-final class Either implements Functor
+final class Either implements Functor, Apply
 {
     /** @var bool */
     private $isRight;
@@ -74,6 +77,21 @@ final class Either implements Functor
 
     /**
      * @template C
+     * @template D
+     * @param HK $hk
+     * @psalm-param HK<EitherBrand, D> $hk
+     * @return Either
+     * @psalm-return Either<C, D>
+     * @psalm-pure
+     */
+    private static function fromBrand(HK $hk): Either
+    {
+        /** @var Either $hk */
+        return $hk;
+    }
+
+    /**
+     * @template C
      * @param callable $ifLeft
      * @psalm-param callable(A): C $ifLeft
      * @param callable $ifRight
@@ -116,6 +134,43 @@ final class Either implements Functor
              * @psalm-return Either<A, C>
              */
             fn($value) => self::right($f($value))
+        );
+    }
+
+    /**
+     * @template C
+     * @param Apply $f
+     * @psalm-param Apply<EitherBrand, callable(B): C> $f
+     * @return Either
+     * @psalm-return Either<A, C>
+     * @psalm-pure
+     */
+    public function apply(Apply $f): Either
+    {
+        $f = self::fromBrand($f);
+
+        return $f->eval(
+            (/**
+             * @psalm-param A $a
+             * @psalm-return Either<A, C>
+             */
+            fn($a) => self::left($a)),
+            (/**
+             * @psalm-param callable(B): C $f
+             * @psalm-return Either<A, C>
+             */
+            fn($f) => $this->eval(
+                (/**
+                 * @psalm-param A $a
+                 * @psalm-return Either<A, C>
+                 */
+                fn($a) => self::left($a)),
+                (/**
+                 * @psalm-param B $b
+                 * @psalm-return Either<A, C>
+                 */
+                fn($b) => self::right($f($b)))
+            ))
         );
     }
 

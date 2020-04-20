@@ -36,11 +36,11 @@ final class State implements Functor
      * @template B
      * @param callable $runState
      * @psalm-param callable(T): Pair<B, T> $runState
-     * @return self
-     * @psalm-return self<B, T>
+     * @return State
+     * @psalm-return State<B, T>
      * @psalm-pure
      */
-    public static function state(callable $runState): self
+    public static function state(callable $runState): State
     {
         return new self($runState);
     }
@@ -61,11 +61,11 @@ final class State implements Functor
      * @template B
      * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return self
-     * @psalm-return self<B, S>
+     * @return State
+     * @psalm-return State<B, S>
      * @psalm-pure
      */
-    public function map(callable $f): self
+    public function map(callable $f): State
     {
         $newRunState =
             /**

@@ -17,10 +17,10 @@ interface Functor extends HK
      * @template B
      * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return self
-     * @psalm-return self<F, B>
+     * @return Functor
+     * @psalm-return Functor<F, B>
      */
     public function map(
         callable $f
-    ): self;
+    ): Functor;
 }

@@ -36,11 +36,11 @@ final class Reader implements Functor
      * @template B
      * @param callable $runReader
      * @psalm-param callable(S): B $runReader
-     * @return self
-     * @psalm-return self<S, B>
+     * @return Reader
+     * @psalm-return Reader<S, B>
      * @psalm-pure
      */
-    public static function reader(callable $runReader): self
+    public static function reader(callable $runReader): Reader
     {
         return new self($runReader);
     }
@@ -61,11 +61,11 @@ final class Reader implements Functor
      * @template B
      * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return self
-     * @psalm-return self<R, B>
+     * @return Reader
+     * @psalm-return Reader<R, B>
      * @psalm-pure
      */
-    public function map(callable $f): self
+    public function map(callable $f): Reader
     {
         $newRunReader =
             /**

@@ -27,8 +27,8 @@ final class LinkedList implements Functor, Apply
     private $head;
 
     /**
-     * @var self|null
-     * @psalm-var self<A>|null
+     * @var LinkedList|null
+     * @psalm-var LinkedList<A>|null
      */
     private $tail;
 
@@ -77,7 +77,7 @@ final class LinkedList implements Functor, Apply
      * @param HK $hk
      * @psalm-param HK<LinkedListBrand, B> $hk
      * @return LinkedList
-     * @psalm-return self<B>
+     * @psalm-return LinkedList<B>
      * @psalm-pure
      */
     private static function fromBrand(HK $hk): LinkedList

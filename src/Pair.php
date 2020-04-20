@@ -47,11 +47,11 @@ final class Pair implements Functor
      * @psalm-param C $left
      * @param mixed $right
      * @psalm-param D $right
-     * @return self
-     * @psalm-return self<C,D>
+     * @return Pair
+     * @psalm-return Pair<C,D>
      * @psalm-pure
      */
-    public static function pair($left, $right): self
+    public static function pair($left, $right): Pair
     {
         return new self($left, $right);
     }
@@ -73,11 +73,11 @@ final class Pair implements Functor
      * @template C
      * @param callable $f
      * @psalm-param callable(B): C $f
-     * @return self
-     * @psalm-return self<A,C>
+     * @return Pair
+     * @psalm-return Pair<A,C>
      * @psalm-pure
      */
-    public function map(callable $f): self
+    public function map(callable $f): Pair
     {
         $fPair =
             /**
@@ -94,11 +94,11 @@ final class Pair implements Functor
      * @template C
      * @param callable $f
      * @psalm-param callable(A): C $f
-     * @return self
-     * @psalm-return self<C,B>
+     * @return Pair
+     * @psalm-return Pair<C,B>
      * @psalm-pure
      */
-    public function lmap(callable $f): self
+    public function lmap(callable $f): Pair
     {
         $fPair =
             /**

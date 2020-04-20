@@ -42,22 +42,22 @@ final class Maybe implements Functor, Apply
      * @template B
      * @param mixed $value
      * @psalm-param B $value
-     * @return self
-     * @psalm-return self<B>
+     * @return Maybe
+     * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public static function just($value): self
+    public static function just($value): Maybe
     {
         return new self(true, $value);
     }
 
     /**
      * @template B
-     * @return self
-     * @psalm-return self<B>
+     * @return Maybe
+     * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public static function nothing(): self
+    public static function nothing(): Maybe
     {
         return new self(false);
     }
@@ -66,13 +66,13 @@ final class Maybe implements Functor, Apply
      * @template B
      * @param HK $hk
      * @psalm-param HK<MaybeBrand, B> $hk
-     * @return self
-     * @psalm-return self<B>
+     * @return Maybe
+     * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    private static function fromBrand(HK $hk): self
+    private static function fromBrand(HK $hk): Maybe
     {
-        /** @var self $hk */
+        /** @var Maybe $hk */
         return $hk;
     }
 
@@ -102,17 +102,17 @@ final class Maybe implements Functor, Apply
      * @template B
      * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return self
-     * @psalm-return self<B>
+     * @return Maybe
+     * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public function map(callable $f): self
+    public function map(callable $f): Maybe
     {
         return $this->eval(
             Maybe::nothing(),
             /**
              * @psalm-param A $value
-             * @psalm-return self<B>
+             * @psalm-return Maybe<B>
              */
             fn($value) => self::just($f($value))
         );
@@ -122,11 +122,11 @@ final class Maybe implements Functor, Apply
      * @template B
      * @param Apply $f
      * @psalm-param Apply<MaybeBrand, callable(A): B> $f
-     * @return self
-     * @psalm-return self<B>
+     * @return Maybe
+     * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public function apply(Apply $f): self
+    public function apply(Apply $f): Maybe
     {
         $f = self::fromBrand($f);
 
@@ -134,13 +134,13 @@ final class Maybe implements Functor, Apply
             self::nothing(),
             (/**
              * @psalm-param A $value
-             * @psalm-return self<B>
+             * @psalm-return Maybe<B>
              */
             fn($value) => $f->eval(
                 self::nothing(),
                 /**
                  * @psalm-param callable(A): B $g
-                 * @psalm-return self<B>
+                 * @psalm-return Maybe<B>
                  */
                 fn($g) => self::just($g($value))
             ))

@@ -36,11 +36,11 @@ final class Writer implements Functor
      * @template X
      * @param Pair $runWriter
      * @psalm-param Pair<B, X> $runWriter
-     * @return self
-     * @psalm-return self<B, X>
+     * @return Writer
+     * @psalm-return Writer<B, X>
      * @psalm-pure
      */
-    public static function writer(Pair $runWriter): self
+    public static function writer(Pair $runWriter): Writer
     {
         return new self($runWriter);
     }
@@ -59,11 +59,11 @@ final class Writer implements Functor
      * @template B
      * @param callable $f
      * @param callable(A): B $f
-     * @return self
-     * @psalm-return self<B, W>
+     * @return Writer
+     * @psalm-return Writer<B, W>
      * @psalm-pure
      */
-    public function map(callable $f): self
+    public function map(callable $f): Writer
     {
         return self::writer($this->runWriter->lmap($f));
     }

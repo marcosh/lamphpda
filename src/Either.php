@@ -49,11 +49,11 @@ final class Either implements Functor
      * @template D
      * @param mixed $value
      * @psalm-param C $value
-     * @return self
-     * @psalm-return self<C, D>
+     * @return Either
+     * @psalm-return Either<C, D>
      * @psalm-pure
      */
-    public static function left($value): self
+    public static function left($value): Either
     {
         return new self(false, $value);
     }
@@ -63,11 +63,11 @@ final class Either implements Functor
      * @template D
      * @param mixed $value
      * @psalm-param D $value
-     * @return self
-     * @psalm-return self<C, D>
+     * @return Either
+     * @psalm-return Either<C, D>
      * @psalm-pure
      */
-    public static function right($value): self
+    public static function right($value): Either
     {
         return new self(true, null, $value);
     }
@@ -99,21 +99,21 @@ final class Either implements Functor
      * @template C
      * @param callable $f
      * @psalm-param callable(B): C $f
-     * @return self
-     * @psalm-return self<A, C>
+     * @return Either
+     * @psalm-return Either<A, C>
      * @psalm-pure
      */
-    public function map(callable $f): self
+    public function map(callable $f): Either
     {
         return $this->eval(
             /**
              * @psalm-param A $value
-             * @psalm-return self<A, C>
+             * @psalm-return Either<A, C>
              */
             fn($value) => self::left($value),
             /**
              * @psalm-param B $value
-             * @psalm-return self<A, C>
+             * @psalm-return Either<A, C>
              */
             fn($value) => self::right($f($value))
         );

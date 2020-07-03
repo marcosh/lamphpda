@@ -35,4 +35,10 @@ describe('Reader', function () {
 
         expect($result)->toEqual(42 * 42 * 2);
     });
+
+    it('creates a constant function as pure', function () {
+        $reader = Reader::pure(42);
+
+        expect($reader->runReader(13))->toBe(42);
+    });
 });

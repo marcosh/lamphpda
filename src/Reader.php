@@ -6,6 +6,7 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\ReaderBrand;
 use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
@@ -14,9 +15,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @template A
  * @implements Functor<ReaderBrand, A>
  * @implements Apply<ReaderBrand, A>
+ * @implements Applicative<ReaderBrand, A>
  * @psalm-immutable
  */
-final class Reader implements Functor, Apply
+final class Reader implements Functor, Apply, Applicative
 {
     /**
      * @var callable
@@ -114,5 +116,24 @@ final class Reader implements Functor, Apply
             fn($r) => ($f->runReader($r))($this->runReader($r));
 
         return self::reader($newRunReader);
+    }
+
+    /**
+     * @template S
+     * @template B
+     * @param mixed $a
+     * @psalm-param B $a
+     * @return Reader
+     * @psalm-return Reader<S, B>
+     * @psalm-pure
+     */
+    public static function pure($a): Reader
+    {
+        return self::reader(
+            /**
+             * @psalm-param S $r
+             */
+            fn($r) => $a
+        );
     }
 }

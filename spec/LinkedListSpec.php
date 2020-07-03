@@ -80,4 +80,8 @@ describe('LinkedList', function () {
 
         expect($values->apply($functions))->toEqual($expected);
     });
+
+    it('creates a singleton as pure', function () {
+       expect(LinkedList::pure(42))->toEqual(LinkedList::cons(42, LinkedList::empty()));
+    });
 });

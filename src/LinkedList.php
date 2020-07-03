@@ -191,6 +191,19 @@ final class LinkedList implements Functor, Apply
     }
 
     /**
+     * @template B
+     * @param $a
+     * @psalm-param B $a
+     * @return LinkedList
+     * @psalm-return LinkedList<B>
+     * @psalm-pure
+     */
+    public static function pure($a): LinkedList
+    {
+        return self::cons($a, self::empty());
+    }
+
+    /**
      * @return bool
      * @psalm-pure
      */

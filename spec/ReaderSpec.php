@@ -24,4 +24,15 @@ describe('Reader', function () {
 
         expect($result)->toEqual('84');
     });
+
+    it('applies a wrapped function to a wrapped value', function () {
+        $reader = Reader::reader(fn($state) => $state * 2);
+        $applyReader = Reader::reader(fn($state) => fn($value) => $state * $value);
+
+        $appliedReader = $reader->apply($applyReader);
+
+        $result = $appliedReader->runReader(42);
+
+        expect($result)->toEqual(42 * 42 * 2);
+    });
 });

@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\ReaderBrand;
+use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template R
  * @template A
  * @implements Functor<ReaderBrand, A>
+ * @implements Apply<ReaderBrand, A>
  * @psalm-immutable
  */
-final class Reader implements Functor
+final class Reader implements Functor, Apply
 {
     /**
      * @var callable
@@ -46,6 +49,20 @@ final class Reader implements Functor
     }
 
     /**
+     * @template B
+     * @param HK $hk
+     * @psalm-param HK<ReaderBrand, B> $hk
+     * @return Reader
+     * @psalm-return Reader<R, B>
+     * @psalm-pure
+     */
+    private static function fromBrand(HK $hk): Reader
+    {
+        /** @var Reader $hk */
+        return $hk;
+    }
+
+    /**
      * @param mixed $state
      * @psalm-param R $state
      * @return mixed
@@ -73,6 +90,28 @@ final class Reader implements Functor
              * @psalm-return B
              */
             fn($r) => $f($this->runReader($r));
+
+        return self::reader($newRunReader);
+    }
+
+    /**
+     * @template B
+     * @param Apply $f
+     * @psalm-param Apply<ReaderBrand, callable(A): B> $f
+     * @return Reader
+     * @psalm-return Reader<R, B>
+     * @psalm-pure
+     */
+    public function apply(Apply $f): Apply
+    {
+        $f = self::fromBrand($f);
+
+        $newRunReader =
+            /**
+             * @psalm-param R $r
+             * @psalm-return B
+             */
+            fn($r) => ($f->runReader($r))($this->runReader($r));
 
         return self::reader($newRunReader);
     }

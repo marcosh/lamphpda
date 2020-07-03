@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\StateBrand;
+use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template A
  * @template S
  * @implements Functor<StateBrand, A>
+ * @implements Apply<StateBrand, A>
  * @psalm-immutable
  */
-final class State implements Functor
+final class State implements Functor, Apply
 {
     /**
      * @var callable
@@ -46,6 +49,20 @@ final class State implements Functor
     }
 
     /**
+     * @template B
+     * @param HK $hk
+     * @psalm-param HK<StateBrand, B> $hk
+     * @return State
+     * @psalm-return State<B, S>
+     * @psalm-pure
+     */
+    private static function fromBrand(HK $hk): State
+    {
+        /** @var State $hk */
+        return $hk;
+    }
+
+    /**
      * @param mixed $state
      * @psalm-param S $state
      * @return Pair
@@ -70,9 +87,39 @@ final class State implements Functor
         $newRunState =
             /**
              * @psalm-param S $s
-             * @psalm-return Pair<B,S>
+             * @psalm-return Pair<B, S>
              */
             fn($s) => $this->runState($s)->lmap($f);
+
+        return self::state($newRunState);
+    }
+
+    /**
+     * @template B
+     * @param Apply $f
+     * @psalm-param Apply<StateBrand, callable(A): B> $f
+     * @return State
+     * @psalm-return State<B, S>
+     * @psalm-pure
+     */
+    public function apply(Apply $f): Apply
+    {
+        $f = self::fromBrand($f);
+
+        $newRunState =
+            /**
+             * @psalm-param S $s
+             * @psalm-return Pair<B, S>
+             */
+            function ($s) use ($f) {
+                $callableAndState = $f->runState($s);
+
+                return $callableAndState->uncurry(function ($callable, $state) {
+                    $valueAndState = $this->runState($state);
+
+                    return $valueAndState->lmap($callable);
+                });
+            };
 
         return self::state($newRunState);
     }

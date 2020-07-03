@@ -25,4 +25,15 @@ describe('State', function () {
 
         expect($result)->toEqual(Pair::pair(7, 84));
     });
+
+    it('applies a wrapped callable to a wrapped value', function () {
+        $state = State::state(fn($state) => Pair::pair($state / 2, $state * 2));
+        $applyState = State::state(fn($state) => Pair::pair(fn($int) => $state * $int, $state * 5));
+
+        $appliedState = $state->apply($applyState);
+
+        $result = $appliedState->runState(42);
+
+        expect($result)->toEqual(Pair::pair(42 * (42 * 5 / 2), 42 * 2 * 5));
+    });
 });

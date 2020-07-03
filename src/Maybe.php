@@ -6,6 +6,7 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
@@ -13,9 +14,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @template A
  * @implements Functor<MaybeBrand, A>
  * @implements Apply<MaybeBrand, A>
+ * @implements Applicative<MaybeBrand, A>
  * @psalm-immutable
  */
-final class Maybe implements Functor, Apply
+final class Maybe implements Functor, Apply, Applicative
 {
     /** @var bool */
     private $isJust;
@@ -145,6 +147,19 @@ final class Maybe implements Functor, Apply
                 fn($g) => self::just($g($value))
             ))
         );
+    }
+
+    /**
+     * @template B
+     * @param mixed $a
+     * @psalm-param B $a
+     * @return Maybe
+     * @psalm-return Maybe<B>
+     * @psalm-pure
+     */
+    public static function pure($a): Maybe
+    {
+        return self::just($a);
     }
 
     /**

@@ -90,4 +90,8 @@ describe('Maybe', function () {
 
         expect($maybe->apply($maybeF))->toEqual(Maybe::just(84));
     });
+
+    it('creates a just as pure', function () {
+        expect(Maybe::pure(42))->toEqual(Maybe::just(42));
+    });
 });

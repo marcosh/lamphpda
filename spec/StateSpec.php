@@ -36,4 +36,10 @@ describe('State', function () {
 
         expect($result)->toEqual(Pair::pair(42 * (42 * 5 / 2), 42 * 2 * 5));
     });
+
+    it('creates a constant state-preserving function as pure', function () {
+        $state = State::pure(42);
+
+        expect($state->runState(13))->toEqual(Pair::pair(42, 13));
+    });
 });

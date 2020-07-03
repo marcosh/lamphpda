@@ -6,6 +6,7 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\StateBrand;
 use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
@@ -14,9 +15,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @template S
  * @implements Functor<StateBrand, A>
  * @implements Apply<StateBrand, A>
+ * @implements Applicative<StateBrand, A>
  * @psalm-immutable
  */
-final class State implements Functor, Apply
+final class State implements Functor, Apply, Applicative
 {
     /**
      * @var callable
@@ -122,5 +124,24 @@ final class State implements Functor, Apply
             };
 
         return self::state($newRunState);
+    }
+
+    /**
+     * @template B
+     * @template T
+     * @param mixed $a
+     * @psalm-param B $a
+     * @return State
+     * @psalm-return State<B, T>
+     * @psalm-pure
+     */
+    public static function pure($a): State
+    {
+        return self::state(
+            (/**
+             * @psalm-param T $s
+             */
+            fn($s) => Pair::pair($a, $s))
+        );
     }
 }

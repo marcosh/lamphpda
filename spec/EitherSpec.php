@@ -77,6 +77,10 @@ describe('Either', function () {
         expect($either->apply($f))->toEqual(Either::right(84));
     });
 
+    it('creates a right as pure', function () {
+        expect(Either::pure(42))->toEqual(Either::right(42));
+    });
+
     it('recognises a left', function () {
         $either = Either::left(42);
 

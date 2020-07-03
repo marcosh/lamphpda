@@ -6,6 +6,7 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
@@ -14,9 +15,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @template B
  * @implements Functor<EitherBrand, B>
  * @implements Apply<EitherBrand, B>
+ * @implements Applicative<EitherBrand, B>
  * @psalm-immutable
  */
-final class Either implements Functor, Apply
+final class Either implements Functor, Apply, Applicative
 {
     /** @var bool */
     private $isRight;
@@ -172,6 +174,20 @@ final class Either implements Functor, Apply
                 fn($b) => self::right($f($b)))
             ))
         );
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param mixed $a
+     * @psalm-param D $a
+     * @return Either
+     * @psalm-return Either<C, D>
+     * @psalm-pure
+     */
+    public static function pure($a): Either
+    {
+        return Either::right($a);
     }
 
     /**

@@ -17,6 +17,7 @@ interface Applicative extends Apply
      * @psalm-param B $a
      * @return Applicative
      * @psalm-return Applicative<F, B>
+     * @psalm-pure
      */
     public static function pure($a): Applicative;
 }

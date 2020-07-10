@@ -17,6 +17,7 @@ interface Apply extends Functor
      * @psalm-param Apply<F, callable(A): B> $f
      * @return Apply
      * @psalm-return Apply<F, B>
+     * @psalm-pure
      */
     public function apply(Apply $f): Apply;
 }

@@ -19,6 +19,7 @@ interface Functor extends HK
      * @psalm-param callable(A): B $f
      * @return Functor
      * @psalm-return Functor<F, B>
+     * @psalm-pure
      */
     public function map(
         callable $f

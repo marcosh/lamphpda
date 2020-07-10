@@ -9,15 +9,17 @@ use Marcosh\LamPHPda\HK\HK;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template A
  * @implements Functor<MaybeBrand, A>
  * @implements Apply<MaybeBrand, A>
  * @implements Applicative<MaybeBrand, A>
+ * @implements Monad<MaybeBrand, A>
  * @psalm-immutable
  */
-final class Maybe implements Functor, Apply, Applicative
+final class Maybe implements Functor, Apply, Applicative, Monad
 {
     /** @var bool */
     private $isJust;
@@ -160,6 +162,26 @@ final class Maybe implements Functor, Apply, Applicative
     public static function pure($a): Maybe
     {
         return self::just($a);
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): Monad<MaybeBrand, B> $f
+     * @return Maybe
+     * @psalm-return Maybe<B>
+     * @psalm-pure
+     */
+    public function bind(callable $f): Maybe
+    {
+        return $this->eval(
+            self::nothing(),
+            /**
+             * @psalm-param A $value
+             * @psalm-return Maybe<B>
+             */
+            fn($value) => self::fromBrand($f($value))
+        );
     }
 
     /**

@@ -94,4 +94,32 @@ describe('Maybe', function () {
     it('creates a just as pure', function () {
         expect(Maybe::pure(42))->toEqual(Maybe::just(42));
     });
+
+    it('binds a callable returning something to Nothing to get Nothing', function () {
+        $maybe = Maybe::nothing();
+        $f = fn($x) => Maybe::just($x);
+
+        expect($maybe->bind($f))->toEqual(Maybe::nothing());
+    });
+
+    it('binds a callable returning Nothing to Nothing to get Nothing', function () {
+        $maybe = Maybe::nothing();
+        $f = fn($x) => Maybe::nothing();
+
+        expect($maybe->bind($f))->toEqual(Maybe::nothing());
+    });
+
+    it('binds a callable returning Nothing to something to return Nothing', function () {
+        $maybe = Maybe::just(42);
+        $f = fn($x) => Maybe::nothing();
+
+        expect($maybe->bind($f))->toEqual(Maybe::nothing());
+    });
+
+    it('binds a callable returning something else to something to return something else', function () {
+        $maybe = Maybe::just(42);
+        $f = fn($x) => Maybe::just($x * 2);
+
+        expect($maybe->bind($f))->toEqual(Maybe::just(84));
+    });
 });

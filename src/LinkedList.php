@@ -6,6 +6,7 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\LinkedListBrand;
 use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
@@ -13,9 +14,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @template A
  * @implements Functor<LinkedListBrand, A>
  * @implements Apply<LinkedListBrand, A>
+ * @implements Applicative<LinkedListBrand, A>
  * @psalm-immutable
  */
-final class LinkedList implements Functor, Apply
+final class LinkedList implements Functor, Apply, Applicative
 {
     /** @var bool */
     private $isNil;

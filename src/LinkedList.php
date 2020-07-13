@@ -9,15 +9,17 @@ use Marcosh\LamPHPda\HK\HK;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template A
  * @implements Functor<LinkedListBrand, A>
  * @implements Apply<LinkedListBrand, A>
  * @implements Applicative<LinkedListBrand, A>
+ * @implements Monad<LinkedListBrand, A>
  * @psalm-immutable
  */
-final class LinkedList implements Functor, Apply, Applicative
+final class LinkedList implements Functor, Apply, Applicative, Monad
 {
     /** @var bool */
     private $isNil;
@@ -203,6 +205,27 @@ final class LinkedList implements Functor, Apply, Applicative
     public static function pure($a): LinkedList
     {
         return self::cons($a, self::empty());
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): Monad<LinkedListBrand, B> $f
+     * @return LinkedList
+     * @psalm-return LinkedList<B>
+     * @psalm-pure
+     */
+    public function bind(callable $f): LinkedList
+    {
+        return $this->foldr(
+            /**
+             * @psalm-param A $a
+             * @psalm-param LinkedList<B> $b
+             * @psalm-return LinkedList<B>
+             */
+            fn($a, $b) => self::fromBrand($f($a))->append($b),
+            self::empty()
+        );
     }
 
     /**

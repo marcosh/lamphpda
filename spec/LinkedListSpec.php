@@ -84,4 +84,32 @@ describe('LinkedList', function () {
     it('creates a singleton as pure', function () {
        expect(LinkedList::pure(42))->toEqual(LinkedList::cons(42, LinkedList::empty()));
     });
+
+    it('binds a callable returning an empty list to an empty list to return an empty list', function () {
+        $list = LinkedList::empty();
+        $f = fn($x) => LinkedList::empty();
+
+        expect($list->bind($f))->toEqual(LinkedList::empty());
+    });
+
+    it('binds a callable returning a non-empty list to an empty list to return an empty list', function () {
+        $list = LinkedList::empty();
+        $f = fn($x) => LinkedList::cons(42, LinkedList::empty());
+
+        expect($list->bind($f))->toEqual(LinkedList::empty());
+    });
+
+    it('binds a callable returning an empty list to a non-empty list to return a non-empty list', function () {
+        $list = LinkedList::cons(42, LinkedList::cons(13, LinkedList::empty()));
+        $f = fn($x) => LinkedList::empty();
+
+        expect($list->bind($f))->toEqual(LinkedList::empty());
+    });
+
+    it('binds a callable returning a non-empty list to a non-empty list to return a non-empty list', function () {
+        $list = LinkedList::cons(42, LinkedList::cons(13, LinkedList::empty()));
+        $f = fn($x) => LinkedList::cons($x + 2, LinkedList::cons($x * 2, LinkedList::empty()));
+
+        expect($list->bind($f))->toEqual(LinkedList::cons(44, LinkedList::cons(84, LinkedList::cons(15, LinkedList::cons(26, LinkedList::empty())))));
+    });
 });

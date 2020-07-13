@@ -9,6 +9,7 @@ use Marcosh\LamPHPda\HK\HK;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template A
@@ -16,9 +17,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @implements Functor<EitherBrand, B>
  * @implements Apply<EitherBrand, B>
  * @implements Applicative<EitherBrand, B>
+ * @implements Monad<EitherBrand, B>
  * @psalm-immutable
  */
-final class Either implements Functor, Apply, Applicative
+final class Either implements Functor, Apply, Applicative, Monad
 {
     /** @var bool */
     private $isRight;
@@ -188,6 +190,30 @@ final class Either implements Functor, Apply, Applicative
     public static function pure($a): Either
     {
         return Either::right($a);
+    }
+
+    /**
+     * @template C
+     * @param callable $f
+     * @psalm-param callable(B): Monad<EitherBrand, C> $f
+     * @return Either
+     * @psalm-return Either<A, C>
+     * @psalm-pure
+     */
+    public function bind(callable $f): Either
+    {
+        return $this->eval(
+            /**
+             * @psalm-param A $a
+             * @psalm-return Either<A, C>
+             */
+            fn($a) => self::left($a),
+            /**
+             * @psalm-param B $b
+             * @psalm-return Either<A, C>
+             */
+            fn($b) => self::fromBrand($f($b))
+        );
     }
 
     /**

@@ -94,4 +94,32 @@ describe('Either', function () {
         expect($either->isLeft())->toBeFalsy();
         expect($either->isRight())->toBeTruthy();
     });
+
+    it('binds a callable returning a right to a left to get a left', function () {
+        $either = Either::left(42);
+        $f = fn($x) => Either::right($x);
+
+        expect($either->bind($f))->toEqual(Either::left(42));
+    });
+
+    it('binds a callable returning a left to a left to get a left', function () {
+        $either = Either::left(42);
+        $f = fn($x) => Either::left('a');
+
+        expect($either->bind($f))->toEqual(Either::left(42));
+    });
+
+    it('binds a callable returning a left to a right to return a left', function () {
+        $either = Either::right(42);
+        $f = fn($x) => Either::left('a');
+
+        expect($either->bind($f))->toEqual(Either::left('a'));
+    });
+
+    it('binds a callable returning a right to a right to return a right', function () {
+        $either = Either::right(42);
+        $f = fn($x) => Either::right($x * 2);
+
+        expect($either->bind($f))->toEqual(Either::right(84));
+    });
 });

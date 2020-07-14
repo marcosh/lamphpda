@@ -42,4 +42,12 @@ describe('State', function () {
 
         expect($state->runState(13))->toEqual(Pair::pair(42, 13));
     });
+
+    it('binds a callable correctly', function () {
+        $state = State::state(fn($state) => Pair::pair($state / 2, $state * 2));
+
+        $f = fn($x) => State::state(fn($state) => Pair::pair($state * $x, $state + $x));
+
+        expect($state->bind($f)->runState(42))->toEqual(Pair::pair(42 * 2 * 42 / 2, 42 * 2 + 42 / 2));
+    });
 });

@@ -9,6 +9,7 @@ use Marcosh\LamPHPda\HK\HK;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template A
@@ -16,9 +17,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @implements Functor<StateBrand, A>
  * @implements Apply<StateBrand, A>
  * @implements Applicative<StateBrand, A>
+ * @implements Monad<StateBrand, A>
  * @psalm-immutable
  */
-final class State implements Functor, Apply, Applicative
+final class State implements Functor, Apply, Applicative, Monad
 {
     /**
      * @var callable
@@ -104,7 +106,7 @@ final class State implements Functor, Apply, Applicative
      * @psalm-return State<B, S>
      * @psalm-pure
      */
-    public function apply(Apply $f): Apply
+    public function apply(Apply $f): State
     {
         $f = self::fromBrand($f);
 
@@ -143,5 +145,25 @@ final class State implements Functor, Apply, Applicative
              */
             fn($s) => Pair::pair($a, $s))
         );
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): Monad<StateBrand, B> $f
+     * @return State
+     * @psalm-return State<B, S>
+     * @psalm-pure
+     */
+    public function bind(callable $f): State
+    {
+        $newRunState =
+            /**
+             * @psalm-param S $s
+             * @psalm-return Pair<B, S>
+             */
+            fn($s) => $this->runState($s)->uncurry(fn($a, $newS) => self::fromBrand($f($a))->runState($newS));
+
+        return self::state($newRunState);
     }
 }

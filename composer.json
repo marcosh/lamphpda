@@ -3,7 +3,7 @@
   "description": "A collection of functional programming data structures",
   "version": "0.1.0",
   "type": "library",
-  "license": "Hippocratic License 2.1",
+  "license": "Hippocratic-2.1",
   "authors": [
     {
       "name": "Marco Perone",

@@ -58,7 +58,7 @@ final class Writer implements Functor
     /**
      * @template B
      * @param callable $f
-     * @param callable(A): B $f
+     * @psalm-param callable(A):(B) $f
      * @return Writer
      * @psalm-return Writer<B, W>
      * @psalm-pure

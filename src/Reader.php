@@ -9,6 +9,7 @@ use Marcosh\LamPHPda\HK\HK;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template R
@@ -16,9 +17,10 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  * @implements Functor<ReaderBrand, A>
  * @implements Apply<ReaderBrand, A>
  * @implements Applicative<ReaderBrand, A>
+ * @implements Monad<ReaderBrand, A>
  * @psalm-immutable
  */
-final class Reader implements Functor, Apply, Applicative
+final class Reader implements Functor, Apply, Applicative, Monad
 {
     /**
      * @var callable
@@ -104,7 +106,7 @@ final class Reader implements Functor, Apply, Applicative
      * @psalm-return Reader<R, B>
      * @psalm-pure
      */
-    public function apply(Apply $f): Apply
+    public function apply(Apply $f): Reader
     {
         $f = self::fromBrand($f);
 
@@ -135,5 +137,25 @@ final class Reader implements Functor, Apply, Applicative
              */
             fn($r) => $a
         );
+    }
+
+    /**
+     * @template B
+     * @param callable $f
+     * @psalm-param callable(A): Monad<ReaderBrand, B> $f
+     * @return Reader
+     * @psalm-return Reader<R, B>
+     * @psalm-pure
+     */
+    public function bind(callable $f): Reader
+    {
+        $newRunReader =
+            /**
+             * @psalm-param R $r
+             * @psalm-return B
+             */
+            fn($r) => self::fromBrand($f(($this->runReader)($r)))->runReader($r);
+
+        return self::reader($newRunReader);
     }
 }

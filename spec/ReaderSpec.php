@@ -41,4 +41,12 @@ describe('Reader', function () {
 
         expect($reader->runReader(13))->toBe(42);
     });
+
+    it('binds a callable correctly', function () {
+        $reader = Reader::reader(fn($state) => $state * 2);
+
+        $f = fn($x) => Reader::reader(fn($state) => $x * $state);
+
+        expect($reader->bind($f)->runReader(42))->toBe(42 * 42 * 2);
+    });
 });

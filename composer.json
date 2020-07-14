@@ -2,7 +2,7 @@
   "name": "marcosh/lamphpda",
   "description": "A collection of functional programming data structures",
   "type": "library",
-  "license": "MIT",
+  "license": "Hippocratic License 2.1",
   "authors": [
     {
       "name": "Marco Perone",

@@ -162,7 +162,14 @@ final class State implements Functor, Apply, Applicative, Monad
              * @psalm-param S $s
              * @psalm-return Pair<B, S>
              */
-            fn($s) => $this->runState($s)->uncurry(fn($a, $newS) => self::fromBrand($f($a))->runState($newS));
+            fn($s) => $this->runState($s)->uncurry(
+                /**
+                 * @psalm-param A $a
+                 * @psalm-param S $newS
+                 * @psalm-return Pair<B, S>
+                 */
+                fn($a, $newS) => self::fromBrand($f($a))->runState($newS)
+            );
 
         return self::state($newRunState);
     }

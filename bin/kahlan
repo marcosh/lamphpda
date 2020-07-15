@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-docker run --rm -v $(pwd)/:/app --entrypoint /kahlan-phpdbg kahlan/kahlan "$@"

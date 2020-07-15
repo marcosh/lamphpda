@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-docker run --rm -ti -u $(id -u):$(id -g) -v $PWD:/app marcosh/psalm "$@"

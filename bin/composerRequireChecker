@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-docker run -u $(id -u):$(id -g) -v $(pwd):/app -w=/app php:7.3 sh -c "vendor/bin/composer-require-checker check --config-file /app/crc-config.json /app/composer.json"

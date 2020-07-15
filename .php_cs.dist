@@ -1,0 +1,10 @@
+<?php
+
+$config = new \drupol\PhpCsFixerConfigsPhp\Config\Php73();
+
+// We need this file because of this issue with Kahlan: https://github.com/kahlan/kahlan/issues/355
+$config
+    ->getFinder()
+    ->exclude('spec');
+
+return $config;

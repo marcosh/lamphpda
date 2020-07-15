@@ -2,6 +2,3 @@ parameters:
     ignoreErrors:
         - message: '#Cannot call method foldr() on Marcosh\\LamPHPda\\LinkedList|null.#'
           path: src/LinkedList.php
-
-includes:
-    - vendor/phpstan/phpstan-strict-rules/rules.neon

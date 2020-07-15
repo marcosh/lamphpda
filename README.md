@@ -25,3 +25,5 @@ compilation step, ensuring that all the types are aligned.
 
 To benefit from this library, it is compulsory that your code runs through a
 Psalm check.
+
+Run `./vendor/bin/grumphp run` to run the QA tasks, including the tests.

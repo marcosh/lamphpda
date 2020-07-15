@@ -1,0 +1,10 @@
+imports:
+  - { resource: vendor/drupol/php-conventions/config/php73/grumphp.yml }
+
+parameters:
+  process_timeout: 600
+  tasks.phpcsfixer2.config: .php_cs.dist
+  extra_tasks:
+    psalm: ~
+    kahlan:
+        coverage: 4

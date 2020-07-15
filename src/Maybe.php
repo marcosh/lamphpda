@@ -19,19 +19,20 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  * @implements Monad<MaybeBrand, A>
  * @psalm-immutable
  */
-final class Maybe implements Functor, Apply, Applicative, Monad
+final class Maybe implements Applicative, Apply, Functor, Monad
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isJust;
 
     /**
      * @var mixed
      * @psalm-var A|null
      */
-    private $value = null;
+    private $value;
 
     /**
-     * @param bool $isJust
      * @param mixed $value
      * @psalm-param A|null $value
      * @psalm-pure
@@ -44,48 +45,57 @@ final class Maybe implements Functor, Apply, Applicative, Monad
 
     /**
      * @template B
-     * @param mixed $value
-     * @psalm-param B $value
-     * @return Maybe
+     * @psalm-param Apply<MaybeBrand, callable(A): B> $f
      * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public static function just($value): Maybe
+    public function apply(Apply $f): Maybe
     {
-        return new self(true, $value);
+        $f = self::fromBrand($f);
+
+        return $this->eval(
+            self::nothing(),
+            (/**
+             * @psalm-param A $value
+             * @psalm-return Maybe<B>
+             */
+            static fn ($value) => $f->eval(
+                self::nothing(),
+                /**
+                 * @psalm-param callable(A): B $g
+                 * @psalm-return Maybe<B>
+                 */
+                static fn ($g) => self::just($g($value))
+            )
+            )
+        );
     }
 
     /**
      * @template B
-     * @return Maybe
+     * @psalm-param callable(A): Monad<MaybeBrand, B> $f
      * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public static function nothing(): Maybe
+    public function bind(callable $f): Maybe
     {
-        return new self(false);
+        return $this->eval(
+            self::nothing(),
+            /**
+             * @psalm-param A $value
+             * @psalm-return Maybe<B>
+             */
+            static fn ($value) => self::fromBrand($f($value))
+        );
     }
 
     /**
      * @template B
-     * @param HK $hk
-     * @psalm-param HK<MaybeBrand, B> $hk
-     * @return Maybe
-     * @psalm-return Maybe<B>
-     * @psalm-pure
-     */
-    private static function fromBrand(HK $hk): Maybe
-    {
-        /** @var Maybe $hk */
-        return $hk;
-    }
-
-    /**
-     * @template B
+     *
      * @param mixed $ifNothing
      * @psalm-param B $ifNothing
-     * @param callable $ifJust
      * @psalm-param callable(A): B $ifJust
+     *
      * @return mixed
      * @psalm-return B
      * @psalm-pure
@@ -103,10 +113,51 @@ final class Maybe implements Functor, Apply, Applicative, Monad
     }
 
     /**
+     * @psalm-pure
+     */
+    public function isJust(): bool
+    {
+        return $this->eval(
+            false,
+            /**
+             * @psalm-param A $value
+             * @psalm-return bool
+             */
+            static fn ($value) => true
+        );
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public function isNothing(): bool
+    {
+        return $this->eval(
+            true,
+            /**
+             * @psalm-param A $value
+             * @psalm-return bool
+             */
+            static fn ($value) => false
+        );
+    }
+
+    /**
      * @template B
-     * @param callable $f
+     *
+     * @param mixed $value
+     * @psalm-param B $value
+     * @psalm-return Maybe<B>
+     * @psalm-pure
+     */
+    public static function just($value): Maybe
+    {
+        return new self(true, $value);
+    }
+
+    /**
+     * @template B
      * @psalm-param callable(A): B $f
-     * @return Maybe
      * @psalm-return Maybe<B>
      * @psalm-pure
      */
@@ -118,44 +169,25 @@ final class Maybe implements Functor, Apply, Applicative, Monad
              * @psalm-param A $value
              * @psalm-return Maybe<B>
              */
-            fn($value) => self::just($f($value))
+            static fn ($value) => self::just($f($value))
         );
     }
 
     /**
      * @template B
-     * @param Apply $f
-     * @psalm-param Apply<MaybeBrand, callable(A): B> $f
-     * @return Maybe
      * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public function apply(Apply $f): Maybe
+    public static function nothing(): Maybe
     {
-        $f = self::fromBrand($f);
-
-        return $this->eval(
-            self::nothing(),
-            (/**
-             * @psalm-param A $value
-             * @psalm-return Maybe<B>
-             */
-            fn($value) => $f->eval(
-                self::nothing(),
-                /**
-                 * @psalm-param callable(A): B $g
-                 * @psalm-return Maybe<B>
-                 */
-                fn($g) => self::just($g($value))
-            ))
-        );
+        return new self(false);
     }
 
     /**
      * @template B
+     *
      * @param mixed $a
      * @psalm-param B $a
-     * @return Maybe
      * @psalm-return Maybe<B>
      * @psalm-pure
      */
@@ -166,53 +198,13 @@ final class Maybe implements Functor, Apply, Applicative, Monad
 
     /**
      * @template B
-     * @param callable $f
-     * @psalm-param callable(A): Monad<MaybeBrand, B> $f
-     * @return Maybe
+     * @psalm-param HK<MaybeBrand, B> $hk
      * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    public function bind(callable $f): Maybe
+    private static function fromBrand(HK $hk): Maybe
     {
-        return $this->eval(
-            self::nothing(),
-            /**
-             * @psalm-param A $value
-             * @psalm-return Maybe<B>
-             */
-            fn($value) => self::fromBrand($f($value))
-        );
-    }
-
-    /**
-     * @return bool
-     * @psalm-pure
-     */
-    public function isJust(): bool
-    {
-        return $this->eval(
-            false,
-            /**
-             * @psalm-param A $value
-             * @psalm-return bool
-             */
-            fn($value) => true
-        );
-    }
-
-    /**
-     * @return bool
-     * @psalm-pure
-     */
-    public function isNothing(): bool
-    {
-        return $this->eval(
-            true,
-            /**
-             * @psalm-param A $value
-             * @psalm-return bool
-             */
-            fn($value) => false
-        );
+        /** @var Maybe $hk */
+        return $hk;
     }
 }

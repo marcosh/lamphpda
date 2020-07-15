@@ -13,9 +13,9 @@ interface Applicative extends Apply
 {
     /**
      * @template B
+     *
      * @param mixed $a
      * @psalm-param B $a
-     * @return Applicative
      * @psalm-return Applicative<F, B>
      * @psalm-pure
      */

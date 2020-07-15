@@ -13,9 +13,7 @@ interface Monad extends Applicative
 {
     /**
      * @template B
-     * @param callable $f
      * @psalm-param callable(A): Monad<F, B> $f
-     * @return Monad
      * @psalm-return Monad<F, B>
      * @psalm-pure
      */

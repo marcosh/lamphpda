@@ -30,6 +30,7 @@ final class Pair implements Functor
     /**
      * @param mixed $left
      * @psalm-param A $left
+     *
      * @param mixed $right
      * @psalm-param B $right
      * @psalm-pure
@@ -42,59 +43,7 @@ final class Pair implements Functor
 
     /**
      * @template C
-     * @template D
-     * @param mixed $left
-     * @psalm-param C $left
-     * @param mixed $right
-     * @psalm-param D $right
-     * @return Pair
-     * @psalm-return Pair<C,D>
-     * @psalm-pure
-     */
-    public static function pair($left, $right): Pair
-    {
-        return new self($left, $right);
-    }
-
-    /**
-     * @template C
-     * @param callable $f
-     * @psalm-param callable(A, B): C $f
-     * @return mixed
-     * @psalm-return C
-     * @psalm-pure
-     */
-    public function uncurry(callable $f)
-    {
-        return $f($this->left, $this->right);
-    }
-
-    /**
-     * @template C
-     * @param callable $f
-     * @psalm-param callable(B): C $f
-     * @return Pair
-     * @psalm-return Pair<A,C>
-     * @psalm-pure
-     */
-    public function map(callable $f): Pair
-    {
-        $fPair =
-            /**
-             * @psalm-param A $left
-             * @psalm-param B $right
-             * @psalm-return Pair<A,C>
-             */
-            fn($left, $right) => self::pair($left, $f($right));
-
-        return $this->uncurry($fPair);
-    }
-
-    /**
-     * @template C
-     * @param callable $f
      * @psalm-param callable(A): C $f
-     * @return Pair
      * @psalm-return Pair<C,B>
      * @psalm-pure
      */
@@ -106,8 +55,57 @@ final class Pair implements Functor
              * @psalm-param B $right
              * @psalm-return Pair<C,B>
              */
-            fn($left, $right) => self::pair($f($left), $right);
+            static fn ($left, $right) => self::pair($f($left), $right);
 
         return $this->uncurry($fPair);
+    }
+
+    /**
+     * @template C
+     * @psalm-param callable(B): C $f
+     * @psalm-return Pair<A,C>
+     * @psalm-pure
+     */
+    public function map(callable $f): Pair
+    {
+        $fPair =
+            /**
+             * @psalm-param A $left
+             * @psalm-param B $right
+             * @psalm-return Pair<A,C>
+             */
+            static fn ($left, $right) => self::pair($left, $f($right));
+
+        return $this->uncurry($fPair);
+    }
+
+    /**
+     * @template C
+     * @template D
+     *
+     * @param mixed $left
+     * @psalm-param C $left
+     *
+     * @param mixed $right
+     * @psalm-param D $right
+     * @psalm-return Pair<C,D>
+     * @psalm-pure
+     */
+    public static function pair($left, $right): Pair
+    {
+        return new self($left, $right);
+    }
+
+    /**
+     * @template C
+     * @psalm-param callable(A, B): C $f
+     *
+     * @return mixed
+     * @psalm-return C
+     * @psalm-pure
+     */
+    public function uncurry(callable $f)
+    {
+        return $f($this->left, $this->right);
     }
 }

@@ -20,7 +20,7 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  * @implements Monad<StateBrand, A>
  * @psalm-immutable
  */
-final class State implements Functor, Apply, Applicative, Monad
+final class State implements Applicative, Apply, Functor, Monad
 {
     /**
      * @var callable
@@ -29,7 +29,6 @@ final class State implements Functor, Apply, Applicative, Monad
     private $runState;
 
     /**
-     * @param callable $runState
      * @psalm-param callable(S): Pair<A, S> $runState
      * @psalm-pure
      */
@@ -39,70 +38,8 @@ final class State implements Functor, Apply, Applicative, Monad
     }
 
     /**
-     * @template T
      * @template B
-     * @param callable $runState
-     * @psalm-param callable(T): Pair<B, T> $runState
-     * @return State
-     * @psalm-return State<B, T>
-     * @psalm-pure
-     */
-    public static function state(callable $runState): State
-    {
-        return new self($runState);
-    }
-
-    /**
-     * @template B
-     * @param HK $hk
-     * @psalm-param HK<StateBrand, B> $hk
-     * @return State
-     * @psalm-return State<B, S>
-     * @psalm-pure
-     */
-    private static function fromBrand(HK $hk): State
-    {
-        /** @var State $hk */
-        return $hk;
-    }
-
-    /**
-     * @param mixed $state
-     * @psalm-param S $state
-     * @return Pair
-     * @psalm-return Pair<A, S>
-     * @psalm-pure
-     */
-    public function runState($state): Pair
-    {
-        return ($this->runState)($state);
-    }
-
-    /**
-     * @template B
-     * @param callable $f
-     * @psalm-param callable(A): B $f
-     * @return State
-     * @psalm-return State<B, S>
-     * @psalm-pure
-     */
-    public function map(callable $f): State
-    {
-        $newRunState =
-            /**
-             * @psalm-param S $s
-             * @psalm-return Pair<B, S>
-             */
-            fn($s) => $this->runState($s)->lmap($f);
-
-        return self::state($newRunState);
-    }
-
-    /**
-     * @template B
-     * @param Apply $f
      * @psalm-param Apply<StateBrand, callable(A): B> $f
-     * @return State
      * @psalm-return State<B, S>
      * @psalm-pure
      */
@@ -114,6 +51,8 @@ final class State implements Functor, Apply, Applicative, Monad
             /**
              * @psalm-param S $s
              * @psalm-return Pair<B, S>
+             *
+             * @param mixed $s
              */
             function ($s) use ($f) {
                 $callableAndState = $f->runState($s);
@@ -130,28 +69,7 @@ final class State implements Functor, Apply, Applicative, Monad
 
     /**
      * @template B
-     * @template T
-     * @param mixed $a
-     * @psalm-param B $a
-     * @return State
-     * @psalm-return State<B, T>
-     * @psalm-pure
-     */
-    public static function pure($a): State
-    {
-        return self::state(
-            (/**
-             * @psalm-param T $s
-             */
-            fn($s) => Pair::pair($a, $s))
-        );
-    }
-
-    /**
-     * @template B
-     * @param callable $f
      * @psalm-param callable(A): Monad<StateBrand, B> $f
-     * @return State
      * @psalm-return State<B, S>
      * @psalm-pure
      */
@@ -162,15 +80,88 @@ final class State implements Functor, Apply, Applicative, Monad
              * @psalm-param S $s
              * @psalm-return Pair<B, S>
              */
-            fn($s) => $this->runState($s)->uncurry(
+            fn ($s) => $this->runState($s)->uncurry(
                 /**
                  * @psalm-param A $a
                  * @psalm-param S $newS
                  * @psalm-return Pair<B, S>
                  */
-                fn($a, $newS) => self::fromBrand($f($a))->runState($newS)
+                static fn ($a, $newS) => self::fromBrand($f($a))->runState($newS)
             );
 
         return self::state($newRunState);
+    }
+
+    /**
+     * @template B
+     * @psalm-param callable(A): B $f
+     * @psalm-return State<B, S>
+     * @psalm-pure
+     */
+    public function map(callable $f): State
+    {
+        $newRunState =
+            /**
+             * @psalm-param S $s
+             * @psalm-return Pair<B, S>
+             */
+            fn ($s) => $this->runState($s)->lmap($f);
+
+        return self::state($newRunState);
+    }
+
+    /**
+     * @template B
+     * @template T
+     *
+     * @param mixed $a
+     * @psalm-param B $a
+     * @psalm-return State<B, T>
+     * @psalm-pure
+     */
+    public static function pure($a): State
+    {
+        return self::state(
+            (/**
+             * @psalm-param T $s
+             */
+            static fn ($s) => Pair::pair($a, $s)
+            )
+        );
+    }
+
+    /**
+     * @param mixed $state
+     * @psalm-param S $state
+     * @psalm-return Pair<A, S>
+     * @psalm-pure
+     */
+    public function runState($state): Pair
+    {
+        return ($this->runState)($state);
+    }
+
+    /**
+     * @template T
+     * @template B
+     * @psalm-param callable(T): Pair<B, T> $runState
+     * @psalm-return State<B, T>
+     * @psalm-pure
+     */
+    public static function state(callable $runState): State
+    {
+        return new self($runState);
+    }
+
+    /**
+     * @template B
+     * @psalm-param HK<StateBrand, B> $hk
+     * @psalm-return State<B, S>
+     * @psalm-pure
+     */
+    private static function fromBrand(HK $hk): State
+    {
+        /** @var State $hk */
+        return $hk;
     }
 }

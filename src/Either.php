@@ -8,21 +8,20 @@ use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\HK\HK;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template A
  * @template B
- * @implements Functor<EitherBrand, B>
- * @implements Apply<EitherBrand, B>
  * @implements Applicative<EitherBrand, B>
  * @implements Monad<EitherBrand, B>
  * @psalm-immutable
  */
-final class Either implements Functor, Apply, Applicative, Monad
+final class Either implements Applicative, Monad
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isRight;
 
     /**
@@ -38,9 +37,9 @@ final class Either implements Functor, Apply, Applicative, Monad
     private $rightValue;
 
     /**
-     * @param bool $isRight
      * @param mixed $leftValue
      * @psalm-param A|null $leftValue
+     *
      * @param mixed $rightValue
      * @psalm-param B|null $rightValue
      */
@@ -53,53 +52,70 @@ final class Either implements Functor, Apply, Applicative, Monad
 
     /**
      * @template C
-     * @template D
-     * @param mixed $value
-     * @psalm-param C $value
-     * @return Either
-     * @psalm-return Either<C, D>
+     * @psalm-param Apply<EitherBrand, callable(B): C> $f
+     * @psalm-return Either<A, C>
      * @psalm-pure
      */
-    public static function left($value): Either
+    public function apply(Apply $f): Either
     {
-        return new self(false, $value);
+        $f = self::fromBrand($f);
+
+        return $f->eval(
+            (/**
+             * @psalm-param A $a
+             * @psalm-return Either<A, C>
+             */
+            fn ($a) => self::left($a)
+            ),
+            (/**
+             * @psalm-param callable(B): C $f
+             * @psalm-return Either<A, C>
+             */
+            fn ($f) => $this->eval(
+                (/**
+                 * @psalm-param A $a
+                 * @psalm-return Either<A, C>
+                 */
+                static fn ($a) => self::left($a)
+                ),
+                (/**
+                 * @psalm-param B $b
+                 * @psalm-return Either<A, C>
+                 */
+                static fn ($b) => self::right($f($b))
+                )
+            )
+            )
+        );
     }
 
     /**
      * @template C
-     * @template D
-     * @param mixed $value
-     * @psalm-param D $value
-     * @return Either
-     * @psalm-return Either<C, D>
+     * @psalm-param callable(B): Monad<EitherBrand, C> $f
+     * @psalm-return Either<A, C>
      * @psalm-pure
      */
-    public static function right($value): Either
+    public function bind(callable $f): Either
     {
-        return new self(true, null, $value);
+        return $this->eval(
+            /**
+             * @psalm-param A $a
+             * @psalm-return Either<A, C>
+             */
+            static fn ($a) => self::left($a),
+            /**
+             * @psalm-param B $b
+             * @psalm-return Either<A, C>
+             */
+            static fn ($b) => self::fromBrand($f($b))
+        );
     }
 
     /**
      * @template C
-     * @template D
-     * @param HK $hk
-     * @psalm-param HK<EitherBrand, D> $hk
-     * @return Either
-     * @psalm-return Either<C, D>
-     * @psalm-pure
-     */
-    private static function fromBrand(HK $hk): Either
-    {
-        /** @var Either $hk */
-        return $hk;
-    }
-
-    /**
-     * @template C
-     * @param callable $ifLeft
      * @psalm-param callable(A): C $ifLeft
-     * @param callable $ifRight
      * @psalm-param callable(B): C $ifRight
+     *
      * @return mixed
      * @psalm-return C
      * @psalm-pure
@@ -118,10 +134,60 @@ final class Either implements Functor, Apply, Applicative, Monad
     }
 
     /**
+     * @psalm-pure
+     */
+    public function isLeft(): bool
+    {
+        return $this->eval(
+            /**
+             * @psalm-param A $left
+             * @psalm-return bool
+             */
+            static fn ($left) => true,
+            /**
+             * @psalm-param B $right
+             * @psalm-return bool
+             */
+            static fn ($right) => false
+        );
+    }
+
+    /**
+     * @psalm-pure
+     */
+    public function isRight(): bool
+    {
+        return $this->eval(
+            /**
+             * @psalm-param A $left
+             * @psalm-return bool
+             */
+            static fn ($left) => false,
+            /**
+             * @psalm-param A $right
+             * @psalm-return bool
+             */
+            static fn ($right) => true
+        );
+    }
+
+    /**
      * @template C
-     * @param callable $f
+     * @template D
+     *
+     * @param mixed $value
+     * @psalm-param C $value
+     * @psalm-return Either<C, D>
+     * @psalm-pure
+     */
+    public static function left($value): Either
+    {
+        return new self(false, $value);
+    }
+
+    /**
+     * @template C
      * @psalm-param callable(B): C $f
-     * @return Either
      * @psalm-return Either<A, C>
      * @psalm-pure
      */
@@ -132,58 +198,21 @@ final class Either implements Functor, Apply, Applicative, Monad
              * @psalm-param A $value
              * @psalm-return Either<A, C>
              */
-            fn($value) => self::left($value),
+            static fn ($value) => self::left($value),
             /**
              * @psalm-param B $value
              * @psalm-return Either<A, C>
              */
-            fn($value) => self::right($f($value))
-        );
-    }
-
-    /**
-     * @template C
-     * @param Apply $f
-     * @psalm-param Apply<EitherBrand, callable(B): C> $f
-     * @return Either
-     * @psalm-return Either<A, C>
-     * @psalm-pure
-     */
-    public function apply(Apply $f): Either
-    {
-        $f = self::fromBrand($f);
-
-        return $f->eval(
-            (/**
-             * @psalm-param A $a
-             * @psalm-return Either<A, C>
-             */
-            fn($a) => self::left($a)),
-            (/**
-             * @psalm-param callable(B): C $f
-             * @psalm-return Either<A, C>
-             */
-            fn($f) => $this->eval(
-                (/**
-                 * @psalm-param A $a
-                 * @psalm-return Either<A, C>
-                 */
-                fn($a) => self::left($a)),
-                (/**
-                 * @psalm-param B $b
-                 * @psalm-return Either<A, C>
-                 */
-                fn($b) => self::right($f($b)))
-            ))
+            static fn ($value) => self::right($f($value))
         );
     }
 
     /**
      * @template C
      * @template D
+     *
      * @param mixed $a
      * @psalm-param D $a
-     * @return Either
      * @psalm-return Either<C, D>
      * @psalm-pure
      */
@@ -194,65 +223,28 @@ final class Either implements Functor, Apply, Applicative, Monad
 
     /**
      * @template C
-     * @param callable $f
-     * @psalm-param callable(B): Monad<EitherBrand, C> $f
-     * @return Either
-     * @psalm-return Either<A, C>
+     * @template D
+     *
+     * @param mixed $value
+     * @psalm-param D $value
+     * @psalm-return Either<C, D>
      * @psalm-pure
      */
-    public function bind(callable $f): Either
+    public static function right($value): Either
     {
-        return $this->eval(
-            /**
-             * @psalm-param A $a
-             * @psalm-return Either<A, C>
-             */
-            fn($a) => self::left($a),
-            /**
-             * @psalm-param B $b
-             * @psalm-return Either<A, C>
-             */
-            fn($b) => self::fromBrand($f($b))
-        );
+        return new self(true, null, $value);
     }
 
     /**
-     * @return bool
+     * @template C
+     * @template D
+     * @psalm-param HK<EitherBrand, D> $hk
+     * @psalm-return Either<C, D>
      * @psalm-pure
      */
-    public function isLeft(): bool
+    private static function fromBrand(HK $hk): Either
     {
-        return $this->eval(
-            /**
-             * @psalm-param A $left
-             * @psalm-return bool
-             */
-            fn($left) => true,
-            /**
-             * @psalm-param B $right
-             * @psalm-return bool
-             */
-            fn($right) => false
-        );
-    }
-
-    /**
-     * @return bool
-     * @psalm-pure
-     */
-    public function isRight(): bool
-    {
-        return $this->eval(
-            /**
-             * @psalm-param A $left
-             * @psalm-return bool
-             */
-            fn($left) => false,
-            /**
-             * @psalm-param A $right
-             * @psalm-return bool
-             */
-            fn($right) => true
-        );
+        /** @var Either $hk */
+        return $hk;
     }
 }

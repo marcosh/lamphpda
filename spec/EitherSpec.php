@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Marcosh\LamPHPdaSpec;
+namespace Marcosh\LamPHPda\Spec;
 
 use Marcosh\LamPHPda\Either;
 
@@ -11,8 +11,8 @@ describe('Either', function () {
         $either = Either::left(42);
 
         $result = $either->eval(
-            (fn($value) => $value * 2),
-            (fn($value) => $value / 2)
+            (static fn ($value) => $value * 2),
+            (static fn ($value) => $value / 2)
         );
 
         expect($result)->toEqual(84);
@@ -22,8 +22,8 @@ describe('Either', function () {
         $either = Either::right(42);
 
         $result = $either->eval(
-            (fn($value) => $value * 2),
-            (fn($value) => $value / 2)
+            (static fn ($value) => $value * 2),
+            (static fn ($value) => $value / 2)
         );
 
         expect($result)->toEqual(21);
@@ -33,7 +33,7 @@ describe('Either', function () {
         $either = Either::left(42);
 
         $result = $either->map(
-            (fn($value) => $value * 2)
+            (static fn ($value) => $value * 2)
         );
 
         expect($result)->toEqual(Either::left(42));
@@ -43,7 +43,7 @@ describe('Either', function () {
         $either = Either::right(42);
 
         $result = $either->map(
-            (fn($value) => $value * 2)
+            (static fn ($value) => $value * 2)
         );
 
         expect($result)->toEqual(Either::right(84));
@@ -64,14 +64,14 @@ describe('Either', function () {
     });
 
     it('applies correctly a right to a left', function () {
-        $f = Either::right(fn($x) => $x * 2);
+        $f = Either::right(static fn ($x) => $x * 2);
         $either = Either::left('a');
 
         expect($either->apply($f))->toEqual($either);
     });
 
     it('applies correctly a right to a right', function () {
-        $f = Either::right(fn($x) => $x * 2);
+        $f = Either::right(static fn ($x) => $x * 2);
         $either = Either::right(42);
 
         expect($either->apply($f))->toEqual(Either::right(84));
@@ -97,28 +97,28 @@ describe('Either', function () {
 
     it('binds a callable returning a right to a left to get a left', function () {
         $either = Either::left(42);
-        $f = fn($x) => Either::right($x);
+        $f = static fn ($x) => Either::right($x);
 
         expect($either->bind($f))->toEqual(Either::left(42));
     });
 
     it('binds a callable returning a left to a left to get a left', function () {
         $either = Either::left(42);
-        $f = fn($x) => Either::left('a');
+        $f = static fn ($x) => Either::left('a');
 
         expect($either->bind($f))->toEqual(Either::left(42));
     });
 
     it('binds a callable returning a left to a right to return a left', function () {
         $either = Either::right(42);
-        $f = fn($x) => Either::left('a');
+        $f = static fn ($x) => Either::left('a');
 
         expect($either->bind($f))->toEqual(Either::left('a'));
     });
 
     it('binds a callable returning a right to a right to return a right', function () {
         $either = Either::right(42);
-        $f = fn($x) => Either::right($x * 2);
+        $f = static fn ($x) => Either::right($x * 2);
 
         expect($either->bind($f))->toEqual(Either::right(84));
     });

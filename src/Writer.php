@@ -22,7 +22,6 @@ final class Writer implements Functor
     private $runWriter;
 
     /**
-     * @param Pair $runWriter
      * @psalm-param Pair<A, W> $runWriter
      * @psalm-pure
      */
@@ -32,21 +31,6 @@ final class Writer implements Functor
     }
 
     /**
-     * @template B
-     * @template X
-     * @param Pair $runWriter
-     * @psalm-param Pair<B, X> $runWriter
-     * @return Writer
-     * @psalm-return Writer<B, X>
-     * @psalm-pure
-     */
-    public static function writer(Pair $runWriter): Writer
-    {
-        return new self($runWriter);
-    }
-
-    /**
-     * @return Pair
      * @psalm-return Pair<A, W>
      * @psalm-pure
      */
@@ -57,14 +41,24 @@ final class Writer implements Functor
 
     /**
      * @template B
-     * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return Writer
      * @psalm-return Writer<B, W>
      * @psalm-pure
      */
     public function map(callable $f): Writer
     {
         return self::writer($this->runWriter->lmap($f));
+    }
+
+    /**
+     * @template B
+     * @template X
+     * @psalm-param Pair<B, X> $runWriter
+     * @psalm-return Writer<B, X>
+     * @psalm-pure
+     */
+    public static function writer(Pair $runWriter): Writer
+    {
+        return new self($runWriter);
     }
 }

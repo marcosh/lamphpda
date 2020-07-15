@@ -15,9 +15,7 @@ interface Functor extends HK
 {
     /**
      * @template B
-     * @param callable $f
      * @psalm-param callable(A): B $f
-     * @return Functor
      * @psalm-return Functor<F, B>
      * @psalm-pure
      */

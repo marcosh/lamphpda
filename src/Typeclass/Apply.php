@@ -13,9 +13,7 @@ interface Apply extends Functor
 {
     /**
      * @template B
-     * @param Apply $f
      * @psalm-param Apply<F, callable(A): B> $f
-     * @return Apply
      * @psalm-return Apply<F, B>
      * @psalm-pure
      */

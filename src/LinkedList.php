@@ -12,6 +12,7 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
+use Marcosh\LamPHPda\Typeclass\Monoid;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
@@ -21,9 +22,10 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  * @implements Applicative<LinkedListBrand, A>
  * @implements Monad<LinkedListBrand, A>
  * @implements Semigroup<LinkedListPBrand<A>>
+ * @implements Monoid<LinkedListPBrand<A>>
  * @psalm-immutable
  */
-final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup
+final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup, Monoid
 {
     /** @var bool */
     private $isNil;
@@ -246,6 +248,16 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup
             },
             $that
         );
+    }
+
+    /**
+     * @template B
+     * @psalm-return LinkedList<B>
+     * @psalm-pure
+     */
+    public static function mempty(): LinkedList
+    {
+        return self::empty();
     }
 
     /**

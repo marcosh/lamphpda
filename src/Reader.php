@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\ReaderBrand;
-use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
@@ -54,13 +54,13 @@ final class Reader implements Functor, Apply, Applicative, Monad
 
     /**
      * @template B
-     * @param HK $hk
-     * @psalm-param HK<ReaderBrand, B> $hk
+     * @param HK1 $hk
+     * @psalm-param HK1<ReaderBrand, B> $hk
      * @return Reader
      * @psalm-return Reader<R, B>
      * @psalm-pure
      */
-    private static function fromBrand(HK $hk): Reader
+    private static function fromBrand(HK1 $hk): Reader
     {
         /** @var Reader $hk */
         return $hk;

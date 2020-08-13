@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\MaybeBrand;
-use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
@@ -68,13 +68,13 @@ final class Maybe implements Functor, Apply, Applicative, Monad
 
     /**
      * @template B
-     * @param HK $hk
-     * @psalm-param HK<MaybeBrand, B> $hk
+     * @param HK1 $hk
+     * @psalm-param HK1<MaybeBrand, B> $hk
      * @return Maybe
      * @psalm-return Maybe<B>
      * @psalm-pure
      */
-    private static function fromBrand(HK $hk): Maybe
+    private static function fromBrand(HK1 $hk): Maybe
     {
         /** @var Maybe $hk */
         return $hk;

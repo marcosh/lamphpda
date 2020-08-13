@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\EitherBrand;
-use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
@@ -82,13 +82,13 @@ final class Either implements Functor, Apply, Applicative, Monad
     /**
      * @template C
      * @template D
-     * @param HK $hk
-     * @psalm-param HK<EitherBrand, D> $hk
+     * @param HK1 $hk
+     * @psalm-param HK1<EitherBrand, D> $hk
      * @return Either
      * @psalm-return Either<C, D>
      * @psalm-pure
      */
-    private static function fromBrand(HK $hk): Either
+    private static function fromBrand(HK1 $hk): Either
     {
         /** @var Either $hk */
         return $hk;

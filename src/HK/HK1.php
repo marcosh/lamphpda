@@ -8,6 +8,6 @@ namespace Marcosh\LamPHPda\HK;
  * @template F
  * @template A
  */
-interface HK
+interface HK1
 {
 }

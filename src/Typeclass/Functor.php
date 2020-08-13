@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda\Typeclass;
 
-use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\HK\HK1;
 
 /**
  * @template F
  * @template A
- * @extends HK<F, A>
+ * @extends HK1<F, A>
  */
-interface Functor extends HK
+interface Functor extends HK1
 {
     /**
      * @template B

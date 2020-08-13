@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\LinkedListBrand;
-use Marcosh\LamPHPda\HK\HK;
+use Marcosh\LamPHPda\Brand\LinkedListPBrand;
+use Marcosh\LamPHPda\HK\HK0;
+use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
+use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
  * @template A
@@ -17,9 +20,10 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  * @implements Apply<LinkedListBrand, A>
  * @implements Applicative<LinkedListBrand, A>
  * @implements Monad<LinkedListBrand, A>
+ * @implements Semigroup<LinkedListPBrand<A>>
  * @psalm-immutable
  */
-final class LinkedList implements Functor, Apply, Applicative, Monad
+final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup
 {
     /** @var bool */
     private $isNil;
@@ -78,13 +82,27 @@ final class LinkedList implements Functor, Apply, Applicative, Monad
 
     /**
      * @template B
-     * @param HK $hk
-     * @psalm-param HK<LinkedListBrand, B> $hk
+     * @param HK1 $hk
+     * @psalm-param HK1<LinkedListBrand, B> $hk
      * @return LinkedList
      * @psalm-return LinkedList<B>
      * @psalm-pure
      */
-    private static function fromBrand(HK $hk): LinkedList
+    private static function fromBrand(HK1 $hk): LinkedList
+    {
+        /** @var LinkedList $hk */
+        return $hk;
+    }
+
+    /**
+     * @template B
+     * @param HK0 $hk
+     * @psalm-param HK0<LinkedListPBrand<B>> $hk
+     * @return LinkedList
+     * @psalm-return LinkedList<B>
+     * @psalm-pure
+     */
+    private static function fromPBrand(HK0 $hk): LinkedList
     {
         /** @var LinkedList $hk */
         return $hk;
@@ -111,28 +129,6 @@ final class LinkedList implements Functor, Apply, Applicative, Monad
          * @psalm-suppress PossiblyNullReference
          */
         return $op($this->head, $this->tail->foldr($op, $unit));
-    }
-
-    /**
-     * @param LinkedList $that
-     * @psalm-param LinkedList<A> $that
-     * @return LinkedList
-     * @psalm-return LinkedList<A>
-     * @psalm-pure
-     */
-    public function append(LinkedList $that): LinkedList
-    {
-        return $this->foldr(
-            /**
-             * @psalm-param A $a
-             * @psalm-param LinkedList<A> $b
-             * @psalm-return LinkedList<A>
-             */
-            function ($a, LinkedList $b) {
-                return self::cons($a, $b);
-            },
-            $that
-        );
     }
 
     /**
@@ -225,6 +221,30 @@ final class LinkedList implements Functor, Apply, Applicative, Monad
              */
             fn($a, $b) => self::fromBrand($f($a))->append($b),
             self::empty()
+        );
+    }
+
+    /**
+     * @param HK0 $that
+     * @psalm-param HK0<LinkedListPBrand<A>> $that
+     * @return LinkedList
+     * @psalm-return LinkedList<A>
+     * @psalm-pure
+     */
+    public function append(HK0 $that): LinkedList
+    {
+        $that = self::fromPBrand($that);
+
+        return $this->foldr(
+            /**
+             * @psalm-param A $a
+             * @psalm-param LinkedList<A> $b
+             * @psalm-return LinkedList<A>
+             */
+            function ($a, LinkedList $b) {
+                return self::cons($a, $b);
+            },
+            $that
         );
     }
 

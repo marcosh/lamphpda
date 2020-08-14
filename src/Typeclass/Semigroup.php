@@ -13,9 +13,9 @@ use Marcosh\LamPHPda\HK\HK0;
 interface Semigroup extends HK0
 {
     /**
-     * @param HK0<T> $that
-     * @return HK0<T>
+     * @param Semigroup<T> $that
+     * @return Semigroup<T>
      * @psalm-pure
      */
-    public function append(HK0 $that): HK0;
+    public function append(Semigroup $that): Semigroup;
 }

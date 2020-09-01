@@ -112,4 +112,36 @@ describe('LinkedList', function () {
 
         expect($list->bind($f))->toEqual(LinkedList::cons(44, LinkedList::cons(84, LinkedList::cons(15, LinkedList::cons(26, LinkedList::empty())))));
     });
+
+    it('appends two empty lists to get an empty list', function () {
+        expect(LinkedList::empty()->append(LinkedList::empty()))->toEqual(LinkedList::empty());
+    });
+
+    it('appends two non-empty lists to get a non-empty list', function () {
+        $list1 = LinkedList::cons(42, LinkedList::cons(13, LinkedList::empty()));
+        $list2 = LinkedList::cons(17, LinkedList::cons(79, LinkedList::empty()));
+        $result = LinkedList::cons(42, LinkedList::cons(13, LinkedList::cons(17, LinkedList::cons(79, LinkedList::empty()))));
+
+        expect($list1->append($list2))->toEqual($result);
+    });
+
+    it('respects the associativity of append', function () {
+        $list1 = LinkedList::cons(42, LinkedList::cons(13, LinkedList::empty()));
+        $list2 = LinkedList::cons(17, LinkedList::cons(79, LinkedList::empty()));
+        $list3 = LinkedList::cons(34, LinkedList::cons(52, LinkedList::empty()));
+
+        expect($list1->append($list2)->append($list3))->toEqual($list1->append($list2->append($list3)));
+    });
+
+    it('respects left-identity', function () {
+        $list = LinkedList::cons(42, LinkedList::cons(13, LinkedList::empty()));
+
+        expect(LinkedList::empty()->append($list))->toEqual($list);
+    });
+
+    it('respects right-identity', function () {
+        $list = LinkedList::cons(42, LinkedList::cons(13, LinkedList::empty()));
+
+        expect($list->append(LinkedList::empty()))->toEqual($list);
+    });
 });

@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\PairBrand;
+use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template A
  * @template B
  * @implements Functor<PairBrand, B>
+ * @implements Foldable<PairBrand, B>
  * @psalm-immutable
  */
-final class Pair implements Functor
+final class Pair implements Functor, Foldable
 {
     /**
      * @var mixed
@@ -88,6 +90,20 @@ final class Pair implements Functor
             fn($left, $right) => self::pair($left, $f($right));
 
         return $this->uncurry($fPair);
+    }
+
+    /**
+     * @template C
+     * @param callable $op
+     * @psalm-param callable(B, C): C $op
+     * @param mixed $unit
+     * @psalm-param C $unit
+     * @return mixed
+     * @psalm-return C
+     */
+    public function foldr(callable $op, $unit)
+    {
+        return $op($this->right, $unit);
     }
 
     /**

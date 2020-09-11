@@ -8,9 +8,9 @@ use Marcosh\LamPHPda\Pair;
 
 describe('Pair', function () {
     it('uncurry uses correctly both arguments', function () {
-        $maybe = Pair::pair(3, "hi!");
+        $pair = Pair::pair(3, "hi!");
 
-        $result = $maybe->uncurry(
+        $result = $pair->uncurry(
             (fn($left, $right) => str_repeat($right, $left))
         );
 
@@ -18,9 +18,9 @@ describe('Pair', function () {
     });
 
     it('maps on the second component', function () {
-        $maybe = Pair::pair(3, "hi!");
+        $pair = Pair::pair(3, "hi!");
 
-        $result = $maybe->map(
+        $result = $pair->map(
             fn($right) => str_repeat($right, 2)
         );
 
@@ -28,12 +28,19 @@ describe('Pair', function () {
     });
 
     it('lmaps on the first component', function () {
-        $maybe = Pair::pair(3, "hi!");
+        $pair = Pair::pair(3, "hi!");
 
-        $result = $maybe->lmap(
+        $result = $pair->lmap(
             fn($left) => $left * 2
         );
 
         expect($result)->toEqual(Pair::pair(6, "hi!"));
+    });
+
+    it('folds a pair using the right component and the unit', function () {
+        $pair = Pair::pair("hi!", 42);
+        $f = fn($x, $y) => $x + $y;
+
+        expect($pair->foldr($f, 37))->toBe(37 + 42);
     });
 });

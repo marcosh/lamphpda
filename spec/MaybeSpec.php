@@ -122,4 +122,18 @@ describe('Maybe', function () {
 
         expect($maybe->bind($f))->toEqual(Maybe::just(84));
     });
+
+    it('folds a nothing using the unit value', function () {
+        $maybe = Maybe::nothing();
+        $f = fn($x, $y) => $x + $y;
+
+        expect($maybe->foldr($f, 0))->toBe(0);
+    });
+
+    it('folds a just using the inner value and the unit', function () {
+        $maybe = Maybe::just(42);
+        $f = fn($x, $y) => $x + $y;
+
+        expect($maybe->foldr($f, 37))->toBe(37 + 42);
+    });
 });

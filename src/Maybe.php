@@ -8,6 +8,7 @@ use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
@@ -17,9 +18,10 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  * @implements Apply<MaybeBrand, A>
  * @implements Applicative<MaybeBrand, A>
  * @implements Monad<MaybeBrand, A>
+ * @implements Foldable<MaybeBrand, A>
  * @psalm-immutable
  */
-final class Maybe implements Functor, Apply, Applicative, Monad
+final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
 {
     /** @var bool */
     private $isJust;
@@ -181,6 +183,27 @@ final class Maybe implements Functor, Apply, Applicative, Monad
              * @psalm-return Maybe<B>
              */
             fn($value) => self::fromBrand($f($value))
+        );
+    }
+
+    /**
+     * @template B
+     * @param callable $op
+     * @psalm-param callable(A, B): B $op
+     * @param mixed $unit
+     * @psalm-param B $unit
+     * @return mixed
+     * @psalm-return B
+     */
+    public function foldr(callable $op, $unit)
+    {
+        return $this->eval(
+            $unit,
+            (/**
+             * @psalm-param A $value
+             * @psalm-return B
+             */
+            fn($value) => $op($value, $unit))
         );
     }
 

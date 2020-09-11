@@ -8,6 +8,7 @@ use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
@@ -18,9 +19,10 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  * @implements Apply<EitherBrand, B>
  * @implements Applicative<EitherBrand, B>
  * @implements Monad<EitherBrand, B>
+ * @implements Foldable<EitherBrand, B>
  * @psalm-immutable
  */
-final class Either implements Functor, Apply, Applicative, Monad
+final class Either implements Functor, Apply, Applicative, Monad, Foldable
 {
     /** @var bool */
     private $isRight;
@@ -213,6 +215,31 @@ final class Either implements Functor, Apply, Applicative, Monad
              * @psalm-return Either<A, C>
              */
             fn($b) => self::fromBrand($f($b))
+        );
+    }
+
+    /**
+     * @template C
+     * @param callable $op
+     * @psalm-param callable(B, C): C $op
+     * @param mixed $unit
+     * @psalm-param C $unit
+     * @return mixed
+     * @psalm-return C
+     */
+    public function foldr(callable $op, $unit)
+    {
+        return $this->eval(
+            (/**
+             * @psalm-param A $left
+             * @psalm-return C
+             */
+            fn($left) => $unit),
+            (/**
+             * @psalm-param B $right
+             * @psalm-return C
+             */
+            fn($right) => $op($right, $unit))
         );
     }
 

@@ -122,4 +122,18 @@ describe('Either', function () {
 
         expect($either->bind($f))->toEqual(Either::right(84));
     });
+
+    it('folds a left using the unit value', function () {
+        $either = Either::left(42);
+        $f = fn($x, $y) => $x + $y;
+
+        expect($either->foldr($f, 0))->toBe(0);
+    });
+
+    it('folds a right using the inner value and the unit', function () {
+        $either = Either::right(42);
+        $f = fn($x, $y) => $x + $y;
+
+        expect($either->foldr($f, 37))->toBe(37 + 42);
+    });
 });

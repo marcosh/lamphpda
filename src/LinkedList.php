@@ -10,6 +10,7 @@ use Marcosh\LamPHPda\HK\HK0;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Monoid;
@@ -23,9 +24,10 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  * @implements Monad<LinkedListBrand, A>
  * @implements Semigroup<LinkedListPBrand<A>>
  * @implements Monoid<LinkedListPBrand<A>>
+ * @implements Foldable<LinkedListBrand, A>
  * @psalm-immutable
  */
-final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup, Monoid
+final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup, Monoid, Foldable
 {
     /** @var bool */
     private $isNil;

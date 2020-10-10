@@ -145,6 +145,30 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
 
     /**
      * @template C
+     * @param callable $f
+     * @psalm-param callable(A): C $f
+     * @return Either
+     * @psalm-return Either<C, B>
+     * @psalm-pure
+     */
+    public function mapLeft(callable $f): Either
+    {
+        return $this->eval(
+            /**
+             * @psalm-param A $value
+             * @psalm-return Either<C, B>
+             */
+            fn($value) => self::left($f($value)),
+            /**
+             * @psalm-param B $value
+             * @psalm-return Either<C, B>
+             */
+            fn($value) => self::right($value)
+        );
+    }
+
+    /**
+     * @template C
      * @param Apply $f
      * @psalm-param Apply<EitherBrand, callable(B): C> $f
      * @return Either

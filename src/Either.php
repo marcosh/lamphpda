@@ -45,6 +45,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param A|null $leftValue
      * @param mixed $rightValue
      * @psalm-param B|null $rightValue
+     * @psalm-mutation-free
      */
     private function __construct(bool $isRight, $leftValue = null, $rightValue = null)
     {
@@ -104,7 +105,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param callable(B): C $ifRight
      * @return mixed
      * @psalm-return C
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function eval(
         callable $ifLeft,
@@ -125,7 +126,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param callable(B): C $f
      * @return Either
      * @psalm-return Either<A, C>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function map(callable $f): Either
     {
@@ -149,7 +150,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param callable(A): C $f
      * @return Either
      * @psalm-return Either<C, B>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function mapLeft(callable $f): Either
     {
@@ -224,7 +225,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param callable(B): Monad<EitherBrand, C> $f
      * @return Either
      * @psalm-return Either<A, C>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function bind(callable $f): Either
     {
@@ -250,6 +251,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param C $unit
      * @return mixed
      * @psalm-return C
+     * @psalm-mutation-free
      */
     public function foldr(callable $op, $unit)
     {
@@ -269,7 +271,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
 
     /**
      * @return bool
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function isLeft(): bool
     {
@@ -289,7 +291,7 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
 
     /**
      * @return bool
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function isRight(): bool
     {

@@ -34,7 +34,7 @@ final class Pair implements Functor, Foldable
      * @psalm-param A $left
      * @param mixed $right
      * @psalm-param B $right
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     private function __construct($left, $right)
     {
@@ -64,7 +64,7 @@ final class Pair implements Functor, Foldable
      * @psalm-param callable(A, B): C $f
      * @return mixed
      * @psalm-return C
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function uncurry(callable $f)
     {
@@ -77,7 +77,7 @@ final class Pair implements Functor, Foldable
      * @psalm-param callable(B): C $f
      * @return Pair
      * @psalm-return Pair<A,C>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function map(callable $f): Pair
     {
@@ -100,6 +100,7 @@ final class Pair implements Functor, Foldable
      * @psalm-param C $unit
      * @return mixed
      * @psalm-return C
+     * @psalm-mutation-free
      */
     public function foldr(callable $op, $unit)
     {
@@ -112,7 +113,7 @@ final class Pair implements Functor, Foldable
      * @psalm-param callable(A): C $f
      * @return Pair
      * @psalm-return Pair<C,B>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function lmap(callable $f): Pair
     {

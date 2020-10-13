@@ -36,7 +36,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
      * @param bool $isJust
      * @param mixed $value
      * @psalm-param A|null $value
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     private function __construct(bool $isJust, $value = null)
     {
@@ -90,7 +90,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param callable(A): B $ifJust
      * @return mixed
      * @psalm-return B
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function eval(
         $ifNothing,
@@ -110,7 +110,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param callable(A): B $f
      * @return Maybe
      * @psalm-return Maybe<B>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function map(callable $f): Maybe
     {
@@ -130,7 +130,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param Apply<MaybeBrand, callable(A): B> $f
      * @return Maybe
      * @psalm-return Maybe<B>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function apply(Apply $f): Maybe
     {
@@ -172,7 +172,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param callable(A): Monad<MaybeBrand, B> $f
      * @return Maybe
      * @psalm-return Maybe<B>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function bind(callable $f): Maybe
     {
@@ -194,6 +194,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
      * @psalm-param B $unit
      * @return mixed
      * @psalm-return B
+     * @psalm-mutation-free
      */
     public function foldr(callable $op, $unit)
     {
@@ -209,7 +210,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
 
     /**
      * @return bool
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function isJust(): bool
     {
@@ -225,7 +226,7 @@ final class Maybe implements Functor, Apply, Applicative, Monad, Foldable
 
     /**
      * @return bool
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function isNothing(): bool
     {

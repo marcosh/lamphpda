@@ -31,7 +31,7 @@ final class State implements Functor, Apply, Applicative, Monad
     /**
      * @param callable $runState
      * @psalm-param callable(S): Pair<A, S> $runState
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     private function __construct(callable $runState)
     {
@@ -71,7 +71,7 @@ final class State implements Functor, Apply, Applicative, Monad
      * @psalm-param S $state
      * @return Pair
      * @psalm-return Pair<A, S>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function runState($state): Pair
     {

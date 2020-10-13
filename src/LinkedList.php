@@ -50,7 +50,7 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
      * @psalm-param A|null $head
      * @param LinkedList|null $tail
      * @psalm-param LinkedList<A>|null $tail
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     private function __construct(bool $isNil, $head = null, LinkedList $tail = null)
     {
@@ -120,7 +120,7 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
      * @psalm-param B $unit
      * @return mixed
      * @psalm-return B
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function foldr(callable $op, $unit)
     {
@@ -141,7 +141,7 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
      * @psalm-param callable(A): B $f
      * @return LinkedList
      * @psalm-return LinkedList<B>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function map(callable $f): LinkedList
     {
@@ -213,7 +213,7 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
      * @psalm-param callable(A): Monad<LinkedListBrand, B> $f
      * @return LinkedList
      * @psalm-return LinkedList<B>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function bind(callable $f): LinkedList
     {
@@ -233,7 +233,7 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
      * @psalm-param HK0<LinkedListPBrand<A>> $that
      * @return LinkedList
      * @psalm-return LinkedList<A>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function append(HK0 $that): LinkedList
     {
@@ -264,7 +264,7 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
 
     /**
      * @return bool
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function isEmpty(): bool
     {

@@ -31,7 +31,7 @@ final class Reader implements Functor, Apply, Applicative, Monad
     /**
      * @param callable $runReader
      * @psalm-param callable(R): A $runReader
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     private function __construct(callable $runReader)
     {
@@ -71,7 +71,7 @@ final class Reader implements Functor, Apply, Applicative, Monad
      * @psalm-param R $state
      * @return mixed
      * @psalm-return A
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function runReader($state)
     {

@@ -24,7 +24,7 @@ final class Writer implements Functor
     /**
      * @param Pair $runWriter
      * @psalm-param Pair<A, W> $runWriter
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     private function __construct(Pair $runWriter)
     {
@@ -48,7 +48,7 @@ final class Writer implements Functor
     /**
      * @return Pair
      * @psalm-return Pair<A, W>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function exec(): Pair
     {
@@ -61,7 +61,7 @@ final class Writer implements Functor
      * @psalm-param callable(A): B $f
      * @return Writer
      * @psalm-return Writer<B, W>
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function map(callable $f): Writer
     {

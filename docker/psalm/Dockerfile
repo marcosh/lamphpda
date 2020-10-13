@@ -1,6 +1,6 @@
 # Set defaults
 
-ARG BASE_IMAGE="php:7.4-alpine"
+ARG BASE_IMAGE="php:7.4.11-alpine"
 ARG PACKAGIST_NAME="vimeo/psalm"
 ARG PHPQA_NAME="psalm"
 ARG VERSION="dev-master"
@@ -23,7 +23,7 @@ RUN apk add --no-cache tini
 
 # Install Psalm - https://github.com/vimeo/psalm
 
-COPY --from=composer:1.6.5 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
 RUN COMPOSER_ALLOW_SUPERUSER=1 \
     COMPOSER_HOME="/composer" \
     composer global require --prefer-dist --no-progress --dev ${PACKAGIST_NAME}:${VERSION}
@@ -37,6 +37,11 @@ RUN mkdir /app && ln -s /composer/vendor/ /app/vendor
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
+
+# Make cache folder writable
+
+RUN mkdir -p /.cache/psalm
+RUN chmod 777 /.cache/psalm
 
 # Add image labels
 

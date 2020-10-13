@@ -12,7 +12,7 @@
   ],
   "require": {
     "php": "^7.4",
-    "roave/you-are-using-it-wrong": "^1.4"
+    "roave/you-are-using-it-wrong": "^1.6"
   },
   "autoload": {
     "psr-4": {
@@ -23,6 +23,6 @@
     "maglnet/composer-require-checker": "^2.1",
     "kahlan/kahlan": "^4.7",
     "squizlabs/php_codesniffer": "^3.5",
-    "vimeo/psalm": "^3.12"
+    "vimeo/psalm": "^3.17"
   }
 }

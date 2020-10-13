@@ -49,6 +49,26 @@ describe('Either', function () {
         expect($result)->toEqual(Either::right(84));
     });
 
+    it('mapsLeft correctly a left', function () {
+        $either = Either::left(42);
+
+        $result = $either->mapLeft(
+            (fn($value) => $value * 2)
+        );
+
+        expect($result)->toEqual(Either::left(84));
+    });
+
+    it('mapsLeft correctly a right', function () {
+        $either = Either::right(42);
+
+        $result = $either->mapLeft(
+            (fn($value) => $value * 2)
+        );
+
+        expect($result)->toEqual(Either::right(42));
+    });
+
     it('applies correctly a left to a left', function () {
         $f = Either::left(42);
         $either = Either::left('a');

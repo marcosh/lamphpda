@@ -5,7 +5,7 @@ on:
   push:
 
 jobs:
-  coding-standards:
+  backwards-compatibility:
     name: "Check Backwards Compatibility"
 
     runs-on: ${{ matrix.operating-system }}
@@ -24,6 +24,9 @@ jobs:
       uses: "actions/checkout@v2"
       with:
         fetch-depth: 0
+
+    - name: "Fetch tags"
+      run: "git fetch --depth=1 origin +refs/tags/*:refs/tags/*"
 
     - name: "Install PHP"
       uses: "shivammathur/setup-php@v2"
@@ -55,4 +58,4 @@ jobs:
       run: "composer install --no-interaction --no-progress --no-suggest"
 
     - name: "Roave Backward Compatibility Check"
-      run: "bin/roave-backward-compatibility-check"
+      uses: "docker://nyholm/roave-bc-check-ga"

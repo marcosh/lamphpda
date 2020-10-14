@@ -53,4 +53,4 @@ jobs:
       run: "composer install --no-interaction --no-progress --no-suggest"
 
     - name: "Coding Standard"
-      run: "vendor/bin/phpcs -q --report=checkstyle --standard=PSR12 | cs2pr"
+      run: "vendor/bin/phpcs -q --report=checkstyle | cs2pr"

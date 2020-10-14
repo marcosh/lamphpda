@@ -66,14 +66,14 @@ describe('LinkedList', function () {
         expect($list->isEmpty())->toBeTruthy();
     });
 
-    it('detects non-empty lists', function() {
+    it('detects non-empty lists', function () {
         $list = LinkedList::cons(0, LinkedList::cons(1, LinkedList::cons(2, LinkedList::empty())));
 
         expect($list->isEmpty())->toBeFalsy();
     });
 
     it('applies a list of functions to a list of values', function () {
-        $functions = LinkedList::cons(fn($x) => $x *2, LinkedList::cons(fn($x) => $x / 2, LinkedList::empty()));
+        $functions = LinkedList::cons(fn($x) => $x * 2, LinkedList::cons(fn($x) => $x / 2, LinkedList::empty()));
         $values = LinkedList::cons(42, LinkedList::cons(666, LinkedList::empty()));
 
         $expected = LinkedList::cons(84, LinkedList::cons(1332, LinkedList::cons(21, LinkedList::cons(333, LinkedList::empty()))));
@@ -82,7 +82,7 @@ describe('LinkedList', function () {
     });
 
     it('creates a singleton as pure', function () {
-       expect(LinkedList::pure(42))->toEqual(LinkedList::cons(42, LinkedList::empty()));
+        expect(LinkedList::pure(42))->toEqual(LinkedList::cons(42, LinkedList::empty()));
     });
 
     it('binds a callable returning an empty list to an empty list to return an empty list', function () {

@@ -18,7 +18,7 @@ describe('Reader', function () {
     it('maps the result of a context dependent computation', function () {
         $reader = Reader::reader(fn($state) => (string) $state);
 
-        $mappedReader = $reader->map(fn($value) => $value *2);
+        $mappedReader = $reader->map(fn($value) => $value * 2);
 
         $result = $mappedReader->runReader(42);
 

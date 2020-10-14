@@ -50,10 +50,10 @@ describe('Maybe', function () {
     });
 
     it('recognises a nothing', function () {
-       $maybe = Maybe::nothing();
+        $maybe = Maybe::nothing();
 
-       expect($maybe->isNothing())->toBeTruthy();
-       expect($maybe->isJust())->toBeFalsy();
+        expect($maybe->isNothing())->toBeTruthy();
+        expect($maybe->isJust())->toBeFalsy();
     });
 
     it('recognises a just', function () {

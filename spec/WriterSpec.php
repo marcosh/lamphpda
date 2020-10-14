@@ -16,7 +16,7 @@ describe('Writer', function () {
         expect($result)->toEqual(Pair::pair(42, 'a'));
     });
 
-    it ('maps the second component', function () {
+    it('maps the second component', function () {
         $writer = Writer::writer(Pair::pair(42, 'a'));
 
         $result = $writer->map(fn($value) => $value * 2);

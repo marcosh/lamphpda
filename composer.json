@@ -11,8 +11,8 @@
     }
   ],
   "require": {
-    "php": "^7.4",
-    "roave/you-are-using-it-wrong": "^1.6"
+    "php": "^7.4|^8.0",
+    "roave/you-are-using-it-wrong": "^1.8"
   },
   "autoload": {
     "psr-4": {
@@ -20,9 +20,9 @@
     }
   },
   "require-dev": {
-    "maglnet/composer-require-checker": "^2.1",
-    "kahlan/kahlan": "^4.7",
-    "squizlabs/php_codesniffer": "^3.5",
-    "vimeo/psalm": "^3.17"
+    "maglnet/composer-require-checker": "^3.3",
+    "kahlan/kahlan": "^5.1",
+    "squizlabs/php_codesniffer": "^3.6",
+    "vimeo/psalm": "^4.10"
   }
 }

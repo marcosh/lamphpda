@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <psalm
-        totallyTyped="false"
+        resolveFromConfigFile="true"
+        errorLevel="1"
+        ensureArrayStringOffsetsExist="true"
+        ensureArrayIntOffsetsExist="true"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -11,8 +14,4 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
-
-    <issueHandlers>
-        <LessSpecificReturnType errorLevel="info" />
-    </issueHandlers>
 </psalm>

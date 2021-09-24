@@ -99,12 +99,9 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
 
     /**
      * @template C
-     * @param callable $ifLeft
-     * @psalm-param callable(A): C $ifLeft
-     * @param callable $ifRight
-     * @psalm-param callable(B): C $ifRight
-     * @return mixed
-     * @psalm-return C
+     * @param callable(A): C $ifLeft
+     * @param callable(B): C $ifRight
+     * @return C
      * @psalm-mutation-free
      */
     public function eval(
@@ -277,13 +274,13 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
     {
         return $this->eval(
             /**
-             * @psalm-param A $left
-             * @psalm-return bool
+             * @param A $left
+             * @return bool
              */
             fn($left) => true,
             /**
-             * @psalm-param B $right
-             * @psalm-return bool
+             * @param B $right
+             * @return bool
              */
             fn($right) => false
         );
@@ -297,13 +294,13 @@ final class Either implements Functor, Apply, Applicative, Monad, Foldable
     {
         return $this->eval(
             /**
-             * @psalm-param A $left
-             * @psalm-return bool
+             * @param A $left
+             * @return bool
              */
             fn($left) => false,
             /**
-             * @psalm-param A $right
-             * @psalm-return bool
+             * @param A $right
+             * @return bool
              */
             fn($right) => true
         );

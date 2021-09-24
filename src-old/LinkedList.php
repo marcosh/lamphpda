@@ -114,12 +114,9 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
 
     /**
      * @template B
-     * @param callable $op
-     * @psalm-param callable(A, B): B $op
-     * @param mixed $unit
-     * @psalm-param B $unit
-     * @return mixed
-     * @psalm-return B
+     * @param callable(A, B): B $op
+     * @param B $unit
+     * @return B
      * @psalm-mutation-free
      */
     public function foldr(callable $op, $unit)
@@ -180,9 +177,9 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
             function (callable $a, LinkedList $b) {
                 return $this->foldr(
                     /**
-                     * @psalm-param A $c
-                     * @psalm-param LinkedList<B> $d
-                     * @psalm-return LinkedList<B>
+                     * @param A $c
+                     * @param LinkedList<B> $d
+                     * @return LinkedList<B>
                      */
                     function ($c, LinkedList $d) use ($a) {
                         return self::cons($a($c), $d);
@@ -229,10 +226,8 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
     }
 
     /**
-     * @param HK0 $that
-     * @psalm-param HK0<LinkedListPBrand<A>> $that
-     * @return LinkedList
-     * @psalm-return LinkedList<A>
+     * @param HK0<LinkedListPBrand<A>> $that
+     * @return LinkedList<A>
      * @psalm-mutation-free
      */
     public function append(HK0 $that): LinkedList
@@ -241,9 +236,9 @@ final class LinkedList implements Functor, Apply, Applicative, Monad, Semigroup,
 
         return $this->foldr(
             /**
-             * @psalm-param A $a
-             * @psalm-param LinkedList<A> $b
-             * @psalm-return LinkedList<A>
+             * @param A $a
+             * @param LinkedList<A> $b
+             * @return LinkedList<A>
              */
             function ($a, LinkedList $b) {
                 return self::cons($a, $b);

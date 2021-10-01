@@ -7,25 +7,25 @@ namespace Marcosh\LamPHPda\Instances\Maybe;
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Maybe;
-use Marcosh\LamPHPda\Typeclass\Applicative;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
- * @implements Applicative<MaybeBrand>
+ * @implements Monad<MaybeBrand>
  *
  * @psalm-immutable
  */
-final class MaybeMonad implements Applicative
+final class MaybeMonad implements Monad
 {
     /**
      * @template A
      * @template B
      * @param callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
-     * @return HK1<MaybeBrand, B>
+     * @return Maybe<B>
      *
      * @psalm-pure
      */
-    public function map(callable $f, $a): HK1
+    public function map(callable $f, $a): Maybe
     {
         return Maybe::fromBrand($a)->eval(
             Maybe::nothing(),
@@ -42,11 +42,11 @@ final class MaybeMonad implements Applicative
      * @template B
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @param HK1<MaybeBrand, A> $a
-     * @return HK1<MaybeBrand, B>
+     * @return Maybe<B>
      *
      * @psalm-pure
      */
-    public function apply(HK1 $f, HK1 $a): HK1
+    public function apply(HK1 $f, HK1 $a): Maybe
     {
         $maybeF = Maybe::fromBrand($f);
         $maybeA = Maybe::fromBrand($a);
@@ -71,12 +71,33 @@ final class MaybeMonad implements Applicative
     /**
      * @template A
      * @param A $a
-     * @return HK1<MaybeBrand, A>
+     * @return Maybe<A>
      *
      * @psalm-pure
      */
-    public static function pure($a): HK1
+    public static function pure($a): Maybe
     {
         return Maybe::just($a);
+    }
+
+    /**
+     * @template A
+     * @template B
+     * @param HK1<MaybeBrand, A> $a
+     * @param callable(A): HK1<MaybeBrand, B> $f
+     * @return Maybe<B>
+     */
+    public function bind(HK1 $a, callable $f): Maybe
+    {
+        $maybeA = Maybe::fromBrand($a);
+
+        return $maybeA->eval(
+            Maybe::nothing(),
+            /**
+             * @param A $a
+             * @return Maybe<B>
+             */
+            fn($a) => Maybe::fromBrand($f($a))
+        );
     }
 }

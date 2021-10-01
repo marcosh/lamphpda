@@ -6,15 +6,18 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\Maybe\MaybeMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template A
- * @implements HK1<MaybeBrand, A>
+ * @implements DefaultMonad<MaybeBrand, A>
  */
-final class Maybe implements HK1
+final class Maybe implements DefaultMonad
 {
     /**
      * @var bool
@@ -106,46 +109,87 @@ final class Maybe implements HK1
      *
      * @psalm-mutation-free
      */
-    public function map(Functor $functor, callable $f): Maybe
+    public function imap(Functor $functor, callable $f): Maybe
     {
-        /** @var Maybe<B> $maybeB */
-        $maybeB = $functor->map($f, $this);
+        return self::fromBrand($functor->map($f, $this));
+    }
 
-        return $maybeB;
+    /**
+     * @template B
+     * @param callable(A): B $f
+     * @return Maybe<B>
+     *
+     * @psalm-mutation-free
+     */
+    public function map(callable $f): Maybe
+    {
+        return $this->imap(new MaybeMonad(), $f);
     }
 
     /**
      * @template B
      * @param Apply<MaybeBrand> $apply
-     * @param Maybe<callable(A): B> $f
+     * @param HK1<MaybeBrand, callable(A): B> $f
      * @return Maybe<B>
      *
      * @psalm-mutation-free
      */
-    public function apply(Apply $apply, Maybe $f): Maybe
+    public function iapply(Apply $apply, HK1 $f): Maybe
     {
-        /**
-         * @var Maybe<B> $maybeB
-         * @psalm-suppress MixedArgumentTypeCoercion
-         * @psalm-suppress InvalidArgument
-         * @see https://github.com/vimeo/psalm/issues/6562
-         */
-        $maybeB = $apply->apply($f, $this);
-
-        return $maybeB;
+        return self::fromBrand($apply->apply($f, $this));
     }
 
     /**
      * @template B
-     * @param Applicative $applicative
+     * @param HK1<MaybeBrand, callable(A): B> $f
+     * @return Maybe<B>
+     *
+     * @psalm-mutation-free
+     */
+    public function apply(HK1 $f): Maybe
+    {
+        return $this->iapply(new MaybeMonad(), $f);
+    }
+
+    /**
+     * @template B
+     * @param Applicative<MaybeBrand> $applicative
      * @param B $a
      * @return Maybe<B>
      */
-    public static function pure(Applicative $applicative, $a): Maybe
+    public static function ipure(Applicative $applicative, $a): Maybe
     {
-        /** @var Maybe<B> $maybeB */
-        $maybeB = $applicative->pure($a);
+        return self::fromBrand($applicative->pure($a));
+    }
 
-        return $maybeB;
+    /**
+     * @template B
+     * @param B $a
+     * @return Maybe<B>
+     */
+    public static function pure($a): Maybe
+    {
+        return self::ipure(new MaybeMonad(), $a);
+    }
+
+    /**
+     * @template B
+     * @param Monad<MaybeBrand> $monad
+     * @param callable(A): HK1<MaybeBrand, B> $f
+     * @return Maybe<B>
+     */
+    public function ibind(Monad $monad, callable $f): Maybe
+    {
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template B
+     * @param callable(A): HK1<MaybeBrand, B> $f
+     * @return Maybe<B>
+     */
+    public function bind(callable $f): Maybe
+    {
+        return $this->ibind(new MaybeMonad(), $f);
     }
 }

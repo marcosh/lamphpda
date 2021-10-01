@@ -4,20 +4,26 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\Maybe\MaybeTraversable;
 use Marcosh\LamPHPda\Instances\Maybe\MaybeMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultTraversable;
+use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
+use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
  * @template A
  * @implements DefaultMonad<MaybeBrand, A>
+ * @implements DefaultTraversable<MaybeBrand, A>
  */
-final class Maybe implements DefaultMonad
+final class Maybe implements DefaultMonad, DefaultTraversable
 {
     /**
      * @var bool
@@ -191,5 +197,56 @@ final class Maybe implements DefaultMonad
     public function bind(callable $f): Maybe
     {
         return $this->ibind(new MaybeMonad(), $f);
+    }
+
+    /**
+     * @template B
+     * @param Foldable<MaybeBrand> $foldable
+     * @param callable(A, B): B $f
+     * @param B $b
+     * @return B
+     */
+    public function ifoldr(Foldable $foldable, callable $f, $b)
+    {
+        return $foldable->foldr($f, $b, $this);
+    }
+
+    /**
+     * @template B
+     * @param callable(A, B): B $f
+     * @param B $b
+     * @return B
+     */
+    public function foldr(callable $f, $b)
+    {
+        return $this->ifoldr(new MaybeTraversable(), $f, $b);
+    }
+
+    /**
+     * @template F of Brand
+     * @template B
+     * @param Traversable<MaybeBrand> $traversable
+     * @param Applicative<F> $applicative
+     * @param callable(A): HK1<F, B> $f
+     * @return HK1<F, Maybe<B>>
+     */
+    public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
+    {
+        /**
+         * @psalm-suppress InvalidArgument
+         */
+        return $applicative->map([Maybe::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+    }
+
+    /**
+     * @template F of Brand
+     * @template B
+     * @param Applicative<F> $applicative
+     * @param callable(A): HK1<F, B> $f
+     * @return HK1<F, Maybe<B>>
+     */
+    public function traverse(Applicative $applicative, callable $f): HK1
+    {
+        return $this->itraverse(new MaybeTraversable(), $applicative, $f);
     }
 }

@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda\Instances\Maybe;
 
+use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Maybe;
-use Marcosh\LamPHPda\Typeclass\Monad;
+use Marcosh\LamPHPda\Typeclass\Applicative;
+use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
- * @implements Monad<MaybeBrand>
+ * @implements Traversable<MaybeBrand>
  *
  * @psalm-immutable
  */
-final class MaybeMonad implements Monad
+final class MaybeTraversable implements Traversable
 {
+    // TODO: remove this duplication
+
     /**
      * @template A
      * @template B
@@ -40,64 +44,52 @@ final class MaybeMonad implements Monad
     /**
      * @template A
      * @template B
-     * @param HK1<MaybeBrand, callable(A): B> $f
+     * @param callable(A, B): B $f
+     * @param B $b
      * @param HK1<MaybeBrand, A> $a
-     * @return Maybe<B>
-     *
-     * @psalm-pure
+     * @return B
      */
-    public function apply(HK1 $f, HK1 $a): Maybe
+    public function foldr(callable $f, $b, HK1 $a)
     {
-        $maybeF = Maybe::fromBrand($f);
         $maybeA = Maybe::fromBrand($a);
 
         return $maybeA->eval(
-            Maybe::nothing(),
+            $b,
             /**
-             * @param A $value
-             * @return Maybe<B>
+             * @param A $a
+             * @return B
              */
-            fn($value) => $maybeF->eval(
-                Maybe::nothing(),
-                /**
-                 * @psalm-param callable(A): B $g
-                 * @psalm-return Maybe<B>
-                 */
-                fn($g) => Maybe::just($g($value))
-            )
+            fn ($a) => $f($a, $b)
         );
     }
 
     /**
-     * @template A
-     * @param A $a
-     * @return Maybe<A>
-     *
-     * @psalm-pure
-     */
-    public function pure($a): Maybe
-    {
-        return Maybe::just($a);
-    }
-
-    /**
+     * @template F of Brand
      * @template A
      * @template B
+     * @param Applicative<F> $applicative
+     * @param callable(A): HK1<F, B> $f
      * @param HK1<MaybeBrand, A> $a
-     * @param callable(A): HK1<MaybeBrand, B> $f
-     * @return Maybe<B>
+     * @return HK1<F, Maybe<B>>
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function bind(HK1 $a, callable $f): Maybe
+    public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
     {
         $maybeA = Maybe::fromBrand($a);
 
+        /** @var HK1<F, Maybe<B>> $onNothing */
+        $onNothing = $applicative->pure(Maybe::nothing());
+
         return $maybeA->eval(
-            Maybe::nothing(),
+            $onNothing,
             /**
              * @param A $a
-             * @return Maybe<B>
+             * @return HK1<F, Maybe<B>>
+             *
+             * @psalm-suppress InvalidArgument
              */
-            fn($a) => Maybe::fromBrand($f($a))
+            fn($a) => $applicative->map([Maybe::class, 'just'], $f($a))
         );
     }
 }

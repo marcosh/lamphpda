@@ -9,19 +9,18 @@ use Marcosh\LamPHPda\HK\HK1;
 
 /**
  * @template F of Brand
+ * @extends Apply<F>
  *
  * @psalm-immutable
  */
-interface Functor
+interface Applicative extends Apply
 {
     /**
      * @template A
-     * @template B
-     * @param callable(A): B $f
-     * @param HK1<F, A> $a
-     * @return HK1<F, B>
+     * @param A $a
+     * @return HK1<F, A>
      *
      * @psalm-pure
      */
-    public function map(callable $f, HK1 $a): HK1;
+    public static function pure($a): HK1;
 }

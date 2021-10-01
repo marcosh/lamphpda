@@ -7,14 +7,14 @@ namespace Marcosh\LamPHPda\Instances\Maybe;
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Maybe;
-use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 
 /**
- * @implements Apply<MaybeBrand>
+ * @implements Applicative<MaybeBrand>
  *
  * @psalm-immutable
  */
-final class MaybeApply implements Apply
+final class MaybeMonad implements Applicative
 {
     /**
      * @template A
@@ -22,6 +22,8 @@ final class MaybeApply implements Apply
      * @param callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
      * @return HK1<MaybeBrand, B>
+     *
+     * @psalm-pure
      */
     public function map(callable $f, $a): HK1
     {
@@ -41,6 +43,8 @@ final class MaybeApply implements Apply
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @param HK1<MaybeBrand, A> $a
      * @return HK1<MaybeBrand, B>
+     *
+     * @psalm-pure
      */
     public function apply(HK1 $f, HK1 $a): HK1
     {
@@ -62,5 +66,17 @@ final class MaybeApply implements Apply
                 fn($g) => Maybe::just($g($value))
             )
         );
+    }
+
+    /**
+     * @template A
+     * @param A $a
+     * @return HK1<MaybeBrand, A>
+     *
+     * @psalm-pure
+     */
+    public static function pure($a): HK1
+    {
+        return Maybe::just($a);
     }
 }

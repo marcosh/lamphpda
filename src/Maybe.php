@@ -6,6 +6,8 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Typeclass\Applicative;
+use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
@@ -108,6 +110,41 @@ final class Maybe implements HK1
     {
         /** @var Maybe<B> $maybeB */
         $maybeB = $functor->map($f, $this);
+
+        return $maybeB;
+    }
+
+    /**
+     * @template B
+     * @param Apply<MaybeBrand> $apply
+     * @param Maybe<callable(A): B> $f
+     * @return Maybe<B>
+     *
+     * @psalm-mutation-free
+     */
+    public function apply(Apply $apply, Maybe $f): Maybe
+    {
+        /**
+         * @var Maybe<B> $maybeB
+         * @psalm-suppress MixedArgumentTypeCoercion
+         * @psalm-suppress InvalidArgument
+         * @see https://github.com/vimeo/psalm/issues/6562
+         */
+        $maybeB = $apply->apply($f, $this);
+
+        return $maybeB;
+    }
+
+    /**
+     * @template B
+     * @param Applicative $applicative
+     * @param B $a
+     * @return Maybe<B>
+     */
+    public static function pure(Applicative $applicative, $a): Maybe
+    {
+        /** @var Maybe<B> $maybeB */
+        $maybeB = $applicative->pure($a);
 
         return $maybeB;
     }

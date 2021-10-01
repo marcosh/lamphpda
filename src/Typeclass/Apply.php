@@ -21,6 +21,8 @@ interface Apply extends Functor
      * @param HK1<F, callable(A): B> $f
      * @param HK1<F, A> $a
      * @return HK1<F, B>
+     *
+     * @psalm-pure
      */
     public function apply(HK1 $f, HK1 $a): HK1;
 }

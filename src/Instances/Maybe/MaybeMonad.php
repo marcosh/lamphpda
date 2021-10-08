@@ -24,6 +24,8 @@ final class MaybeMonad implements Monad
      * @return Maybe<B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, $a): Maybe
     {
@@ -45,6 +47,8 @@ final class MaybeMonad implements Monad
      * @return Maybe<B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): Maybe
     {
@@ -74,6 +78,8 @@ final class MaybeMonad implements Monad
      * @return Maybe<A>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function pure($a): Maybe
     {
@@ -86,6 +92,10 @@ final class MaybeMonad implements Monad
      * @param HK1<MaybeBrand, A> $a
      * @param callable(A): HK1<MaybeBrand, B> $f
      * @return Maybe<B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function bind(HK1 $a, callable $f): Maybe
     {

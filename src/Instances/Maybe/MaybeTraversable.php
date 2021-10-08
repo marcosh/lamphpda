@@ -28,6 +28,8 @@ final class MaybeTraversable implements Traversable
      * @return Maybe<B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, $a): Maybe
     {
@@ -73,6 +75,7 @@ final class MaybeTraversable implements Traversable
      * @return HK1<F, Maybe<B>>
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
     {

@@ -117,6 +117,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public function imap(Functor $functor, callable $f): Maybe
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($functor->map($f, $this));
     }
 
@@ -126,6 +127,8 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @return Maybe<B>
      *
      * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f): Maybe
     {
@@ -142,6 +145,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public function iapply(Apply $apply, HK1 $f): Maybe
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($apply->apply($f, $this));
     }
 
@@ -151,6 +155,8 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @return Maybe<B>
      *
      * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f): Maybe
     {
@@ -172,6 +178,8 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @template B
      * @param B $a
      * @return Maybe<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public static function pure($a): Maybe
     {
@@ -186,6 +194,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public function ibind(Monad $monad, callable $f): Maybe
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($monad->bind($this, $f));
     }
 
@@ -193,6 +202,8 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @template B
      * @param callable(A): HK1<MaybeBrand, B> $f
      * @return Maybe<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function bind(callable $f): Maybe
     {
@@ -208,6 +219,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public function ifoldr(Foldable $foldable, callable $f, $b)
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return $foldable->foldr($f, $b, $this);
     }
 
@@ -234,6 +246,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     {
         /**
          * @psalm-suppress InvalidArgument
+         * @psalm-suppress ArgumentTypeCoercion
          */
         return $applicative->map([Maybe::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
     }
@@ -244,6 +257,8 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
      * @return HK1<F, Maybe<B>>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f): HK1
     {

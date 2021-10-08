@@ -18,8 +18,6 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class MaybeTraversable implements Traversable
 {
-    // TODO: remove this duplication
-
     /**
      * @template A
      * @template B
@@ -33,14 +31,7 @@ final class MaybeTraversable implements Traversable
      */
     public function map(callable $f, $a): Maybe
     {
-        return Maybe::fromBrand($a)->eval(
-            Maybe::nothing(),
-            /**
-             * @param A $value
-             * @return Maybe<B>
-             */
-            fn($value) => Maybe::just($f($value))
-        );
+        return (new MaybeFunctor())->map($f, $a);
     }
 
     /**
@@ -53,16 +44,7 @@ final class MaybeTraversable implements Traversable
      */
     public function foldr(callable $f, $b, HK1 $a)
     {
-        $maybeA = Maybe::fromBrand($a);
-
-        return $maybeA->eval(
-            $b,
-            /**
-             * @param A $a
-             * @return B
-             */
-            fn ($a) => $f($a, $b)
-        );
+        return (new MaybeFoldable())->foldr($f, $b, $a);
     }
 
     /**

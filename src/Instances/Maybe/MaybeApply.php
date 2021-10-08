@@ -7,14 +7,14 @@ namespace Marcosh\LamPHPda\Instances\Maybe;
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Maybe;
-use Marcosh\LamPHPda\Typeclass\Monad;
+use Marcosh\LamPHPda\Typeclass\Apply;
 
 /**
- * @implements Monad<MaybeBrand>
+ * @implements Apply<MaybeBrand>
  *
  * @psalm-immutable
  */
-final class MaybeMonad implements Monad
+final class MaybeApply implements Apply
 {
     /**
      * @template A
@@ -45,45 +45,23 @@ final class MaybeMonad implements Monad
      */
     public function apply(HK1 $f, HK1 $a): Maybe
     {
-        return (new MaybeApply())->apply($f, $a);
-    }
-
-    /**
-     * @template A
-     * @param A $a
-     * @return Maybe<A>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function pure($a): Maybe
-    {
-        return (new MaybeApplicative())->pure($a);
-    }
-
-    /**
-     * @template A
-     * @template B
-     * @param HK1<MaybeBrand, A> $a
-     * @param callable(A): HK1<MaybeBrand, B> $f
-     * @return Maybe<B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function bind(HK1 $a, callable $f): Maybe
-    {
+        $maybeF = Maybe::fromBrand($f);
         $maybeA = Maybe::fromBrand($a);
 
         return $maybeA->eval(
             Maybe::nothing(),
             /**
-             * @param A $a
+             * @param A $value
              * @return Maybe<B>
              */
-            fn($a) => Maybe::fromBrand($f($a))
+            fn($value) => $maybeF->eval(
+                Maybe::nothing(),
+                /**
+                 * @psalm-param callable(A): B $g
+                 * @psalm-return Maybe<B>
+                 */
+                fn($g) => Maybe::just($g($value))
+            )
         );
     }
 }

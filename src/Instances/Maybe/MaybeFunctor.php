@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Marcosh\LamPHPda\Instances\Maybe;
+
+use Marcosh\LamPHPda\Brand\MaybeBrand;
+use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Maybe;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
+/**
+ * @implements Functor<MaybeBrand>
+ *
+ * @psalm-immutable
+ */
+final class MaybeFunctor implements Functor
+{
+    /**
+     * @template A
+     * @template B
+     * @param callable(A): B $f
+     * @param HK1<MaybeBrand, A> $a
+     * @return Maybe<B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, $a): Maybe
+    {
+        return Maybe::fromBrand($a)->eval(
+            Maybe::nothing(),
+            /**
+             * @param A $value
+             * @return Maybe<B>
+             */
+            fn($value) => Maybe::just($f($value))
+        );
+    }
+}

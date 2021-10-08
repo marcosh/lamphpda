@@ -7,6 +7,10 @@ namespace Marcosh\LamPHPda;
 use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\Maybe\MaybeApplicative;
+use Marcosh\LamPHPda\Instances\Maybe\MaybeApply;
+use Marcosh\LamPHPda\Instances\Maybe\MaybeFoldable;
+use Marcosh\LamPHPda\Instances\Maybe\MaybeFunctor;
 use Marcosh\LamPHPda\Instances\Maybe\MaybeTraversable;
 use Marcosh\LamPHPda\Instances\Maybe\MaybeMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
@@ -132,7 +136,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public function map(callable $f): Maybe
     {
-        return $this->imap(new MaybeMonad(), $f);
+        return $this->imap(new MaybeFunctor(), $f);
     }
 
     /**
@@ -160,7 +164,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public function apply(HK1 $f): Maybe
     {
-        return $this->iapply(new MaybeMonad(), $f);
+        return $this->iapply(new MaybeApply(), $f);
     }
 
     /**
@@ -183,7 +187,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public static function pure($a): Maybe
     {
-        return self::ipure(new MaybeMonad(), $a);
+        return self::ipure(new MaybeApplicative(), $a);
     }
 
     /**
@@ -231,7 +235,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      */
     public function foldr(callable $f, $b)
     {
-        return $this->ifoldr(new MaybeTraversable(), $f, $b);
+        return $this->ifoldr(new MaybeFoldable(), $f, $b);
     }
 
     /**

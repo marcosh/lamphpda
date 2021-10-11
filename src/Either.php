@@ -9,10 +9,12 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\Either\EitherApplicative;
 use Marcosh\LamPHPda\Instances\Either\EitherApply;
 use Marcosh\LamPHPda\Instances\Either\EitherFunctor;
+use Marcosh\LamPHPda\Instances\Either\EitherMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template A
@@ -181,5 +183,26 @@ final class Either implements DefaultApply
     public static function pure($a): Either
     {
         return self::ipure(new EitherApplicative(), $a);
+    }
+
+    /**
+     * @template C
+     * @param Monad<EitherBrand> $monad
+     * @param callable(B): HK1<EitherBrand<A>, C> $f
+     * @return Either<A, C>
+     */
+    public function ibind(Monad $monad, callable $f): Either
+    {
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template C
+     * @param callable(B): HK1<EitherBrand<A>, C> $f
+     * @return Either<A, C>
+     */
+    public function bind(callable $f): Either
+    {
+        return $this->ibind(new EitherMonad(), $f);
     }
 }

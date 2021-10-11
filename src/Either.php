@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\EitherBrand;
-use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\Either\EitherApply;
 use Marcosh\LamPHPda\Instances\Either\EitherFunctor;
+use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template A
  * @template B
- * @implements HK1<EitherBrand<A>, B>
+ * @implements DefaultApply<EitherBrand<A>, B>
  */
-final class Either implements HK1
+final class Either implements DefaultApply
 {
     /** @var bool */
     private $isRight;
@@ -129,5 +131,30 @@ final class Either implements HK1
     public function map(callable $f): Either
     {
         return $this->imap(new EitherFunctor(), $f);
+    }
+
+    /**
+     * @template C
+     * @param Apply<EitherBrand<A>> $apply
+     * @param HK1<EitherBrand<A>, callable(B): C> $f
+     * @return Either<A, C>
+     *
+     * @psalm-mutation-free
+     */
+    public function iapply(Apply $apply, HK1 $f): Either
+    {
+        return self::fromBrand($apply->apply($f, $this));
+    }
+
+    /**
+     * @template C
+     * @param HK1<EitherBrand<A>, callable(B): C> $f
+     * @return Either<A, C>
+     *
+     * @psalm-mutation-free
+     */
+    public function apply(HK1 $f): Either
+    {
+        return $this->iapply(new EitherApply(), $f);
     }
 }

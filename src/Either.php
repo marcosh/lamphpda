@@ -6,8 +6,10 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\Either\EitherApplicative;
 use Marcosh\LamPHPda\Instances\Either\EitherApply;
 use Marcosh\LamPHPda\Instances\Either\EitherFunctor;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
 use Marcosh\LamPHPda\Typeclass\Functor;
@@ -156,5 +158,28 @@ final class Either implements DefaultApply
     public function apply(HK1 $f): Either
     {
         return $this->iapply(new EitherApply(), $f);
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param Applicative<EitherBrand> $applicative
+     * @param D $a
+     * @return Either<C, D>
+     */
+    public static function ipure(Applicative $applicative, $a): Either
+    {
+        return self::fromBrand($applicative->pure($a));
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param D $a
+     * @return Either<C, D>
+     */
+    public static function pure($a): Either
+    {
+        return self::ipure(new EitherApplicative(), $a);
     }
 }

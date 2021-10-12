@@ -8,11 +8,13 @@ use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\Either\EitherApplicative;
 use Marcosh\LamPHPda\Instances\Either\EitherApply;
+use Marcosh\LamPHPda\Instances\Either\EitherFoldable;
 use Marcosh\LamPHPda\Instances\Either\EitherFunctor;
 use Marcosh\LamPHPda\Instances\Either\EitherMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
+use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
@@ -204,5 +206,28 @@ final class Either implements DefaultApply
     public function bind(callable $f): Either
     {
         return $this->ibind(new EitherMonad(), $f);
+    }
+
+    /**
+     * @template C
+     * @param Foldable<EitherBrand> $foldable
+     * @param callable(B, C): C $f
+     * @param C $b
+     * @return C
+     */
+    public function ifoldr(Foldable $foldable, callable $f, $b)
+    {
+        return $foldable->foldr($f, $b, $this);
+    }
+
+    /**
+     * @template C
+     * @param callable(B, C): C $f
+     * @param C $b
+     * @return C
+     */
+    public function foldr(callable $f, $b)
+    {
+        return $this->ifoldr(new EitherFoldable(), $f, $b);
     }
 }

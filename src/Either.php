@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\Either\EitherApplicative;
@@ -11,12 +12,14 @@ use Marcosh\LamPHPda\Instances\Either\EitherApply;
 use Marcosh\LamPHPda\Instances\Either\EitherFoldable;
 use Marcosh\LamPHPda\Instances\Either\EitherFunctor;
 use Marcosh\LamPHPda\Instances\Either\EitherMonad;
+use Marcosh\LamPHPda\Instances\Either\EitherTraversable;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
+use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
  * @template A
@@ -115,7 +118,7 @@ final class Either implements DefaultApply
 
     /**
      * @template C
-     * @param Functor<EitherBrand> $functor
+     * @param Functor<EitherBrand<A>> $functor
      * @param callable(B): C $f
      * @return Either<A, C>
      *
@@ -167,7 +170,7 @@ final class Either implements DefaultApply
     /**
      * @template C
      * @template D
-     * @param Applicative<EitherBrand> $applicative
+     * @param Applicative<EitherBrand<A>> $applicative
      * @param D $a
      * @return Either<C, D>
      */
@@ -189,7 +192,7 @@ final class Either implements DefaultApply
 
     /**
      * @template C
-     * @param Monad<EitherBrand> $monad
+     * @param Monad<EitherBrand<A>> $monad
      * @param callable(B): HK1<EitherBrand<A>, C> $f
      * @return Either<A, C>
      */
@@ -210,7 +213,7 @@ final class Either implements DefaultApply
 
     /**
      * @template C
-     * @param Foldable<EitherBrand> $foldable
+     * @param Foldable<EitherBrand<A>> $foldable
      * @param callable(B, C): C $f
      * @param C $b
      * @return C
@@ -229,5 +232,36 @@ final class Either implements DefaultApply
     public function foldr(callable $f, $b)
     {
         return $this->ifoldr(new EitherFoldable(), $f, $b);
+    }
+
+    /**
+     * @template F of Brand
+     * @template C
+     * @param Traversable<EitherBrand<A>> $traversable
+     * @param Applicative<F> $applicative
+     * @param callable(B): HK1<F, C> $f
+     * @return HK1<F, Either<A, C>>
+     *
+     * @psalm-suppress InvalidReturnType
+     */
+    public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
+    {
+        /**
+         * @psalm-suppress InvalidReturnStatement
+         * @psalm-suppress InvalidArgument
+         */
+        return $applicative->map([Either::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+    }
+
+    /**
+     * @template F of Brand
+     * @template C
+     * @param Applicative<F> $applicative
+     * @param callable(B): HK1<F, C> $f
+     * @return HK1<F, Either<A, C>>
+     */
+    public function traverse(Applicative $applicative, callable $f): HK1
+    {
+        return $this->itraverse(new EitherTraversable(), $applicative, $f);
     }
 }

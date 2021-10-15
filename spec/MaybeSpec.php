@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Marcosh\LamPHPda\Instances\Maybe\MaybeMonad;
+use Marcosh\LamPHPda\Either;
+use Marcosh\LamPHPda\Instances\Either\EitherApplicative;
 use Marcosh\LamPHPda\Maybe;
 
 describe('Maybe', function () {
@@ -122,36 +123,35 @@ describe('Maybe', function () {
         expect($maybe->foldr($f, 37))->toBe(37 + 42);
     });
 
-    // TODO: rewrite these tests with an applicative different from Maybe itself
-    it('traverses a Nothing with a function returning Nothing', function () {
+    it('traverses a Nothing with a function returning Left', function () {
         $maybe = Maybe::nothing();
 
-        expect($maybe->traverse(new MaybeMonad(), function ($a) {
-            return Maybe::nothing();
-        }))->toEqual(Maybe::just(Maybe::nothing()));
+        expect($maybe->traverse(new EitherApplicative(), function ($a) {
+            return Either::left(42);
+        }))->toEqual(Either::right(Maybe::nothing()));
     });
 
-    it('traverses a Nothing with a function returning something', function () {
+    it('traverses a Nothing with a function returning Right', function () {
         $maybe = Maybe::nothing();
 
-        expect($maybe->traverse(new MaybeMonad(), function ($a) {
-            return Maybe::just($a);
-        }))->toEqual(Maybe::just(Maybe::nothing()));
+        expect($maybe->traverse(new EitherApplicative(), function ($a) {
+            return Either::right($a);
+        }))->toEqual(Either::right(Maybe::nothing()));
     });
 
-    it('traverses a Just with a function returning Nothing', function () {
+    it('traverses a Just with a function returning Left', function () {
         $maybe = Maybe::just(42);
 
-        expect($maybe->traverse(new MaybeMonad(), function ($a) {
-            return Maybe::nothing();
-        }))->toEqual(Maybe::nothing());
+        expect($maybe->traverse(new EitherApplicative(), function ($a) {
+            return Either::left(42);
+        }))->toEqual(Either::left(42));
     });
 
-    it('traverses a Just with a function returning something', function () {
+    it('traverses a Just with a function returning Right', function () {
         $maybe = Maybe::Just(42);
 
-        expect($maybe->traverse(new MaybeMonad(), function ($a) {
-            return Maybe::just($a);
-        }))->toEqual(Maybe::just(Maybe::just(42)));
+        expect($maybe->traverse(new EitherApplicative(), function ($a) {
+            return Either::right($a);
+        }))->toEqual(Either::right(Maybe::just(42)));
     });
 });

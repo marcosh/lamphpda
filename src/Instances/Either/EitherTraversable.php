@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda\Instances\Either;
 
-Use Marcosh\LamPHPda\Brand\Brand;
+use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\Either;
 use Marcosh\LamPHPda\HK\HK1;

@@ -29,6 +29,18 @@ describe('Maybe', function () {
         expect($result)->toEqual(84);
     });
 
+    it('uses the default value when extracting a Nothing', function () {
+        $maybe = Maybe::nothing();
+
+        expect($maybe->withDefault(42))->toBe(42);
+    });
+
+    it('return the inner value when extracting a Just', function () {
+        $maybe = Maybe::just(42);
+
+        expect($maybe->withDefault(37))->toBe(42);
+    });
+
     it('maps a nothing to a nothing', function () {
         $maybe = Maybe::nothing();
 

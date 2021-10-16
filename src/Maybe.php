@@ -112,6 +112,22 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     }
 
     /**
+     * @param A $a
+     * @return A
+     */
+    public function fromMaybe($a)
+    {
+        return $this->eval(
+            $a,
+            /**
+             * @param A $a
+             * @return A
+             */
+            fn($a) => $a
+        );
+    }
+
+    /**
      * @template B
      * @param Functor<MaybeBrand> $functor
      * @param callable(A): B $f

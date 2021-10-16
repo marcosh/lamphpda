@@ -1,0 +1,10 @@
+imports:
+  - { resource: vendor/drupol/php-conventions/config/php73/grumphp.yml }
+
+parameters:
+    # PHP CS Fixer
+    tasks.phpcsfixer.config: .php-cs-fixer.dist.php
+
+    skip_tasks:
+        - license
+

@@ -13,7 +13,6 @@ use Marcosh\LamPHPda\Brand\MaybeBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Maybe;
 use Marcosh\LamPHPda\Typeclass\MonadThrow;
-use Marcosh\LamPHPda\Unit;
 
 /**
  * @template E

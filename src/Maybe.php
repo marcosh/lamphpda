@@ -45,7 +45,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     /**
      * @var A|null
      */
-    private $value = null;
+    private $value;
 
     /**
      * @param bool $isJust

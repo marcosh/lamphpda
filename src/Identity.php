@@ -75,31 +75,11 @@ final class Identity implements DefaultMonad, DefaultTraversable
     }
 
     /**
-     * @template B
-     *
-     * @param callable(A): B $f
-     *
-     * @return B
-     */
-    public function eval(
-        callable $f
-    ) {
-        /** @psalm-suppress PossiblyNullArgument */
-        return $f($this->value);
-    }
-
-    /**
      * @return A
      */
     public function unwrap()
     {
-        return $this->eval(
-            /**
-             * @param A $a
-             * @return A
-             */
-            fn($a) => $a
-        );
+        return $this->value;
     }
 
     /**

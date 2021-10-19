@@ -89,8 +89,6 @@ final class Identity implements DefaultMonad, DefaultTraversable
     }
 
     /**
-     * @param A $a
-     *
      * @return A
      */
     public function unwrap()

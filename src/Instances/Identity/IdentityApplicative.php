@@ -59,6 +59,6 @@ final class IdentityApplicative implements Applicative
      */
     public function pure($a): Identity
     {
-        return Identity::of($a);
+        return Identity::wrap($a);
     }
 }

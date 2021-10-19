@@ -70,7 +70,7 @@ final class IdentityTraversable implements Traversable
              *
              * @psalm-suppress InvalidArgument
              */
-            fn($a) => $applicative->map([Identity::class, 'of'], $f($a))
+            fn($a) => $applicative->map([Identity::class, 'wrap'], $f($a))
         );
     }
 }

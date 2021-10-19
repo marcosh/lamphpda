@@ -58,7 +58,7 @@ final class IdentityApply implements Apply
                  * @psalm-param callable(A): B $g
                  * @psalm-return Identity<B>
                  */
-                fn($g) => Identity::of($g($value))
+                fn($g) => Identity::wrap($g($value))
             )
         );
     }

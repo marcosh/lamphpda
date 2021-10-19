@@ -53,7 +53,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function of($value): Identity
+    public static function wrap($value): Identity
     {
         return new self($value);
     }
@@ -89,7 +89,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      * @param A $a
      * @return A
      */
-    public function fromIdentity($a)
+    public function unwrap($a)
     {
         return $this->eval(
             /**

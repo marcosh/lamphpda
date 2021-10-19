@@ -34,7 +34,7 @@ final class IdentityFunctor implements Functor
              * @param A $value
              * @return Identity<B>
              */
-            fn($value) => Identity::of($f($value))
+            fn($value) => Identity::wrap($f($value))
         );
     }
 }

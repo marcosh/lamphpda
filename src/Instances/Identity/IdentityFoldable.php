@@ -10,30 +10,26 @@ use Marcosh\LamPHPda\Identity;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 
 /**
- * @implements Foldable<IdentityBrand>
- *
  * @psalm-immutable
+ *
+ * @implements Foldable<IdentityBrand>
  */
 final class IdentityFoldable implements Foldable
 {
     /**
      * @template A
      * @template B
+     *
      * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<IdentityBrand, A> $a
+     *
      * @return B
      */
     public function foldr(callable $f, $b, HK1 $a)
     {
         $identityA = Identity::fromBrand($a);
 
-        return $identityA->eval(
-            /**
-             * @param A $a
-             * @return B
-             */
-            fn ($a) => $f($a, $b)
-        );
+        return $f($identityA->unwrap(), $b);
     }
 }

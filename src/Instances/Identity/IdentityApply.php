@@ -10,22 +10,24 @@ use Marcosh\LamPHPda\Identity;
 use Marcosh\LamPHPda\Typeclass\Apply;
 
 /**
- * @implements Apply<IdentityBrand>
- *
  * @psalm-immutable
+ *
+ * @implements Apply<IdentityBrand>
  */
 final class IdentityApply implements Apply
 {
     /**
-     * @template A
-     * @template B
-     * @param callable(A): B $f
-     * @param HK1<IdentityBrand, A> $a
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      *
      * @psalm-pure
      *
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     *
+     * @param callable(A): B $f
+     * @param HK1<IdentityBrand, A> $a
+     *
+     * @return Identity<B>
      */
     public function map(callable $f, $a): Identity
     {
@@ -33,33 +35,23 @@ final class IdentityApply implements Apply
     }
 
     /**
-     * @template A
-     * @template B
-     * @param HK1<IdentityBrand, callable(A): B> $f
-     * @param HK1<IdentityBrand, A> $a
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      *
      * @psalm-pure
      *
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     *
+     * @param HK1<IdentityBrand, callable(A): B> $f
+     * @param HK1<IdentityBrand, A> $a
+     *
+     * @return Identity<B>
      */
     public function apply(HK1 $f, HK1 $a): Identity
     {
         $identityF = Identity::fromBrand($f);
         $identityA = Identity::fromBrand($a);
 
-        return $identityA->eval(
-            /**
-             * @param A $value
-             * @return Identity<B>
-             */
-            fn($value) => $identityF->eval(
-                /**
-                 * @psalm-param callable(A): B $g
-                 * @psalm-return Identity<B>
-                 */
-                fn($g) => Identity::wrap($g($value))
-            )
-        );
+        return Identity::wrap(($identityF->unwrap())($identityA->unwrap()));
     }
 }

@@ -23,7 +23,10 @@ use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
+ * @psalm-immutable
+ *
  * @template A
+ *
  * @implements DefaultMonad<IdentityBrand, A>
  * @implements DefaultTraversable<IdentityBrand, A>
  */

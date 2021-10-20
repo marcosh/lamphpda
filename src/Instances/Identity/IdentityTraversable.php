@@ -57,6 +57,7 @@ final class IdentityTraversable implements Traversable
      * @return HK1<F, Identity<B>>
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
+     * @psalm-suppress InvalidArgument
      * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1

@@ -10,20 +10,18 @@ use Marcosh\LamPHPda\Identity;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 
 /**
- * @psalm-immutable
- *
  * @implements Foldable<IdentityBrand>
+ *
+ * @psalm-immutable
  */
 final class IdentityFoldable implements Foldable
 {
     /**
      * @template A
      * @template B
-     *
      * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<IdentityBrand, A> $a
-     *
      * @return B
      */
     public function foldr(callable $f, $b, HK1 $a)

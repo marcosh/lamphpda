@@ -10,24 +10,22 @@ use Marcosh\LamPHPda\Identity;
 use Marcosh\LamPHPda\Typeclass\Apply;
 
 /**
- * @psalm-immutable
- *
  * @implements Apply<IdentityBrand>
+ *
+ * @psalm-immutable
  */
 final class IdentityApply implements Apply
 {
     /**
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     * @param callable(A): B $f
+     * @param HK1<IdentityBrand, A> $a
+     * @return Identity<B>
      *
      * @psalm-pure
      *
-     * @template A
-     * @template B
-     *
-     * @param callable(A): B $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, $a): Identity
     {
@@ -35,17 +33,15 @@ final class IdentityApply implements Apply
     }
 
     /**
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     * @param HK1<IdentityBrand, callable(A): B> $f
+     * @param HK1<IdentityBrand, A> $a
+     * @return Identity<B>
      *
      * @psalm-pure
      *
-     * @template A
-     * @template B
-     *
-     * @param HK1<IdentityBrand, callable(A): B> $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): Identity
     {

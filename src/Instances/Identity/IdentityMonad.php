@@ -10,24 +10,22 @@ use Marcosh\LamPHPda\Identity;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
- * @psalm-immutable
- *
  * @implements Monad<IdentityBrand>
+ *
+ * @psalm-immutable
  */
 final class IdentityMonad implements Monad
 {
     /**
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     * @param callable(A): B $f
+     * @param HK1<IdentityBrand, A> $a
+     * @return Identity<B>
      *
      * @psalm-pure
      *
-     * @template A
-     * @template B
-     *
-     * @param callable(A): B $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, $a): Identity
     {
@@ -35,17 +33,15 @@ final class IdentityMonad implements Monad
     }
 
     /**
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     * @param HK1<IdentityBrand, callable(A): B> $f
+     * @param HK1<IdentityBrand, A> $a
+     * @return Identity<B>
      *
      * @psalm-pure
      *
-     * @template A
-     * @template B
-     *
-     * @param HK1<IdentityBrand, callable(A): B> $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): Identity
     {
@@ -53,15 +49,13 @@ final class IdentityMonad implements Monad
     }
 
     /**
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @param A $a
+     * @return Identity<A>
      *
      * @psalm-pure
      *
-     * @template A
-     *
-     * @param A $a
-     *
-     * @return Identity<A>
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function pure($a): Identity
     {
@@ -69,17 +63,15 @@ final class IdentityMonad implements Monad
     }
 
     /**
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     * @param HK1<IdentityBrand, A> $a
+     * @param callable(A): HK1<IdentityBrand, B> $f
+     * @return Identity<B>
      *
      * @psalm-pure
      *
-     * @template A
-     * @template B
-     *
-     * @param HK1<IdentityBrand, A> $a
-     * @param callable(A): HK1<IdentityBrand, B> $f
-     *
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function bind(HK1 $a, callable $f): Identity
     {

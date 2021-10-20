@@ -12,24 +12,22 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
- * @psalm-immutable
- *
  * @implements Traversable<IdentityBrand>
+ *
+ * @psalm-immutable
  */
 final class IdentityTraversable implements Traversable
 {
     /**
+     * @template A
+     * @template B
+     * @param callable(A): B $f
+     * @param HK1<IdentityBrand, A> $a
+     * @return Identity<B>
+     *
      * @psalm-pure
      *
      * @psalm-suppress LessSpecificImplementedReturnType
-     *
-     * @template A
-     * @template B
-     *
-     * @param callable(A): B $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
      */
     public function map(callable $f, $a): Identity
     {
@@ -39,11 +37,9 @@ final class IdentityTraversable implements Traversable
     /**
      * @template A
      * @template B
-     *
      * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<IdentityBrand, A> $a
-     *
      * @return B
      */
     public function foldr(callable $f, $b, HK1 $a)
@@ -52,18 +48,16 @@ final class IdentityTraversable implements Traversable
     }
 
     /**
-     * @psalm-suppress ImplementedReturnTypeMismatch
-     * @psalm-suppress LessSpecificImplementedReturnType
-     *
      * @template F of Brand
      * @template A
      * @template B
-     *
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
      * @param HK1<IdentityBrand, A> $a
-     *
      * @return HK1<F, Identity<B>>
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
     {

@@ -23,12 +23,12 @@ use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
- * @psalm-immutable
- *
  * @template A
  *
  * @implements DefaultMonad<IdentityBrand, A>
  * @implements DefaultTraversable<IdentityBrand, A>
+ *
+ * @psalm-immutable
  */
 final class Identity implements DefaultMonad, DefaultTraversable
 {
@@ -46,13 +46,11 @@ final class Identity implements DefaultMonad, DefaultTraversable
     }
 
     /**
-     * @psalm-pure
-     *
      * @template B
-     *
      * @param B $value
-     *
      * @return Identity<B>
+     *
+     * @psalm-pure
      */
     public static function wrap($value): Identity
     {
@@ -60,13 +58,11 @@ final class Identity implements DefaultMonad, DefaultTraversable
     }
 
     /**
-     * @psalm-pure
-     *
      * @template B
-     *
      * @param HK1<IdentityBrand, B> $b
-     *
      * @return Identity<B>
+     *
+     * @psalm-pure
      */
     public static function fromBrand(HK1 $b): Identity
     {
@@ -84,21 +80,19 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     *
      * @param Functor<IdentityBrand> $functor
      * @param callable(A): B $f
-     *
      * @return Identity<B>
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      */
     public function imap(Functor $functor, callable $f): Identity
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($functor->map($f, $this));
     }
 
     /**
      * @template B
-     *
      * @param callable(A): B $f
      * @return Identity<B>
      *
@@ -111,21 +105,19 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     *
      * @param Apply<IdentityBrand> $apply
      * @param HK1<IdentityBrand, callable(A): B> $f
-     *
      * @return Identity<B>
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      */
     public function iapply(Apply $apply, HK1 $f): Identity
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($apply->apply($f, $this));
     }
 
     /**
      * @template B
-     *
      * @param HK1<IdentityBrand, callable(A): B> $f
      * @return Identity<B>
      *
@@ -138,10 +130,8 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     *
      * @param Applicative<IdentityBrand> $applicative
      * @param B $a
-     *
      * @return Identity<B>
      */
     public static function ipure(Applicative $applicative, $a): Identity
@@ -151,9 +141,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     *
      * @param B $a
-     *
      * @return Identity<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -165,23 +153,20 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     *
      * @param Monad<IdentityBrand> $monad
      * @param callable(A): HK1<IdentityBrand, B> $f
-     *
      * @return Identity<B>
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      */
     public function ibind(Monad $monad, callable $f): Identity
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($monad->bind($this, $f));
     }
 
     /**
      * @template B
-     *
      * @param callable(A): HK1<IdentityBrand, B> $f
-     *
      * @return Identity<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -193,25 +178,22 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     *
      * @param Foldable<IdentityBrand> $foldable
      * @param callable(A, B): B $f
      * @param B $b
-     *
      * @return B
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      */
     public function ifoldr(Foldable $foldable, callable $f, $b)
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
         return $foldable->foldr($f, $b, $this);
     }
 
     /**
      * @template B
-     *
      * @param callable(A, B): B $f
      * @param B $b
-     *
      * @return B
      */
     public function foldr(callable $f, $b)
@@ -222,29 +204,24 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @template F of Brand
      * @template B
-     *
      * @param Traversable<IdentityBrand> $traversable
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
-     *
      * @return HK1<F, Identity<B>>
+     *
+     * @psalm-suppress InvalidArgument
+     * @psalm-suppress ArgumentTypeCoercion
      */
     public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
     {
-        /**
-         * @psalm-suppress InvalidArgument
-         * @psalm-suppress ArgumentTypeCoercion
-         */
         return $applicative->map([Identity::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
     }
 
     /**
      * @template F of Brand
      * @template B
-     *
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
-     *
      * @return HK1<F, Identity<B>>
      *
      * @psalm-suppress LessSpecificImplementedReturnType

@@ -10,24 +10,22 @@ use Marcosh\LamPHPda\Identity;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
- * @psalm-immutable
- *
  * @implements Functor<IdentityBrand>
+ *
+ * @psalm-immutable
  */
 final class IdentityFunctor implements Functor
 {
     /**
-     * @psalm-suppress LessSpecificImplementedReturnType
+     * @template A
+     * @template B
+     * @param callable(A): B $f
+     * @param HK1<IdentityBrand, A> $a
+     * @return Identity<B>
      *
      * @psalm-pure
      *
-     * @template A
-     * @template B
-     *
-     * @param callable(A): B $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, $a): Identity
     {

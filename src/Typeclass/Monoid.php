@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda\Typeclass;
 
 /**
- * @psalm-immutable
- *
  * @template A
+ *
+ * @psalm-immutable
  */
 interface Monoid extends Semigroup
 {
     /**
-     * @psalm-pure
-     *
      * @return Monoid<A>
+     *
+     * @psalm-pure
      */
     public static function mempty(): Monoid;
 }

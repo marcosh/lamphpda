@@ -12,9 +12,9 @@ namespace Marcosh\LamPHPda\Typeclass;
 interface Monoid extends Semigroup
 {
     /**
-     * @return Monoid<A>
+     * @return A
      *
      * @psalm-pure
      */
-    public static function mempty(): Monoid;
+    public static function mempty();
 }

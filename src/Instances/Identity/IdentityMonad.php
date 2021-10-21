@@ -69,7 +69,7 @@ final class IdentityMonad implements Monad
      * @param callable(A): HK1<IdentityBrand, B> $f
      * @return Identity<B>
      *
-     * @psalm-pure
+     * @psalm-mutation-free
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */

@@ -56,14 +56,13 @@ final class IdentityTraversable implements Traversable
      * @param HK1<IdentityBrand, A> $a
      * @return HK1<F, Identity<B>>
      *
-     * @psalm-suppress ImplementedReturnTypeMismatch
-     * @psalm-suppress InvalidArgument
      * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
     {
         $identityA = Identity::fromBrand($a);
 
+        /** @psalm-suppress InvalidArgument */
         return $applicative->map([Identity::class, 'wrap'], $f($identityA->unwrap()));
     }
 }

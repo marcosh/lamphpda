@@ -39,7 +39,7 @@ final class IdentityApply implements Apply
      * @param HK1<IdentityBrand, A> $a
      * @return Identity<B>
      *
-     * @psalm-pure
+     * @psalm-mutation-free
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */

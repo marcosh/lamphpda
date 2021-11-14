@@ -27,7 +27,7 @@ final class IdentityFunctor implements Functor
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f, $a): Identity
+    public function map(callable $f, HK1 $a): Identity
     {
         $identityA = Identity::fromBrand($a);
 

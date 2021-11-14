@@ -27,7 +27,7 @@ final class IdentityMonad implements Monad
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f, $a): Identity
+    public function map(callable $f, HK1 $a): Identity
     {
         return (new IdentityFunctor())->map($f, $a);
     }

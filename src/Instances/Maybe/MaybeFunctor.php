@@ -27,7 +27,7 @@ final class MaybeFunctor implements Functor
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f, $a): Maybe
+    public function map(callable $f, HK1 $a): Maybe
     {
         return Maybe::fromBrand($a)->eval(
             Maybe::nothing(),

@@ -23,6 +23,6 @@
     "maglnet/composer-require-checker": "^3.3",
     "kahlan/kahlan": "^5.1",
     "squizlabs/php_codesniffer": "^3.6",
-    "vimeo/psalm": "^4.10"
+    "vimeo/psalm": "4.12"
   }
 }

@@ -25,6 +25,10 @@ final class EitherTraversable implements Traversable
      * @param callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): HK1
     {
@@ -39,6 +43,8 @@ final class EitherTraversable implements Traversable
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a
      * @return B
+     *
+     * @psalm-pure
      */
     public function foldr(callable $f, $b, HK1 $a)
     {
@@ -57,6 +63,7 @@ final class EitherTraversable implements Traversable
      * @return HK1<F, Either<C, B>>
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
     {

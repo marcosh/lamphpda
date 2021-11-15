@@ -35,6 +35,10 @@ final class ValidationApply implements Apply
      * @param callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
      * @return Either<E, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): HK1
     {
@@ -49,6 +53,8 @@ final class ValidationApply implements Apply
      * @return Either<E, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): HK1
     {

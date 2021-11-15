@@ -21,5 +21,5 @@ interface DefaultFunctor extends HK1
      *
      * @psalm-mutation-free
      */
-    public function map(callable $f);
+    public function map(callable $f): HK1;
 }

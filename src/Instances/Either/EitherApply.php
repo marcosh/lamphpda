@@ -23,6 +23,10 @@ final class EitherApply implements Apply
      * @param callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): HK1
     {
@@ -38,6 +42,8 @@ final class EitherApply implements Apply
      * @return Either<C, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): Either
     {

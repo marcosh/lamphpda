@@ -23,6 +23,10 @@ final class EitherMonad implements Monad
      * @param callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): HK1
     {
@@ -38,6 +42,8 @@ final class EitherMonad implements Monad
      * @return Either<C, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): Either
     {
@@ -51,6 +57,8 @@ final class EitherMonad implements Monad
      * @return Either<B, A>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function pure($a): Either
     {
@@ -66,6 +74,8 @@ final class EitherMonad implements Monad
      * @return Either<C, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function bind(HK1 $a, callable $f): Either
     {

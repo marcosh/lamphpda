@@ -23,6 +23,10 @@ final class EitherFunctor implements Functor
      * @param callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): HK1
     {

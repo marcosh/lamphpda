@@ -24,6 +24,8 @@ final class EitherFoldable implements Foldable
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a
      * @return B
+     *
+     * @psalm-pure
      */
     public function foldr(callable $f, $b, HK1 $a)
     {

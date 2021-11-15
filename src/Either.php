@@ -15,7 +15,8 @@ use Marcosh\LamPHPda\Instances\Either\EitherMonad;
 use Marcosh\LamPHPda\Instances\Either\EitherTraversable;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultTraversable;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
@@ -24,9 +25,10 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
 /**
  * @template A
  * @template B
- * @implements DefaultApply<EitherBrand<A>, B>
+ * @implements DefaultMonad<EitherBrand<A>, B>
+ * @implements DefaultTraversable<EitherBrand<A>, B>
  */
-final class Either implements DefaultApply
+final class Either implements DefaultMonad, DefaultTraversable
 {
     /** @var bool */
     private $isRight;
@@ -136,6 +138,8 @@ final class Either implements DefaultApply
      * @return Either<A, C>
      *
      * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f): Either
     {
@@ -152,6 +156,7 @@ final class Either implements DefaultApply
      */
     public function iapply(Apply $apply, HK1 $f): Either
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($apply->apply($f, $this));
     }
 
@@ -161,6 +166,8 @@ final class Either implements DefaultApply
      * @return Either<A, C>
      *
      * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f): Either
     {
@@ -173,6 +180,8 @@ final class Either implements DefaultApply
      * @param Applicative<EitherBrand<A>> $applicative
      * @param D $a
      * @return Either<C, D>
+     *
+     * @psalm-mutation-free
      */
     public static function ipure(Applicative $applicative, $a): Either
     {
@@ -184,6 +193,10 @@ final class Either implements DefaultApply
      * @template D
      * @param D $a
      * @return Either<C, D>
+     *
+     * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public static function pure($a): Either
     {
@@ -195,9 +208,12 @@ final class Either implements DefaultApply
      * @param Monad<EitherBrand<A>> $monad
      * @param callable(B): HK1<EitherBrand<A>, C> $f
      * @return Either<A, C>
+     *
+     * @psalm-mutation-free
      */
     public function ibind(Monad $monad, callable $f): Either
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($monad->bind($this, $f));
     }
 
@@ -205,6 +221,10 @@ final class Either implements DefaultApply
      * @template C
      * @param callable(B): HK1<EitherBrand<A>, C> $f
      * @return Either<A, C>
+     *
+     * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function bind(callable $f): Either
     {
@@ -217,9 +237,12 @@ final class Either implements DefaultApply
      * @param callable(B, C): C $f
      * @param C $b
      * @return C
+     *
+     * @psalm-mutation-free
      */
     public function ifoldr(Foldable $foldable, callable $f, $b)
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return $foldable->foldr($f, $b, $this);
     }
 
@@ -228,6 +251,8 @@ final class Either implements DefaultApply
      * @param callable(B, C): C $f
      * @param C $b
      * @return C
+     *
+     * @psalm-mutation-free
      */
     public function foldr(callable $f, $b)
     {
@@ -242,6 +267,8 @@ final class Either implements DefaultApply
      * @param callable(B): HK1<F, C> $f
      * @return HK1<F, Either<A, C>>
      *
+     * @psalm-mutation-free
+     *
      * @psalm-suppress InvalidReturnType
      */
     public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
@@ -249,6 +276,7 @@ final class Either implements DefaultApply
         /**
          * @psalm-suppress InvalidReturnStatement
          * @psalm-suppress InvalidArgument
+         * @psalm-suppress ArgumentTypeCoercion
          */
         return $applicative->map([Either::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
     }
@@ -259,6 +287,10 @@ final class Either implements DefaultApply
      * @param Applicative<F> $applicative
      * @param callable(B): HK1<F, C> $f
      * @return HK1<F, Either<A, C>>
+     *
+     * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f): HK1
     {

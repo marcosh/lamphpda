@@ -24,6 +24,10 @@ final class EitherMonadThrow implements MonadThrow
      * @param callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): HK1
     {
@@ -39,6 +43,8 @@ final class EitherMonadThrow implements MonadThrow
      * @return Either<C, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): Either
     {
@@ -52,6 +58,8 @@ final class EitherMonadThrow implements MonadThrow
      * @return Either<B, A>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function pure($a): Either
     {
@@ -67,6 +75,8 @@ final class EitherMonadThrow implements MonadThrow
      * @return Either<C, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function bind(HK1 $a, callable $f): Either
     {
@@ -79,6 +89,8 @@ final class EitherMonadThrow implements MonadThrow
      * @return Either<E, A>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function throwError($e): Either
     {

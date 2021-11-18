@@ -33,14 +33,10 @@ final class Either implements DefaultMonad, DefaultTraversable
     /** @var bool */
     private $isRight;
 
-    /**
-     * @var A|null
-     */
+    /** @var A|null */
     private $leftValue;
 
-    /**
-     * @var B|null
-     */
+    /** @var B|null */
     private $rightValue;
 
     /**

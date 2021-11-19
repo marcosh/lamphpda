@@ -16,5 +16,5 @@ interface Monoid extends Semigroup
      *
      * @psalm-pure
      */
-    public static function mempty();
+    public function mempty();
 }

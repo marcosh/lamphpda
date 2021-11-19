@@ -230,7 +230,7 @@ final class Either implements DefaultMonad, DefaultTraversable
     /**
      * @template C
      * @param Foldable<EitherBrand<A>> $foldable
-     * @param callable(B, C): C $f
+     * @param pure-callable(B, C): C $f
      * @param C $b
      * @return C
      *
@@ -244,7 +244,7 @@ final class Either implements DefaultMonad, DefaultTraversable
 
     /**
      * @template C
-     * @param callable(B, C): C $f
+     * @param pure-callable(B, C): C $f
      * @param C $b
      * @return C
      *

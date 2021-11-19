@@ -19,7 +19,7 @@ final class IdentityFoldable implements Foldable
     /**
      * @template A
      * @template B
-     * @param callable(A, B): B $f
+     * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<IdentityBrand, A> $a
      * @return B

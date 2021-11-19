@@ -17,7 +17,7 @@ interface Foldable
     /**
      * @template A
      * @template B
-     * @param callable(A, B): B $f
+     * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<T, A> $a
      * @return B

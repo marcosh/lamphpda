@@ -179,7 +179,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @template B
      * @param Foldable<IdentityBrand> $foldable
-     * @param callable(A, B): B $f
+     * @param pure-callable(A, B): B $f
      * @param B $b
      * @return B
      *
@@ -192,7 +192,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     * @param callable(A, B): B $f
+     * @param pure-callable(A, B): B $f
      * @param B $b
      * @return B
      */

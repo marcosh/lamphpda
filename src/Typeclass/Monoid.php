@@ -7,6 +7,8 @@ namespace Marcosh\LamPHPda\Typeclass;
 /**
  * @template A
  *
+ * @extends Semigroup<A>
+ *
  * @psalm-immutable
  */
 interface Monoid extends Semigroup

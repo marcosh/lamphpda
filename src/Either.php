@@ -89,7 +89,7 @@ final class Either implements DefaultMonad, DefaultTraversable
      */
     public static function fromBrand(HK1 $hk): Either
     {
-        /** @var Either $hk */
+        /** @var Either<C, D> $hk */
         return $hk;
     }
 

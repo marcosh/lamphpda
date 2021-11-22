@@ -6,15 +6,19 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\EitherBrand;
+use Marcosh\LamPHPda\Brand\EitherBrand2;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\HK\HK2;
 use Marcosh\LamPHPda\Instances\Either\EitherApplicative;
 use Marcosh\LamPHPda\Instances\Either\EitherApply;
+use Marcosh\LamPHPda\Instances\Either\EitherBifunctor;
 use Marcosh\LamPHPda\Instances\Either\EitherFoldable;
 use Marcosh\LamPHPda\Instances\Either\EitherFunctor;
 use Marcosh\LamPHPda\Instances\Either\EitherMonad;
 use Marcosh\LamPHPda\Instances\Either\EitherTraversable;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\Bifunctor;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultTraversable;
 use Marcosh\LamPHPda\Typeclass\Foldable;
@@ -27,8 +31,9 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  * @template B
  * @implements DefaultMonad<EitherBrand<A>, B>
  * @implements DefaultTraversable<EitherBrand<A>, B>
+ * @implements HK2<EitherBrand2, A, B>
  */
-final class Either implements DefaultMonad, DefaultTraversable
+final class Either implements DefaultMonad, DefaultTraversable, HK2
 {
     /** @var bool */
     private $isRight;
@@ -89,7 +94,21 @@ final class Either implements DefaultMonad, DefaultTraversable
      */
     public static function fromBrand(HK1 $hk): Either
     {
-        /** @var Either<C, D> $hk */
+        /** @var Either<C, D> */
+        return $hk;
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param HK2<EitherBrand2, C, D> $hk
+     * @return Either<C, D>
+     *
+     * @psalm-pure
+     */
+    public static function fromBrand2(HK2 $hk): Either
+    {
+        /** @var Either<C, D> */
         return $hk;
     }
 
@@ -140,6 +159,54 @@ final class Either implements DefaultMonad, DefaultTraversable
     public function map(callable $f): Either
     {
         return $this->imap(new EitherFunctor(), $f);
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param Bifunctor<EitherBrand2> $bifunctor
+     * @param callable(A): C $f
+     * @param callable(B): D $g
+     * @return Either<C, D>
+     *
+     * @psalm-mutation-free
+     */
+    public function ibiMap(Bifunctor $bifunctor, callable $f, callable $g): Either
+    {
+        return self::fromBrand2($bifunctor->biMap($f, $g, $this));
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param callable(A): C $f
+     * @param callable(B): D $g
+     * @return Either<C, D>
+     *
+     * @psalm-mutation-free
+     */
+    public function biMap(callable $f, callable $g): Either
+    {
+        return $this->ibiMap(new EitherBifunctor(), $f, $g);
+    }
+
+    /**
+     * @template C
+     * @param callable(A): C $f
+     * @return Either<C, B>
+     *
+     * @psalm-mutation-free
+     */
+    public function leftMap(callable $f): Either
+    {
+        return $this->biMap(
+            $f,
+            /**
+             * @param B $b
+             * @return B
+             */
+            fn($b) => $b
+        );
     }
 
     /**

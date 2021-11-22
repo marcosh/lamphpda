@@ -15,8 +15,12 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class ExtraApply
 {
+    /** @var Apply<F> */
     private Apply $apply;
 
+    /**
+     * @param Apply<F> $apply
+     */
     public function __construct(Apply $apply)
     {
         $this->apply = $apply;

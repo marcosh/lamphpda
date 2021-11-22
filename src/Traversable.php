@@ -36,6 +36,8 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
      * @template B
      * @param PhpTraversable<B> $traversable
      * @return Traversable<B>
+     *
+     * @psalm-pure
      */
     public static function fromPhpTraversable(PhpTraversable $traversable): self
     {
@@ -46,9 +48,12 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
      * @template B
      * @param array<B> $array
      * @return Traversable<B>
+     *
+     * @psalm-pure
      */
     public static function fromArray(array $array): self
     {
+        /** @psalm-suppress ImpureMethodCall */
         return new self(new ArrayIterator($array));
     }
 

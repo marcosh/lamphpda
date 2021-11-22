@@ -28,7 +28,7 @@ final class EitherFunctor implements Functor
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f, HK1 $a): HK1
+    public function map(callable $f, HK1 $a): Either
     {
         return Either::fromBrand($a)->eval(
             /**

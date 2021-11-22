@@ -197,7 +197,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2
      *
      * @psalm-mutation-free
      */
-    public function leftMap(callable $f): Either
+    public function mapLeft(callable $f): Either
     {
         return $this->biMap(
             $f,

@@ -10,6 +10,7 @@ use Marcosh\LamPHPda\HK\HK1;
 /**
  * @template F of Brand
  * @template A
+ *
  * @extends HK1<F, A>
  */
 interface DefaultFunctor extends HK1

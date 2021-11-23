@@ -21,7 +21,7 @@ final class ExtraProfunctor
     /**
      * @param Profunctor<F> $profunctor
      */
-    private function __construct(Profunctor $profunctor)
+    public function __construct(Profunctor $profunctor)
     {
         $this->profunctor = $profunctor;
     }

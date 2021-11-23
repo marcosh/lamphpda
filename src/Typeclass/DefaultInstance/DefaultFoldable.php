@@ -10,6 +10,7 @@ use Marcosh\LamPHPda\HK\HK1;
 /**
  * @template T of Brand
  * @template A
+ *
  * @extends HK1<T, A>
  */
 interface DefaultFoldable extends HK1

@@ -24,6 +24,7 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
  * @template A
+ *
  * @implements DefaultMonad<MaybeBrand, A>
  * @implements DefaultTraversable<MaybeBrand, A>
  */

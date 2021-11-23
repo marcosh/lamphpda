@@ -12,6 +12,7 @@ use Marcosh\LamPHPda\Unit;
 
 /**
  * @template E
+ *
  * @implements MonadThrow<MaybeBrand, E>
  *
  * @psalm-immutable

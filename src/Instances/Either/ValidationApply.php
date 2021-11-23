@@ -12,6 +12,7 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
  * @template E
+ *
  * @implements Apply<EitherBrand>
  *
  * @psalm-immutable

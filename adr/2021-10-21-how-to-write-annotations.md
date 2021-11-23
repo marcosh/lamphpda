@@ -12,6 +12,7 @@ Class level annotations should be written as
 ```php
 /**
  * @template A of B
+ *
  * @implements
  *
  * @psalm-immutable

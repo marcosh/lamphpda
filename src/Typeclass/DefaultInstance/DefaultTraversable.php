@@ -11,6 +11,7 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
 /**
  * @template T of Brand
  * @template A
+ *
  * @extends DefaultFunctor<T, A>
  * @extends DefaultFoldable<T, A>
  */

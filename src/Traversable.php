@@ -15,6 +15,7 @@ use Traversable as PhpTraversable;
 
 /**
  * @template A
+ *
  * @implements DefaultFoldable<TraversableBrand, A>
  *
  * @psalm-immutable

@@ -9,6 +9,7 @@ use Marcosh\LamPHPda\HK\HK1;
 
 /**
  * @template F of Brand
+ *
  * @extends Applicative<F>
  *
  * @psalm-immutable

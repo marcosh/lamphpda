@@ -9,6 +9,7 @@ use Marcosh\LamPHPda\HK\HK1;
 
 /**
  * @template T of Brand
+ *
  * @extends Functor<T>
  * @extends Foldable<T>
  *

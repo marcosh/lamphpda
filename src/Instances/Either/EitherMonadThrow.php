@@ -11,6 +11,7 @@ use Marcosh\LamPHPda\Typeclass\MonadThrow;
 
 /**
  * @template E
+ *
  * @implements MonadThrow<EitherBrand, E>
  *
  * @psalm-immutable

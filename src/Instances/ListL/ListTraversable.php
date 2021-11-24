@@ -75,7 +75,7 @@ final class ListTraversable implements Traversable
                  * @param HK1<ListBrand, B> $t
                  * @return HK1<ListBrand, B>
                  */
-                fn($h, $t) => ListL::fromBrand($t)->prepend($h),
+                fn($h, $t) => ListL::fromBrand($t)->append($h),
                 $f($c),
                 $d
             ),

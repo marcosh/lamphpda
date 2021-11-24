@@ -19,7 +19,7 @@ final class IdentityFunctor implements Functor
     /**
      * @template A
      * @template B
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @param HK1<IdentityBrand, A> $a
      * @return Identity<B>
      *

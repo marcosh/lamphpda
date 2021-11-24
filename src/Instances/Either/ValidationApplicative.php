@@ -33,7 +33,7 @@ final class ValidationApplicative implements Applicative
     /**
      * @template A
      * @template B
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
      * @return Either<E, B>
      *

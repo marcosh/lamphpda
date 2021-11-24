@@ -20,7 +20,7 @@ final class EitherApplicative implements Applicative
      * @template A
      * @template B
      * @template C
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
      *

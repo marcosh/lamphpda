@@ -7,6 +7,7 @@ namespace Marcosh\LamPHPda\Instances\ListL;
 use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\ListBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\ListL;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Extra\ExtraApply;
 use Marcosh\LamPHPda\Typeclass\Traversable;
@@ -38,11 +39,11 @@ final class ListTraversable implements Traversable
      * @template B
      * @param pure-callable(A): B $f
      * @param HK1<ListBrand, A> $a
-     * @return HK1<ListBrand, B>
+     * @return ListL<B>
      *
      * @psalm-pure
      */
-    public function map(callable $f, HK1 $a): HK1
+    public function map(callable $f, HK1 $a): ListL
     {
         return (new ListFunctor())->map($f, $a);
     }
@@ -59,7 +60,7 @@ final class ListTraversable implements Traversable
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
     {
         /** @var HK1<F, HK1<ListBrand, B>> $initial */
-        $initial = $applicative->pure(ListBrand::fromList([]));
+        $initial = $applicative->pure(new ListL([]));
 
         /** @var HK1<F, HK1<ListBrand, B>> */
         return $this->foldr(
@@ -72,8 +73,9 @@ final class ListTraversable implements Traversable
                 /**
                  * @param B $h
                  * @param HK1<ListBrand, B> $t
+                 * @return HK1<ListBrand, B>
                  */
-                fn($h, $t) => ListBrand::fromList(array_merge([$h], ListBrand::toList($t))),
+                fn($h, $t) => ListL::fromBrand($t)->prepend($h),
                 $f($c),
                 $d
             ),

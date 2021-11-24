@@ -6,6 +6,7 @@ namespace Marcosh\LamPHPda\Instances\ListL;
 
 use Marcosh\LamPHPda\Brand\ListBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\ListL;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 
 /**
@@ -27,8 +28,9 @@ final class ListFoldable implements Foldable
      */
     public function foldr(callable $f, $b, HK1 $a)
     {
-        $aList = ListBrand::toList($a);
+        $aList = ListL::fromBrand($a);
 
+        /** @psalm-suppress ImpureMethodCall */
         foreach ($aList as $aElement) {
             $b = $f($aElement, $b);
         }

@@ -6,6 +6,7 @@ namespace Marcosh\LamPHPda\Instances\ListL;
 
 use Marcosh\LamPHPda\Brand\ListBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\ListL;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
@@ -20,14 +21,21 @@ final class ListFunctor implements Functor
      * @template B
      * @param pure-callable(A): B $f
      * @param HK1<ListBrand, A> $a
-     * @return HK1<ListBrand, B>
+     * @return ListL<B>
      *
      * @psalm-pure
      */
     public function map(callable $f, HK1 $a): HK1
     {
-        $aList = ListBrand::toList($a);
+        $aList = ListL::fromBrand($a);
 
-        return ListBrand::fromList(array_map($f, $aList));
+        $bList = [];
+
+        /** @psalm-suppress ImpureMethodCall */
+        foreach ($aList as $aElement) {
+            $bList[] = $f($aElement);
+        }
+
+        return new ListL($bList);
     }
 }

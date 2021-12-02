@@ -29,6 +29,6 @@ final class ConcatenationMonoid implements Monoid
      */
     public function append($a, $b)
     {
-        return array_merge($a, $b);
+        return array_merge($b, $a);
     }
 }

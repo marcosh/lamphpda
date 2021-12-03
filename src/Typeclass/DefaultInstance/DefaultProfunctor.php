@@ -10,9 +10,11 @@ use Marcosh\LamPHPda\HK\HK2;
 /**
  * @template F of Brand
  * @template A
- * @template B
+ * @template-covariant B
  *
  * @extends HK2<F, A, B>
+ *
+ * @psalm-immutable
  */
 interface DefaultProfunctor extends HK2
 {

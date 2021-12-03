@@ -8,6 +8,8 @@ use Marcosh\LamPHPda\Either;
 
 /**
  * @implements Brand<Either>
+ *
+ * @psalm-immutable
  */
 final class EitherBrand2 implements Brand
 {

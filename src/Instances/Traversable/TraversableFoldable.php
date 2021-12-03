@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda\Instances\Traversable;
 
-use Marcosh\LamPHPda\Traversable;
 use Marcosh\LamPHPda\Brand\TraversableBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Traversable;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 
 /**

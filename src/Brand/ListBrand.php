@@ -8,6 +8,8 @@ use Marcosh\LamPHPda\ListL;
 
 /**
  * @implements Brand<ListL>
+ *
+ * @psalm-immutable
  */
 final class ListBrand implements Brand
 {

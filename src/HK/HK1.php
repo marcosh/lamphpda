@@ -8,7 +8,9 @@ use Marcosh\LamPHPda\Brand\Brand;
 
 /**
  * @template F of Brand
- * @template A
+ * @template-covariant A
+ *
+ * @psalm-immutable
  */
 interface HK1
 {

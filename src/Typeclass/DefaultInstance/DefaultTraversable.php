@@ -10,10 +10,12 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
 
 /**
  * @template T of Brand
- * @template A
+ * @template-covariant A
  *
  * @extends DefaultFunctor<T, A>
  * @extends DefaultFoldable<T, A>
+ *
+ * @psalm-immutable
  */
 interface DefaultTraversable extends DefaultFunctor, DefaultFoldable
 {

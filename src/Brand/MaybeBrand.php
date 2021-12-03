@@ -8,6 +8,8 @@ use Marcosh\LamPHPda\Maybe;
 
 /**
  * @implements Brand<Maybe>
+ *
+ * @psalm-immutable
  */
 final class MaybeBrand implements Brand
 {

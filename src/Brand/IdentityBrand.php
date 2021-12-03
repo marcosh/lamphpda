@@ -8,6 +8,8 @@ use Marcosh\LamPHPda\Identity;
 
 /**
  * @implements Brand<Identity>
+ *
+ * @psalm-immutable
  */
 final class IdentityBrand implements Brand
 {

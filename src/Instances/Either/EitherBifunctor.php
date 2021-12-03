@@ -6,7 +6,7 @@ namespace Marcosh\LamPHPda\Instances\Either;
 
 use Marcosh\LamPHPda\Brand\EitherBrand2;
 use Marcosh\LamPHPda\Either;
-use Marcosh\LamPHPda\HK\HK2;
+use Marcosh\LamPHPda\HK\HK2Covariant;
 use Marcosh\LamPHPda\Typeclass\Bifunctor;
 
 /**
@@ -23,10 +23,10 @@ final class EitherBifunctor implements Bifunctor
      * @template D
      * @param callable(A): C $f
      * @param callable(B): D $g
-     * @param HK2<EitherBrand2, A, B> $a
+     * @param HK2Covariant<EitherBrand2, A, B> $a
      * @return Either<C, D>
      */
-    public function biMap(callable $f, callable $g, HK2 $a): Either
+    public function biMap(callable $f, callable $g, HK2Covariant $a): Either
     {
         return Either::fromBrand2($a)->eval(
             /**

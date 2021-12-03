@@ -8,11 +8,11 @@ use Marcosh\LamPHPda\Brand\Brand;
 
 /**
  * @template F of Brand
- * @template A
+ * @template-covariant A
  * @template-covariant B
  *
  * @psalm-immutable
  */
-interface HK2
+interface HK2Covariant
 {
 }

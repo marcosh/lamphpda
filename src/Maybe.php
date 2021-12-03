@@ -11,8 +11,8 @@ use Marcosh\LamPHPda\Instances\Maybe\MaybeApplicative;
 use Marcosh\LamPHPda\Instances\Maybe\MaybeApply;
 use Marcosh\LamPHPda\Instances\Maybe\MaybeFoldable;
 use Marcosh\LamPHPda\Instances\Maybe\MaybeFunctor;
-use Marcosh\LamPHPda\Instances\Maybe\MaybeTraversable;
 use Marcosh\LamPHPda\Instances\Maybe\MaybeMonad;
+use Marcosh\LamPHPda\Instances\Maybe\MaybeTraversable;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
@@ -23,32 +23,28 @@ use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
- * @template A
+ * @template-covariant A
  *
  * @implements DefaultMonad<MaybeBrand, A>
  * @implements DefaultTraversable<MaybeBrand, A>
+ *
+ * @psalm-immutable
  */
 final class Maybe implements DefaultMonad, DefaultTraversable
 {
     /**
      * @var bool
-     *
-     * @psalm-readonly
      */
     private $isJust;
 
     /**
      * @var A|null
-     *
-     * @psalm-readonly
      */
     private $value = null;
 
     /**
      * @param bool $isJust
      * @param A|null $value
-     *
-     * @psalm-mutation-free
      */
     private function __construct(bool $isJust, $value = null)
     {
@@ -97,8 +93,6 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param B $ifNothing
      * @param callable(A): B $ifJust
      * @return B
-     *
-     * @psalm-mutation-free
      */
     public function eval(
         $ifNothing,
@@ -133,8 +127,6 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param Functor<MaybeBrand> $functor
      * @param callable(A): B $f
      * @return Maybe<B>
-     *
-     * @psalm-mutation-free
      */
     public function imap(Functor $functor, callable $f): Maybe
     {
@@ -146,8 +138,6 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @template B
      * @param callable(A): B $f
      * @return Maybe<B>
-     *
-     * @psalm-mutation-free
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
@@ -161,8 +151,6 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param Apply<MaybeBrand> $apply
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @return Maybe<B>
-     *
-     * @psalm-mutation-free
      */
     public function iapply(Apply $apply, HK1 $f): Maybe
     {
@@ -174,8 +162,6 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @template B
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @return Maybe<B>
-     *
-     * @psalm-mutation-free
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */

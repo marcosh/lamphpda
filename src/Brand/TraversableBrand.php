@@ -8,6 +8,8 @@ use Marcosh\LamPHPda\Traversable;
 
 /**
  * @implements Brand<Traversable>
+ *
+ * @psalm-immutable
  */
 final class TraversableBrand implements Brand
 {

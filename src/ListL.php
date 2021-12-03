@@ -13,7 +13,7 @@ use Marcosh\LamPHPda\HK\HK1;
 /**
  * a type wrapper around the psalm list type
  *
- * @template A
+ * @template-covariant A
  *
  * @implements HK1<ListBrand, A>
  *

@@ -9,9 +9,11 @@ use Marcosh\LamPHPda\HK\HK1;
 
 /**
  * @template T of Brand
- * @template A
+ * @template-covariant A
  *
  * @extends HK1<T, A>
+ *
+ * @psalm-immutable
  */
 interface DefaultFoldable extends HK1
 {

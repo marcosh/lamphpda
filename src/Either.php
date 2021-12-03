@@ -8,7 +8,7 @@ use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\Brand\EitherBrand2;
 use Marcosh\LamPHPda\HK\HK1;
-use Marcosh\LamPHPda\HK\HK2;
+use Marcosh\LamPHPda\HK\HK2Covariant;
 use Marcosh\LamPHPda\Instances\Either\EitherApplicative;
 use Marcosh\LamPHPda\Instances\Either\EitherApply;
 use Marcosh\LamPHPda\Instances\Either\EitherBifunctor;
@@ -27,14 +27,16 @@ use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
- * @template A
- * @template B
+ * @template-covariant A
+ * @template-covariant B
  *
  * @implements DefaultMonad<EitherBrand<A>, B>
  * @implements DefaultTraversable<EitherBrand<A>, B>
- * @implements HK2<EitherBrand2, A, B>
+ * @implements HK2Covariant<EitherBrand2, A, B>
+ *
+ * @psalm-immutable
  */
-final class Either implements DefaultMonad, DefaultTraversable, HK2
+final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 {
     /** @var bool */
     private $isRight;
@@ -102,12 +104,12 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2
     /**
      * @template C
      * @template D
-     * @param HK2<EitherBrand2, C, D> $hk
+     * @param HK2Covariant<EitherBrand2, C, D> $hk
      * @return Either<C, D>
      *
      * @psalm-pure
      */
-    public static function fromBrand2(HK2 $hk): Either
+    public static function fromBrand2(HK2Covariant $hk): Either
     {
         /** @var Either<C, D> */
         return $hk;

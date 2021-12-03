@@ -14,7 +14,7 @@ use Marcosh\LamPHPda\Typeclass\Foldable;
 use Traversable as PhpTraversable;
 
 /**
- * @template A
+ * @template-covariant A
  *
  * @implements DefaultFoldable<TraversableBrand, A>
  *

@@ -10,6 +10,8 @@ use Marcosh\LamPHPda\Either;
  * @template A
  *
  * @implements Brand<Either>
+ *
+ * @psalm-immutable
  */
 final class EitherBrand implements Brand
 {

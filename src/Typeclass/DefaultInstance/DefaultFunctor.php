@@ -9,9 +9,11 @@ use Marcosh\LamPHPda\HK\HK1;
 
 /**
  * @template F of Brand
- * @template A
+ * @template-covariant A
  *
  * @extends HK1<F, A>
+ *
+ * @psalm-immutable
  */
 interface DefaultFunctor extends HK1
 {

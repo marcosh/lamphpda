@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda\Typeclass\Extra;
 
 use Marcosh\LamPHPda\Brand\Brand;
-use Marcosh\LamPHPda\HK\HK2;
+use Marcosh\LamPHPda\HK\HK2Covariant;
 use Marcosh\LamPHPda\Typeclass\Bifunctor;
 
 /**
@@ -31,10 +31,10 @@ final class ExtraBifunctor
      * @template B
      * @template C
      * @param callable(A): C $f
-     * @param HK2<F, A, B> $hk2
-     * @return HK2<F, C, B>
+     * @param HK2Covariant<F, A, B> $hk2
+     * @return HK2Covariant<F, C, B>
      */
-    public function first(callable $f, HK2 $hk2): HK2
+    public function first(callable $f, HK2Covariant $hk2): HK2Covariant
     {
         return $this->bifunctor->biMap(
             $f,
@@ -52,10 +52,10 @@ final class ExtraBifunctor
      * @template B
      * @template C
      * @param callable(B): C $g
-     * @param HK2<F, A, B> $hk2
-     * @return HK2<F, A, C>
+     * @param HK2Covariant<F, A, B> $hk2
+     * @return HK2Covariant<F, A, C>
      */
-    public function second(callable $g, HK2 $hk2): HK2
+    public function second(callable $g, HK2Covariant $hk2): HK2Covariant
     {
         return $this->bifunctor->biMap(
             /**

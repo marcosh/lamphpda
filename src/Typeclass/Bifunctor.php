@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda\Typeclass;
 
 use Marcosh\LamPHPda\Brand\Brand;
-use Marcosh\LamPHPda\HK\HK2;
+use Marcosh\LamPHPda\HK\HK2Covariant;
 
 /**
  * @template F of Brand
@@ -21,8 +21,8 @@ interface Bifunctor
      * @template D
      * @param callable(A): C $f
      * @param callable(B): D $g
-     * @param HK2<F, A, B> $a
-     * @return HK2<F, C, D>
+     * @param HK2Covariant<F, A, B> $a
+     * @return HK2Covariant<F, C, D>
      */
-    public function biMap(callable $f, callable $g, HK2 $a): HK2;
+    public function biMap(callable $f, callable $g, HK2Covariant $a): HK2Covariant;
 }

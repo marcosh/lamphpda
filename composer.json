@@ -1,28 +1,33 @@
 {
-  "name": "marcosh/lamphpda",
-  "description": "A collection of functional programming data structures",
-  "version": "0.1.0",
-  "type": "library",
-  "license": "Hippocratic-2.1",
-  "authors": [
-    {
-      "name": "Marco Perone",
-      "email": "pasafama@gmail.com"
+    "name": "marcosh/lamphpda",
+    "description": "A collection of functional programming data structures",
+    "license": "Hippocratic-2.1",
+    "type": "library",
+    "keywords": [
+        "monad",
+        "functional programming"
+    ],
+    "readme": "README.md",
+    "authors": [
+        {
+            "name": "Marco Perone",
+            "email": "pasafama@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/marcosh/lamphpda",
+    "require": {
+        "php": ">= 7.4",
+        "roave/you-are-using-it-wrong": "^1.8"
+    },
+    "require-dev": {
+        "kahlan/kahlan": "^5.1",
+        "maglnet/composer-require-checker": "^3.5",
+        "squizlabs/php_codesniffer": "^3.6",
+        "vimeo/psalm": "^4.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marcosh\\LamPHPda\\": "src/"
+        }
     }
-  ],
-  "require": {
-    "php": "^7.4|^8.0",
-    "roave/you-are-using-it-wrong": "^1.8"
-  },
-  "autoload": {
-    "psr-4": {
-      "Marcosh\\LamPHPda\\": "src/"
-    }
-  },
-  "require-dev": {
-    "maglnet/composer-require-checker": "^3.5",
-    "kahlan/kahlan": "^5.1",
-    "squizlabs/php_codesniffer": "^3.6",
-    "vimeo/psalm": "4.12"
-  }
 }

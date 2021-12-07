@@ -3,11 +3,6 @@
     "description": "A collection of functional programming data structures",
     "license": "Hippocratic-2.1",
     "type": "library",
-    "keywords": [
-        "monad",
-        "functional programming"
-    ],
-    "readme": "README.md",
     "authors": [
         {
             "name": "Marco Perone",
@@ -16,14 +11,14 @@
     ],
     "homepage": "https://github.com/marcosh/lamphpda",
     "require": {
-        "php": ">= 7.4",
+        "php": "^7.4 || ^8.0",
         "roave/you-are-using-it-wrong": "^1.8"
     },
     "require-dev": {
         "kahlan/kahlan": "^5.1",
         "maglnet/composer-require-checker": "^3.5",
         "squizlabs/php_codesniffer": "^3.6",
-        "vimeo/psalm": "^4.14"
+        "vimeo/psalm": "4.12"
     },
     "autoload": {
         "psr-4": {

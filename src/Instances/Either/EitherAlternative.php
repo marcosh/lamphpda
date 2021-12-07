@@ -83,7 +83,7 @@ final class EitherAlternative implements Alternative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function empty()
+    public function empty(): Either
     {
         return Either::left($this->eMonoid->mempty());
     }
@@ -96,7 +96,7 @@ final class EitherAlternative implements Alternative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function alt($a, $b)
+    public function alt($a, $b): Either
     {
         $aEither = Either::fromBrand($a);
         $bEither = Either::fromBrand($b);

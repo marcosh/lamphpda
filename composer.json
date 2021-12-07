@@ -3,6 +3,14 @@
     "description": "A collection of functional programming data structures",
     "license": "Hippocratic-2.1",
     "type": "library",
+    "keywords": [
+        "functional programming",
+        "data structures",
+        "functor",
+        "applicative",
+        "monad",
+        "monoid"
+    ],
     "authors": [
         {
             "name": "Marco Perone",

@@ -26,7 +26,7 @@ final class EitherAlternative implements Alternative
     /**
      * @param Monoid<E> $eMonoid
      */
-    private function __construct(Monoid $eMonoid)
+    public function __construct(Monoid $eMonoid)
     {
         $this->eMonoid = $eMonoid;
     }

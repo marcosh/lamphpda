@@ -30,7 +30,7 @@ final class ExtraProfunctor
      * @template A
      * @template B
      * @template C
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @param HK2<F, C, A> $hk
      * @return HK2<F, C, B>
      */
@@ -51,7 +51,7 @@ final class ExtraProfunctor
      * @template A
      * @template B
      * @template C
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @param HK2<F, B, C> $hk
      * @return HK2<F, A, C>
      */

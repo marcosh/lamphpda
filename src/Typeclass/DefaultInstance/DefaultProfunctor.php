@@ -21,8 +21,8 @@ interface DefaultProfunctor extends HK2
     /**
      * @template C
      * @template D
-     * @param callable(C): A $f
-     * @param callable(B): D $g
+     * @param pure-callable(C): A $f
+     * @param pure-callable(B): D $g
      * @return HK2<F, C, D>
      *
      * @psalm-mutation-free

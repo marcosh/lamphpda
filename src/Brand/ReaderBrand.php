@@ -7,7 +7,11 @@ namespace Marcosh\LamPHPda\Brand;
 use Marcosh\LamPHPda\Reader;
 
 /**
+ * @template E
+ *
  * @implements Brand<Reader>
+ *
+ * @psalm-immutable
  */
 final class ReaderBrand implements Brand
 {

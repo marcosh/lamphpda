@@ -8,15 +8,15 @@ describe('Reader', function () {
     it('apply', function () {
         $addTwo = static fn (int $x): int => $x + 2;
 
-        $result = Reader::of($addTwo)->apply(Reader::of(10))->runReader(50);
+        $result = Reader::reader(fn () => $addTwo)->apply(Reader::reader(fn (): int => 10))->runReader(50);
 
         expect($result)->toEqual(12);
     });
 
     it('bind', function () {
-        $bind = static fn (int $x) => Reader::of(5)->map(static fn (int $y): int => $x * $y);
+        $bind = static fn (int $x) => Reader::reader(fn () => 5)->map(static fn (int $y): int => $x * $y);
 
-        $result = Reader::of(2)->bind($bind)->runReader('foobar');
+        $result = Reader::reader(fn (): int => 2)->bind($bind)->runReader('foobar');
 
         expect($result)->toEqual(10);
     });
@@ -24,7 +24,7 @@ describe('Reader', function () {
     it('map', function () {
         $mapper = static fn (int $x): int => $x * 5;
 
-        $result = Reader::of(2)->map($mapper)->runReader(20);
+        $result = Reader::reader(fn (): int => 2)->map($mapper)->runReader(20);
 
         expect($result)->toEqual(10);
     });

@@ -19,7 +19,8 @@ use Marcosh\LamPHPda\Brand\ReaderBrand;
 /**
  * @template E
  * @template A
- * @implements DefaultMonad<ReaderBrand, A>
+ *
+ * @implements DefaultMonad<ReaderBrand<E>, A>
  *
  * @psalm-immutable
  */
@@ -54,19 +55,7 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param callable(E): B $b
-     * @return Reader<E, B>
-     *
-     * @psalm-pure
-     */
-    public static function of($b): Reader
-    {
-        return new self(static fn () => $b);
-    }
-
-    /**
-     * @template B
-     * @param HK1<ReaderBrand, B> $b
+     * @param HK1<ReaderBrand<E>, B> $b
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -90,7 +79,7 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param Functor<ReaderBrand> $functor
+     * @param Functor<ReaderBrand<E>> $functor
      * @param callable(A): B $f
      * @return Reader<E, B>
      *
@@ -106,7 +95,7 @@ final class Reader implements DefaultMonad
      * @param callable(A): B $f
      * @return Reader<E, B>
      *
-     * @psalm-pure
+     * @psalm-mutation-free
      */
     public function map(callable $f): Reader
     {
@@ -115,8 +104,8 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param Apply<ReaderBrand> $apply
-     * @param HK1<ReaderBrand, callable(A): B> $f
+     * @param Apply<ReaderBrand<E>> $apply
+     * @param HK1<ReaderBrand<E>, callable(A): B> $f
      * @return Reader<E, B>
      *
      * @psalm-mutation-free
@@ -128,7 +117,7 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param HK1<ReaderBrand, callable(A): B> $f
+     * @param HK1<ReaderBrand<E>, callable(A): B> $f
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -140,9 +129,11 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param Applicative<ReaderBrand> $applicative
+     * @param Applicative<ReaderBrand<E>> $applicative
      * @param B $a
      * @return Reader<E, B>
+     *
+     * @psalm-pure
      */
     public static function ipure(Applicative $applicative, $a): Reader
     {
@@ -163,9 +154,11 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param Monad<ReaderBrand> $monad
-     * @param callable(A): HK1<ReaderBrand, B> $f
+     * @param Monad<ReaderBrand<E>> $monad
+     * @param callable(A): HK1<ReaderBrand<E>, B> $f
      * @return Reader<E, B>
+     *
+     * @psalm-pure
      */
     public function ibind(Monad $monad, callable $f): Reader
     {
@@ -174,7 +167,7 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param callable(A): Monad<ReaderBrand> $f
+     * @param callable(A): Monad<ReaderBrand<E>> $f
      * @return Reader<E, B>
      *
      * @psalm-pure

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\ReaderBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\Reader\ReaderApplicative;
 use Marcosh\LamPHPda\Instances\Reader\ReaderApply;
@@ -19,7 +20,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
-use Marcosh\LamPHPda\Brand\ReaderBrand;
 
 /**
  * @template E

@@ -67,7 +67,7 @@ final class Reader implements DefaultMonad
              *
              * @return E
              */
-            fn ($e) => $e
+            static fn ($e) => $e
         );
     }
 

@@ -74,7 +74,7 @@ final class MeetEitherSemigroup implements Semigroup
                  *
                  * @return Either<E, B>
                  */
-                fn ($vb) => Either::right($vb)
+                static fn ($vb) => Either::right($vb)
             ),
             /**
              * @param B $va
@@ -87,7 +87,7 @@ final class MeetEitherSemigroup implements Semigroup
              *
              * @return Either<E, B>
              */
-                fn ($_) => Either::right($va),
+                static fn ($_) => Either::right($va),
                 /**
                  * @param B $vb
                  *

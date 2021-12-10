@@ -47,25 +47,25 @@ final class EitherApply implements Apply
              *
              * @return Either<C, B>
              */
-            fn ($c) => Either::left($c),
+            static fn ($c) => Either::left($c),
             /**
              * @param callable(A): B $f
              *
              * @return Either<C, B>
              */
-            fn ($f) => $eitherA->eval(
+            static fn ($f) => $eitherA->eval(
                 /**
                  * @param C $c
                  *
                  * @return Either<C, B>
                  */
-                fn ($c) => Either::left($c),
+                static fn ($c) => Either::left($c),
                 /**
                  * @param A $a
                  *
                  * @return Either<C, B>
                  */
-                fn ($a) => Either::right($f($a))
+                static fn ($a) => Either::right($f($a))
             )
         );
     }

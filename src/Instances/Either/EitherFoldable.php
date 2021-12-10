@@ -44,13 +44,13 @@ final class EitherFoldable implements Foldable
              *
              * @return B
              */
-            fn ($_) => $b,
+            static fn ($_) => $b,
             /**
              * @param A $a
              *
              * @return B
              */
-            fn ($a) => $f($a, $b)
+            static fn ($a) => $f($a, $b)
         );
     }
 }

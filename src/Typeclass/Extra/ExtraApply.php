@@ -54,13 +54,13 @@ final class ExtraApply
              *
              * @return callable(B): C
              */
-            fn ($ca) =>
+            static fn ($ca) =>
                 /**
                  * @param B $cb
                  *
                  * @return C
                  */
-            fn ($cb) => $f($ca, $cb);
+            static fn ($cb) => $f($ca, $cb);
 
         /** @psalm-suppress InvalidReturnStatement */
         return $this->apply->apply(

@@ -44,7 +44,7 @@ final class PairBifunctor implements Bifunctor
              *
              * @return Pair<C, D>
              */
-            fn ($left, $right) => Pair::pair($f($left), $g($right))
+            static fn ($left, $right) => Pair::pair($f($left), $g($right))
         );
     }
 }

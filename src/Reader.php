@@ -75,6 +75,20 @@ final class Reader implements DefaultMonad
     }
 
     /**
+     * @return Reader<E, E>
+     */
+    public function ask(): self
+    {
+        return self::reader(
+            /**
+             * @param E $e
+             * @return E
+             */
+            fn($e) => $e
+        );
+    }
+
+    /**
      * @template B
      * @param Functor<ReaderBrand<E>> $functor
      * @param pure-callable(A): B $f

@@ -23,7 +23,6 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class IdentityTraversable implements Traversable
 {
-
     /**
      * @template A
      * @template B
@@ -38,6 +37,7 @@ final class IdentityTraversable implements Traversable
     {
         return (new IdentityFoldable())->foldr($f, $b, $a);
     }
+
     /**
      * @template A
      * @template B

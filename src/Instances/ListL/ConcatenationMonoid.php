@@ -19,7 +19,6 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class ConcatenationMonoid implements Monoid
 {
-
     /**
      * @param list<A> $a
      * @param list<A> $b
@@ -30,6 +29,7 @@ final class ConcatenationMonoid implements Monoid
     {
         return array_merge($b, $a);
     }
+
     /**
      * @return list<A>
      */

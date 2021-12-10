@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\HK\HK1;
  */
 interface Alternative extends Applicative
 {
-
     /**
      * @template A
      *
@@ -31,6 +30,7 @@ interface Alternative extends Applicative
      * @return HK1<F, A>
      */
     public function alt(HK1 $a, HK1 $b): HK1;
+
     /**
      * @template A
      *

@@ -26,11 +26,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class JoinEitherSemigroup implements Semigroup
 {
-
     /**
      * @var Semigroup<B>
      */
     private Semigroup $bSemigroup;
+
     /**
      * @var Semigroup<E>
      */

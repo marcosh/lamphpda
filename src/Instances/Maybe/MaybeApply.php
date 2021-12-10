@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class MaybeApply implements Apply
 {
-
     /**
      * @template A
      * @template B
@@ -57,6 +56,7 @@ final class MaybeApply implements Apply
             )
         );
     }
+
     /**
      * @template A
      * @template B

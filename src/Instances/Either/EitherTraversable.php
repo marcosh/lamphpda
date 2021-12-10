@@ -23,7 +23,6 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class EitherTraversable implements Traversable
 {
-
     /**
      * @template A
      * @template B
@@ -41,6 +40,7 @@ final class EitherTraversable implements Traversable
     {
         return (new EitherFoldable())->foldr($f, $b, $a);
     }
+
     /**
      * @template A
      * @template B
@@ -59,7 +59,6 @@ final class EitherTraversable implements Traversable
     {
         return (new EitherFunctor())->map($f, $a);
     }
-
 
     /**
      * @template F of Brand

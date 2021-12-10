@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
  */
 final class MaybeApplicative implements Applicative
 {
-
     /**
      * @template A
      * @template B
@@ -39,6 +38,7 @@ final class MaybeApplicative implements Applicative
     {
         return (new MaybeApply())->apply($f, $a);
     }
+
     /**
      * @template A
      * @template B

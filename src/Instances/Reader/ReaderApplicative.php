@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
  */
 final class ReaderApplicative implements Applicative
 {
-
     /**
      * @template A
      * @template B
@@ -38,6 +37,7 @@ final class ReaderApplicative implements Applicative
     {
         return (new ReaderApply())->apply($f, $a);
     }
+
     /**
      * @template A
      * @template B

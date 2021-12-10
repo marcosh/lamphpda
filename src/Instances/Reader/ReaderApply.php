@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class ReaderApply implements Apply
 {
-
     /**
      * @template A
      * @template B
@@ -48,6 +47,7 @@ final class ReaderApply implements Apply
             static fn ($env) => ($readerF->runReader($env))($readerA->runReader($env))
         );
     }
+
     /**
      * @template A
      * @template B

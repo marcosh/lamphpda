@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
  */
 final class IdentityApplicative implements Applicative
 {
-
     /**
      * @template A
      * @template B
@@ -39,6 +38,7 @@ final class IdentityApplicative implements Applicative
     {
         return (new IdentityApply())->apply($f, $a);
     }
+
     /**
      * @template A
      * @template B

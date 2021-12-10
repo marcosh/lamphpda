@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class ReaderMonad implements Monad
 {
-
     /**
      * @template A
      * @template B
@@ -59,6 +58,7 @@ final class ReaderMonad implements Monad
             static fn ($env) => Reader::fromBrand($f($readerA->runReader($env)))->runReader($env)
         );
     }
+
     /**
      * @template A
      * @template B

@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
  */
 final class EitherApplicative implements Applicative
 {
-
     /**
      * @template A
      * @template B
@@ -40,6 +39,7 @@ final class EitherApplicative implements Applicative
     {
         return (new EitherApply())->apply($f, $a);
     }
+
     /**
      * @template A
      * @template B

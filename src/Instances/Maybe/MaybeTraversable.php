@@ -23,7 +23,6 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class MaybeTraversable implements Traversable
 {
-
     /**
      * @template A
      * @template B
@@ -38,6 +37,7 @@ final class MaybeTraversable implements Traversable
     {
         return (new MaybeFoldable())->foldr($f, $b, $a);
     }
+
     /**
      * @template A
      * @template B

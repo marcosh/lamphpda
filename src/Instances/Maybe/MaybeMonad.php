@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class MaybeMonad implements Monad
 {
-
     /**
      * @template A
      * @template B
@@ -67,6 +66,7 @@ final class MaybeMonad implements Monad
             static fn ($a) => Maybe::fromBrand($f($a))
         );
     }
+
     /**
      * @template A
      * @template B

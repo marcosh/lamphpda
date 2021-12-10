@@ -23,7 +23,6 @@ use Marcosh\LamPHPda\Typeclass\MonadThrow;
  */
 final class MaybeMonadThrow implements MonadThrow
 {
-
     /**
      * @template A
      * @template B
@@ -59,6 +58,7 @@ final class MaybeMonadThrow implements MonadThrow
     {
         return (new MaybeMonad())->bind($a, $f);
     }
+
     /**
      * @template A
      * @template B

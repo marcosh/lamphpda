@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class EitherMonad implements Monad
 {
-
     /**
      * @template A
      * @template B
@@ -74,6 +73,7 @@ final class EitherMonad implements Monad
             static fn ($b) => Either::fromBrand($f($b))
         );
     }
+
     /**
      * @template A
      * @template B

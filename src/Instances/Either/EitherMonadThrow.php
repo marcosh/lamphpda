@@ -23,7 +23,6 @@ use Marcosh\LamPHPda\Typeclass\MonadThrow;
  */
 final class EitherMonadThrow implements MonadThrow
 {
-
     /**
      * @template A
      * @template B
@@ -61,6 +60,7 @@ final class EitherMonadThrow implements MonadThrow
     {
         return (new EitherMonad())->bind($a, $f);
     }
+
     /**
      * @template A
      * @template B

@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class IdentityMonad implements Monad
 {
-
     /**
      * @template A
      * @template B
@@ -59,6 +58,7 @@ final class IdentityMonad implements Monad
 
         return Identity::fromBrand($f($identityA->unwrap()));
     }
+
     /**
      * @template A
      * @template B

@@ -21,7 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class IdentityApply implements Apply
 {
-
     /**
      * @template A
      * @template B
@@ -42,6 +41,7 @@ final class IdentityApply implements Apply
 
         return Identity::wrap(($identityF->unwrap())($identityA->unwrap()));
     }
+
     /**
      * @template A
      * @template B

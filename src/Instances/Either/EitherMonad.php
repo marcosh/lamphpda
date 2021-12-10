@@ -65,13 +65,13 @@ final class EitherMonad implements Monad
              *
              * @return Either<C, B>
              */
-            fn($c) => Either::left($c),
+            fn ($c) => Either::left($c),
             /**
              * @param A $b
              *
              * @return Either<C, B>
              */
-            fn($b) => Either::fromBrand($f($b))
+            fn ($b) => Either::fromBrand($f($b))
         );
     }
     /**

@@ -47,13 +47,13 @@ final class MaybeApply implements Apply
              *
              * @return Maybe<B>
              */
-            fn($value) => $maybeF->eval(
+            fn ($value) => $maybeF->eval(
                 Maybe::nothing(),
                 /**
                  * @psalm-param callable(A): B $g
                  * @psalm-return Maybe<B>
                  */
-                fn($g) => Maybe::just($g($value))
+                fn ($g) => Maybe::just($g($value))
             )
         );
     }

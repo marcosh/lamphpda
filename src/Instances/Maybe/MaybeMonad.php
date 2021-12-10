@@ -64,7 +64,7 @@ final class MaybeMonad implements Monad
              *
              * @return Maybe<B>
              */
-            fn($a) => Maybe::fromBrand($f($a))
+            fn ($a) => Maybe::fromBrand($f($a))
         );
     }
     /**

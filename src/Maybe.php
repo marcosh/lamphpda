@@ -304,7 +304,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
              *
              * @return A
              */
-            fn($a) => $a
+            fn ($a) => $a
         );
     }
 }

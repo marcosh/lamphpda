@@ -360,7 +360,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
              *
              * @return B
              */
-            fn($b) => $b
+            fn ($b) => $b
         );
     }
 

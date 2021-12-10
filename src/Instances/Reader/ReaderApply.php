@@ -45,7 +45,7 @@ final class ReaderApply implements Apply
              *
              * @return B
              */
-            static fn($env) => ($readerF->runReader($env))($readerA->runReader($env))
+            static fn ($env) => ($readerF->runReader($env))($readerA->runReader($env))
         );
     }
     /**

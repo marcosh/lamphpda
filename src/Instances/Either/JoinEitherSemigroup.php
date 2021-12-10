@@ -62,26 +62,26 @@ final class JoinEitherSemigroup implements Semigroup
              *
              * @return Either<E, B>
              */
-            fn($ea) => $b->eval(
+            fn ($ea) => $b->eval(
                 /**
                  * @param E $eb
                  *
                  * @return Either<E, B>
                  */
-                fn($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
+                fn ($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
                 /**
                  * @param B $_
                  *
                  * @return Either<E, B>
                  */
-                fn($_) => Either::left($ea)
+                fn ($_) => Either::left($ea)
             ),
             /**
              * @param B $va
              *
              * @return Either<E, B>
              */
-            fn($va) => $b->eval(
+            fn ($va) => $b->eval(
                 /**
                  * @param E $eb
                  *
@@ -93,7 +93,7 @@ final class JoinEitherSemigroup implements Semigroup
                  *
                  * @return Either<E, B>
                  */
-                fn($vb) => Either::right($this->bSemigroup->append($va, $vb))
+                fn ($vb) => Either::right($this->bSemigroup->append($va, $vb))
             )
         );
     }

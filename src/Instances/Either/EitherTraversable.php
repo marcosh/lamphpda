@@ -99,7 +99,7 @@ final class EitherTraversable implements Traversable
              *
              * @psalm-suppress InvalidArgument
              */
-            fn($a) => $applicative->map([Either::class, 'right'], $f($a))
+            fn ($a) => $applicative->map([Either::class, 'right'], $f($a))
         );
     }
 }

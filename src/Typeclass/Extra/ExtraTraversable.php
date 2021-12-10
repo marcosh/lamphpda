@@ -52,7 +52,7 @@ final class ExtraTraversable
              *
              * @return HK1<F, A>
              */
-            fn($fa) => $fa,
+            fn ($fa) => $fa,
             $hk
         );
     }

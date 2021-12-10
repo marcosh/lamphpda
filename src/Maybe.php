@@ -36,7 +36,7 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  * @psalm-immutable
  */
 final class Maybe implements DefaultMonad, DefaultTraversable
-{    
+{
     private $isJust;
 
     /**

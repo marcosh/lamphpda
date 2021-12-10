@@ -16,7 +16,7 @@ use Marcosh\LamPHPda\Brand\ListBrand;
 use Marcosh\LamPHPda\HK\HK1;
 
 /**
- * a type wrapper around the psalm list type
+ * A type wrapper around the psalm list type.
  *
  * @template-covariant A
  *

@@ -13,9 +13,9 @@ use Marcosh\LamPHPda\Either;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
- * joins the errors with an E semigroup
- * if one succeeds, then it all succeeds
- * if both validations succeed, we join the results with a B semigroup
+ * Joins the errors with an E semigroup,
+ * if one succeeds, then it all succeeds,
+ * if both validations succeed, we join the results with a B semigroup.
  *
  * @template E
  * @template B

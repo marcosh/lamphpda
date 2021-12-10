@@ -43,13 +43,19 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isRight;
 
-    /** @var A|null */
+    /**
+     * @var A|null
+     */
     private $leftValue;
 
-    /** @var B|null */
+    /**
+     * @var B|null
+     */
     private $rightValue;
 
     /**

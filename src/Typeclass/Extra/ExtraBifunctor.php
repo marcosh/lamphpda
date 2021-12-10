@@ -20,7 +20,9 @@ use Marcosh\LamPHPda\Typeclass\Bifunctor;
  */
 final class ExtraBifunctor
 {
-    /** @var Bifunctor<F> */
+    /**
+     * @var Bifunctor<F>
+     */
     private Bifunctor $bifunctor;
 
     /**

@@ -27,7 +27,9 @@ use Traversable as PhpTraversable;
  */
 final class Traversable implements IteratorAggregate, DefaultFoldable
 {
-    /** @var PhpTraversable<A> */
+    /**
+     * @var PhpTraversable<A>
+     */
     private $traversable;
 
     /**

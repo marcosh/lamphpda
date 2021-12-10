@@ -22,10 +22,14 @@ use Marcosh\LamPHPda\HK\HK2Covariant;
  */
 final class Pair implements HK2Covariant
 {
-    /** @var A */
+    /**
+     * @var A
+     */
     private $left;
 
-    /** @var B */
+    /**
+     * @var B
+     */
     private $right;
 
     /**

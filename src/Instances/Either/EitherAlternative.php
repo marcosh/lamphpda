@@ -25,7 +25,9 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class EitherAlternative implements Alternative
 {
-    /** @var Monoid<E> */
+    /**
+     * @var Monoid<E>
+     */
     private Monoid $eMonoid;
 
     /**

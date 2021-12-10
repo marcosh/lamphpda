@@ -26,7 +26,9 @@ use Marcosh\LamPHPda\HK\HK1;
  */
 final class ListL implements IteratorAggregate, HK1
 {
-    /** @var list<A> */
+    /**
+     * @var list<A>
+     */
     private array $list;
 
     /**

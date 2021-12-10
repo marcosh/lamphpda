@@ -20,7 +20,9 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class ExtraApply
 {
-    /** @var Apply<F> */
+    /**
+     * @var Apply<F>
+     */
     private Apply $apply;
 
     /**

@@ -21,7 +21,9 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class ExtraTraversable
 {
-    /** @var Traversable<T> */
+    /**
+     * @var Traversable<T>
+     */
     private $traversable;
 
     /**

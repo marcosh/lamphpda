@@ -24,7 +24,9 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class ValidationApplicative implements Applicative
 {
-    /** @var Semigroup<E> */
+    /**
+     * @var Semigroup<E>
+     */
     private $semigroup;
 
     /**

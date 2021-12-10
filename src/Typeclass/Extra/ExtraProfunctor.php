@@ -20,7 +20,9 @@ use Marcosh\LamPHPda\Typeclass\Profunctor;
  */
 final class ExtraProfunctor
 {
-    /** @var Profunctor<F> */
+    /**
+     * @var Profunctor<F>
+     */
     private Profunctor $profunctor;
 
     /**

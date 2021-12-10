@@ -26,10 +26,14 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class MeetEitherSemigroup implements Semigroup
 {
-    /** @var Semigroup<E> */
+    /**
+     * @var Semigroup<E>
+     */
     private Semigroup $eSemigroup;
 
-    /** @var Semigroup<B> */
+    /**
+     * @var Semigroup<B>
+     */
     private Semigroup $bSemigroup;
 
     /**

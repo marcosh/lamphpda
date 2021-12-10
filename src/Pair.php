@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\PairBrand2;
+use Marcosh\LamPHPda\HK\HK2Covariant;
+
 /**
  * @template A
  * @template B
  *
+ * @implements HK2Covariant<PairBrand2, A, B>
+ *
  * @psalm-immutable
  */
-final class Pair
+final class Pair implements HK2Covariant
 {
     /** @var A */
     private $left;
@@ -40,6 +45,20 @@ final class Pair
     public static function pair($left, $right): self
     {
         return new self($left, $right);
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param HK2Covariant<PairBrand2, C, D> $hk
+     * @return Pair<C, D>
+     *
+     * @psalm-pure
+     */
+    public static function fromBrand2(HK2Covariant $hk): self
+    {
+        /** @var Pair<C, D> */
+        return $hk;
     }
 
     /**

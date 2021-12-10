@@ -59,7 +59,6 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     private $rightValue;
 
     /**
-     * @param bool $isRight
      * @param A|null $leftValue
      * @param B|null $rightValue
      *

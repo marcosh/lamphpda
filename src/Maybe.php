@@ -38,7 +38,6 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
 final class Maybe implements DefaultMonad, DefaultTraversable
 {
     /**
-     * @var bool
      */
     private $isJust;
 
@@ -48,7 +47,6 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     private $value;
 
     /**
-     * @param bool $isJust
      * @param A|null $value
      */
     private function __construct(bool $isJust, $value = null)

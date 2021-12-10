@@ -26,9 +26,7 @@ use Marcosh\LamPHPda\Brand\ReaderBrand;
  */
 final class Reader implements DefaultMonad
 {
-    /**
-     * @var callable(E): A
-     */
+    /** @var callable(E): A */
     private $action;
 
     /**

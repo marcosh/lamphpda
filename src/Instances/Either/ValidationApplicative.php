@@ -20,7 +20,7 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 final class ValidationApplicative implements Applicative
 {
     /** @var Semigroup<E> */
-    private $semigroup;
+    private Semigroup $semigroup;
 
     /**
      * @param Semigroup<E> $semigroup

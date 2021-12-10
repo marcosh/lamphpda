@@ -51,33 +51,33 @@ final class MeetEitherSemigroup implements Semigroup
              * @param E $ea
              * @return Either<E, B>
              */
-            fn ($ea) => $b->eval(
+            fn ($ea): Either => $b->eval(
                 /**
                  * @param E $eb
                  * @return Either<E, B>
                  */
-                fn ($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
+                fn ($eb): Either => Either::left($this->eSemigroup->append($ea, $eb)),
                 /**
                  * @param B $vb
                  * @return Either<E, B>
                  */
-                static fn ($vb) => Either::right($vb)
+                static fn ($vb): Either => Either::right($vb)
             ),
             /**
              * @param B $va
              * @return Either<E, B>
              */
-            fn ($va) => $b->eval(
+            fn ($va): Either => $b->eval(
                 /**
                  * @param E $_
                  * @return Either<E, B>
                  */
-                static fn ($_) => Either::right($va),
+                static fn ($_): Either => Either::right($va),
                 /**
                  * @param B $vb
                  * @return Either<E, B>
                  */
-                fn ($vb) => Either::right($this->bSemigroup->append($va, $vb))
+                fn ($vb): Either => Either::right($this->bSemigroup->append($va, $vb))
             )
         );
     }

@@ -33,12 +33,12 @@ final class EitherBifunctor implements Bifunctor
              * @param A $a
              * @return Either<C, D>
              */
-            static fn ($a) => Either::left($f($a)),
+            static fn ($a): Either => Either::left($f($a)),
             /**
              * @param B $b
              * @return Either<C, D>
              */
-            static fn ($b) => Either::right($g($b))
+            static fn ($b): Either => Either::right($g($b))
         );
     }
 }

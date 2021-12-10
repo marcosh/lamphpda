@@ -83,7 +83,7 @@ final class MaybeMonad implements Monad
              * @param A $a
              * @return Maybe<B>
              */
-            static fn ($a) => Maybe::fromBrand($f($a))
+            static fn ($a): Maybe => Maybe::fromBrand($f($a))
         );
     }
 }

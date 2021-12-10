@@ -17,13 +17,14 @@ use Traversable as PhpTraversable;
  * @template-covariant A
  *
  * @implements DefaultFoldable<TraversableBrand, A>
+ * @implements IteratorAggregate<mixed, A>
  *
  * @psalm-immutable
  */
 final class Traversable implements IteratorAggregate, DefaultFoldable
 {
     /** @var PhpTraversable<A> */
-    private $traversable;
+    private PhpTraversable $traversable;
 
     /**
      * @param PhpTraversable<A> $traversable

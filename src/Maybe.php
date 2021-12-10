@@ -32,14 +32,9 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class Maybe implements DefaultMonad, DefaultTraversable
 {
-    /**
-     * @var bool
-     */
-    private $isJust;
+    private bool $isJust;
 
-    /**
-     * @var null|A
-     */
+    /** @var null|A */
     private $value;
 
     /**

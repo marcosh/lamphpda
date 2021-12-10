@@ -74,7 +74,7 @@ final class MaybeTraversable implements Traversable
              *
              * @psalm-suppress InvalidArgument
              */
-            static fn ($a) => $applicative->map([Maybe::class, 'just'], $f($a))
+            static fn ($a): HK1 => $applicative->map([Maybe::class, 'just'], $f($a))
         );
     }
 }

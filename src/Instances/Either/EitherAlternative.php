@@ -21,7 +21,7 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
 final class EitherAlternative implements Alternative
 {
     /** @var Monoid<E> */
-    private $eMonoid;
+    private Monoid $eMonoid;
 
     /**
      * @param Monoid<E> $eMonoid
@@ -96,7 +96,7 @@ final class EitherAlternative implements Alternative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function alt($a, $b): Either
+    public function alt(HK1 $a, HK1 $b): Either
     {
         $aEither = Either::fromBrand($a);
         $bEither = Either::fromBrand($b);

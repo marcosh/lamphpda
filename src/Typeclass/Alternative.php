@@ -28,5 +28,5 @@ interface Alternative extends Applicative
      * @param HK1<F, A> $b
      * @return HK1<F, A>
      */
-    public function alt($a, $b);
+    public function alt(HK1 $a, HK1 $b): HK1;
 }

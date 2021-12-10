@@ -18,6 +18,16 @@ are:
     (see [http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-issue.html](http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-issue.html)
     and [http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-solution.html](http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-solution.html))
 
+## Installation
+
+There is currently no stable version available, we are currently working on it.
+
+To install the latest development branch:
+
+```shell
+composer require marcosh/lamphpda:dev-master
+```
+
 ## Tools
 
 We use [Psalm](https://psalm.dev/) as a type checker. It basically works as a

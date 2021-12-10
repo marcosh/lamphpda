@@ -21,6 +21,7 @@ use Marcosh\LamPHPda\HK\HK1;
  * @template-covariant A
  *
  * @implements HK1<ListBrand, A>
+ * @implements IteratorAggregate<mixed, A>
  *
  * @psalm-immutable
  */

@@ -61,38 +61,38 @@ final class ValidationApply implements Apply
              *
              * @return Either<E, B>
              */
-            fn ($ef) => $eitherA->eval(
+            fn ($ef): Either => $eitherA->eval(
                 /**
                  * @param E $ea
                  *
                  * @return Either<E, B>
                  */
-                fn ($ea) => Either::left($this->semigroup->append($ef, $ea)),
+                fn ($ea): Either => Either::left($this->semigroup->append($ef, $ea)),
                 /**
                  * @param A $_a
                  *
                  * @return Either<E, B>
                  */
-                static fn ($_a) => Either::left($ef)
+                static fn ($_a): Either => Either::left($ef)
             ),
             /**
              * @param callable(A): B $f
              *
              * @return Either<E, B>
              */
-            static fn ($f) => $eitherA->eval(
+            static fn ($f): Either => $eitherA->eval(
                 /**
                  * @param E $e
                  *
                  * @return Either<E, B>
                  */
-                static fn ($e) => Either::left($e),
+                static fn ($e): Either => Either::left($e),
                 /**
                  * @param A $a
                  *
                  * @return Either<E, B>
                  */
-                static fn ($a) => Either::right($f($a))
+                static fn ($a): Either => Either::right($f($a))
             )
         );
     }

@@ -36,5 +36,5 @@ interface Alternative extends Applicative
      *
      * @return HK1<F, A>
      */
-    public function empty();
+    public function empty(): HK1;
 }

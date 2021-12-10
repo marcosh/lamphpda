@@ -85,7 +85,7 @@ final class EitherTraversable implements Traversable
              *
              * @return HK1<F, Either<C, B>>
              */
-            static function ($c) use ($applicative) {
+            static function ($c) use ($applicative): HK1 {
                 /** @var Either<C, B> $eitherCB */
                 $eitherCB = Either::left($c);
 
@@ -98,7 +98,7 @@ final class EitherTraversable implements Traversable
              *
              * @psalm-suppress InvalidArgument
              */
-            static fn ($a) => $applicative->map([Either::class, 'right'], $f($a))
+            static fn ($a): HK1 => $applicative->map([Either::class, 'right'], $f($a))
         );
     }
 }

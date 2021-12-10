@@ -26,7 +26,6 @@ final class ConcatenationMonoid implements Monoid
     /**
      * @param string $a
      * @param string $b
-     *
      */
     public function append($a, $b): string
     {

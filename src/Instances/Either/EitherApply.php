@@ -25,8 +25,10 @@ final class EitherApply implements Apply
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return Either<C, B>
      *
      * @psalm-pure
@@ -42,8 +44,10 @@ final class EitherApply implements Apply
      * @template A
      * @template B
      * @template C
+     *
      * @param HK1<EitherBrand<C>, callable(A): B> $f
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return Either<C, B>
      *
      * @psalm-pure
@@ -58,21 +62,25 @@ final class EitherApply implements Apply
         return $eitherF->eval(
             /**
              * @param C $c
+             *
              * @return Either<C, B>
              */
             fn($c) => Either::left($c),
             /**
              * @param callable(A): B $f
+             *
              * @return Either<C, B>
              */
             fn($f) => $eitherA->eval(
                 /**
                  * @param C $c
+                 *
                  * @return Either<C, B>
                  */
                 fn($c) => Either::left($c),
                 /**
                  * @param A $a
+                 *
                  * @return Either<C, B>
                  */
                 fn($a) => Either::right($f($a))

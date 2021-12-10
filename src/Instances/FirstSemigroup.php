@@ -23,6 +23,7 @@ final class FirstSemigroup implements Semigroup
     /**
      * @param A $a
      * @param A $b
+     *
      * @return A
      */
     public function append($a, $b)

@@ -25,8 +25,10 @@ final class ReaderMonad implements Monad
      * @template A
      * @template B
      * @template E
+     *
      * @param callable(A): B $f
      * @param HK1<ReaderBrand, A> $a
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class ReaderMonad implements Monad
      * @template A
      * @template B
      * @template E
+     *
      * @param HK1<ReaderBrand, callable(A): B> $f
      * @param HK1<ReaderBrand, A> $a
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -54,7 +58,9 @@ final class ReaderMonad implements Monad
     /**
      * @template A
      * @template E
+     *
      * @param A $a
+     *
      * @return Reader<E, A>
      *
      * @psalm-pure
@@ -68,8 +74,10 @@ final class ReaderMonad implements Monad
      * @template A
      * @template B
      * @template E
+     *
      * @param HK1<ReaderBrand, A> $a
      * @param callable(A): HK1<ReaderBrand, B> $f
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure

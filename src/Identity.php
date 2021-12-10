@@ -52,7 +52,9 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param B $value
+     *
      * @return Identity<B>
      *
      * @psalm-pure
@@ -64,7 +66,9 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param HK1<IdentityBrand, B> $b
+     *
      * @return Identity<B>
      *
      * @psalm-pure
@@ -85,8 +89,10 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Functor<IdentityBrand> $functor
      * @param callable(A): B $f
+     *
      * @return Identity<B>
      *
      * @psalm-suppress ArgumentTypeCoercion
@@ -98,7 +104,9 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param callable(A): B $f
+     *
      * @return Identity<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -110,8 +118,10 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Apply<IdentityBrand> $apply
      * @param HK1<IdentityBrand, callable(A): B> $f
+     *
      * @return Identity<B>
      *
      * @psalm-suppress ArgumentTypeCoercion
@@ -123,7 +133,9 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param HK1<IdentityBrand, callable(A): B> $f
+     *
      * @return Identity<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -135,8 +147,10 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Applicative<IdentityBrand> $applicative
      * @param B $a
+     *
      * @return Identity<B>
      */
     public static function ipure(Applicative $applicative, $a): Identity
@@ -146,7 +160,9 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param B $a
+     *
      * @return Identity<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -158,8 +174,10 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Monad<IdentityBrand> $monad
      * @param callable(A): HK1<IdentityBrand, B> $f
+     *
      * @return Identity<B>
      *
      * @psalm-suppress ArgumentTypeCoercion
@@ -171,7 +189,9 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param callable(A): HK1<IdentityBrand, B> $f
+     *
      * @return Identity<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -183,9 +203,11 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Foldable<IdentityBrand> $foldable
      * @param pure-callable(A, B): B $f
      * @param B $b
+     *
      * @return B
      *
      * @psalm-suppress ArgumentTypeCoercion
@@ -197,8 +219,10 @@ final class Identity implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
+     *
      * @return B
      */
     public function foldr(callable $f, $b)
@@ -209,9 +233,11 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @template F of Brand
      * @template B
+     *
      * @param Traversable<IdentityBrand> $traversable
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
+     *
      * @return HK1<F, Identity<B>>
      *
      * @psalm-suppress InvalidArgument
@@ -225,8 +251,10 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @template F of Brand
      * @template B
+     *
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
+     *
      * @return HK1<F, Identity<B>>
      *
      * @psalm-suppress LessSpecificImplementedReturnType

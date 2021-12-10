@@ -24,8 +24,10 @@ interface Monad extends Applicative
     /**
      * @template A
      * @template B
+     *
      * @param HK1<F, A> $a
      * @param callable(A): HK1<F, B> $f
+     *
      * @return HK1<F, B>
      */
     public function bind(HK1 $a, callable $f): HK1;

@@ -24,8 +24,10 @@ final class IdentityApplicative implements Applicative
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<IdentityBrand, A> $a
+     *
      * @return Identity<B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class IdentityApplicative implements Applicative
     /**
      * @template A
      * @template B
+     *
      * @param HK1<IdentityBrand, callable(A): B> $f
      * @param HK1<IdentityBrand, A> $a
+     *
      * @return Identity<B>
      *
      * @psalm-pure
@@ -55,7 +59,9 @@ final class IdentityApplicative implements Applicative
 
     /**
      * @template A
+     *
      * @param A $a
+     *
      * @return Identity<A>
      *
      * @psalm-pure

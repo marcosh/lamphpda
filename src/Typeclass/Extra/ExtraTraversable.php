@@ -35,8 +35,10 @@ final class ExtraTraversable
     /**
      * @template F of Brand
      * @template A
+     *
      * @param Applicative<F> $applicative
      * @param HK1<T, HK1<F, A>> $hk
+     *
      * @return HK1<F, HK1<T, A>>
      */
     public function sequence($applicative, $hk)
@@ -45,6 +47,7 @@ final class ExtraTraversable
             $applicative,
             /**
              * @param HK1<F, A> $fa
+             *
              * @return HK1<F, A>
              */
             fn($fa) => $fa,

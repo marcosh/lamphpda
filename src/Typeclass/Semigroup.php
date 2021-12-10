@@ -19,6 +19,7 @@ interface Semigroup
     /**
      * @param A $a
      * @param A $b
+     *
      * @return A
      *
      * @psalm-pure

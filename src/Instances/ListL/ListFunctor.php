@@ -24,8 +24,10 @@ final class ListFunctor implements Functor
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<ListBrand, A> $a
+     *
      * @return ListL<B>
      *
      * @psalm-pure

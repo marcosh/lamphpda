@@ -24,9 +24,11 @@ interface Bifunctor
      * @template B
      * @template C
      * @template D
+     *
      * @param callable(A): C $f
      * @param callable(B): D $g
      * @param HK2Covariant<F, A, B> $a
+     *
      * @return HK2Covariant<F, C, D>
      */
     public function biMap(callable $f, callable $g, HK2Covariant $a): HK2Covariant;

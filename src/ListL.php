@@ -39,7 +39,9 @@ final class ListL implements IteratorAggregate, HK1
 
     /**
      * @template B
+     *
      * @param HK1<ListBrand, B> $hk
+     *
      * @return ListL<B>
      *
      * @psalm-pure
@@ -60,6 +62,7 @@ final class ListL implements IteratorAggregate, HK1
 
     /**
      * @param A $a
+     *
      * @return ListL<A>
      */
     public function append($a): self

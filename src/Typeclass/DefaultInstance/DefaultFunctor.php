@@ -24,7 +24,9 @@ interface DefaultFunctor extends HK1
 {
     /**
      * @template B
+     *
      * @param pure-callable(A): B $f
+     *
      * @return HK1<F, B>
      *
      * @psalm-mutation-free

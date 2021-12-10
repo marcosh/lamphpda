@@ -23,14 +23,17 @@ interface Alternative extends Applicative
 {
     /**
      * @template A
+     *
      * @return HK1<F, A>
      */
     public function empty();
 
     /**
      * @template A
+     *
      * @param HK1<F, A> $a
      * @param HK1<F, A> $b
+     *
      * @return HK1<F, A>
      */
     public function alt(HK1 $a, HK1 $b): HK1;

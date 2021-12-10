@@ -27,8 +27,10 @@ final class EitherTraversable implements Traversable
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return Either<C, B>
      *
      * @psalm-pure
@@ -44,9 +46,11 @@ final class EitherTraversable implements Traversable
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return B
      *
      * @psalm-pure
@@ -62,9 +66,11 @@ final class EitherTraversable implements Traversable
      * @template A
      * @template B
      * @template C
+     *
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return HK1<F, Either<C, B>>
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
@@ -77,6 +83,7 @@ final class EitherTraversable implements Traversable
         return $eitherA->eval(
             /**
              * @param C $c
+             *
              * @return HK1<F, Either<C, B>>
              */
             function ($c) use ($applicative) {
@@ -87,6 +94,7 @@ final class EitherTraversable implements Traversable
             },
             /**
              * @param A $a
+             *
              * @return HK1<F, Either<C, B>>
              *
              * @psalm-suppress InvalidArgument

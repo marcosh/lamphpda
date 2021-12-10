@@ -25,8 +25,10 @@ final class EitherFunctor implements Functor
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return Either<C, B>
      *
      * @psalm-pure
@@ -38,11 +40,13 @@ final class EitherFunctor implements Functor
         return Either::fromBrand($a)->eval(
             /**
              * @param C $b
+             *
              * @return Either<C, B>
              */
             fn ($b) => Either::left($b),
             /**
              * @param A $b
+             *
              * @return Either<C, B>
              */
             fn ($b) => Either::right($f($b))

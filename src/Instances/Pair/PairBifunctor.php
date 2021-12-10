@@ -26,9 +26,11 @@ final class PairBifunctor implements Bifunctor
      * @template B
      * @template C
      * @template D
+     *
      * @param callable(A): C $f
      * @param callable(B): D $g
      * @param HK2Covariant<PairBrand2, A, B> $a
+     *
      * @return Pair<C, D>
      */
     public function biMap(callable $f, callable $g, HK2Covariant $a): HK2Covariant
@@ -39,6 +41,7 @@ final class PairBifunctor implements Bifunctor
             /**
              * @param A $left
              * @param B $right
+             *
              * @return Pair<C, D>
              */
             fn ($left, $right) => Pair::pair($f($left), $g($right))

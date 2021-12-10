@@ -22,8 +22,10 @@ interface Functor
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<F, A> $a
+     *
      * @return HK1<F, B>
      *
      * @psalm-pure

@@ -45,6 +45,7 @@ final class MeetEitherSemigroup implements Semigroup
     /**
      * @param Either<E, B> $a
      * @param Either<E, B> $b
+     *
      * @return Either<E, B>
      *
      * @psalm-pure
@@ -54,32 +55,38 @@ final class MeetEitherSemigroup implements Semigroup
         return $a->eval(
         /**
          * @param E $ea
+         *
          * @return Either<E, B>
          */
             fn($ea) => $b->eval(
             /**
              * @param E $eb
+             *
              * @return Either<E, B>
              */
                 fn($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
                 /**
                  * @param B $vb
+                 *
                  * @return Either<E, B>
                  */
                 fn($vb) => Either::right($vb)
             ),
             /**
              * @param B $va
+             *
              * @return Either<E, B>
              */
             fn($va) => $b->eval(
             /**
              * @param E $_
+             *
              * @return Either<E, B>
              */
                 fn($_) => Either::right($va),
                 /**
                  * @param B $vb
+                 *
                  * @return Either<E, B>
                  */
                 fn($vb) => Either::right($this->bSemigroup->append($va, $vb))

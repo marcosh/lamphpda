@@ -27,9 +27,11 @@ final class ListTraversable implements Traversable
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<ListBrand, A> $a
+     *
      * @return B
      *
      * @psalm-pure
@@ -42,8 +44,10 @@ final class ListTraversable implements Traversable
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<ListBrand, A> $a
+     *
      * @return ListL<B>
      *
      * @psalm-pure
@@ -57,9 +61,11 @@ final class ListTraversable implements Traversable
      * @template F of Brand
      * @template A
      * @template B
+     *
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
      * @param HK1<ListBrand, A> $a
+     *
      * @return HK1<F, HK1<ListBrand, B>>
      */
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
@@ -72,12 +78,14 @@ final class ListTraversable implements Traversable
             /**
              * @param A $c
              * @param HK1<F, HK1<ListBrand, B>> $d
+             *
              * @return HK1<F, HK1<ListBrand, B>>
              */
             fn($c, $d) => (new ExtraApply($applicative))->lift2(
                 /**
                  * @param B $h
                  * @param HK1<ListBrand, B> $t
+                 *
                  * @return HK1<ListBrand, B>
                  */
                 fn($h, $t) => ListL::fromBrand($t)->append($h),

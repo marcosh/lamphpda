@@ -24,7 +24,9 @@ interface DefaultApply extends DefaultFunctor
 {
     /**
      * @template B
+     *
      * @param HK1<F, callable(A): B> $f
+     *
      * @return HK1<F, B>
      *
      * @psalm-mutation-free

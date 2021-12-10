@@ -35,8 +35,10 @@ final class ExtraBifunctor
      * @template A
      * @template B
      * @template C
+     *
      * @param callable(A): C $f
      * @param HK2Covariant<F, A, B> $hk2
+     *
      * @return HK2Covariant<F, C, B>
      */
     public function first(callable $f, HK2Covariant $hk2): HK2Covariant
@@ -45,6 +47,7 @@ final class ExtraBifunctor
             $f,
             /**
              * @param B $b
+             *
              * @return B
              */
             fn($b) => $b,
@@ -56,8 +59,10 @@ final class ExtraBifunctor
      * @template A
      * @template B
      * @template C
+     *
      * @param callable(B): C $g
      * @param HK2Covariant<F, A, B> $hk2
+     *
      * @return HK2Covariant<F, A, C>
      */
     public function second(callable $g, HK2Covariant $hk2): HK2Covariant
@@ -65,6 +70,7 @@ final class ExtraBifunctor
         return $this->bifunctor->biMap(
             /**
              * @param A $a
+             *
              * @return A
              */
             fn($a) => $a,

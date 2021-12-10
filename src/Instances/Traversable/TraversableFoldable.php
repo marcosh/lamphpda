@@ -24,9 +24,11 @@ final class TraversableFoldable implements Foldable
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<TraversableBrand, A> $a
+     *
      * @return B
      *
      * @psalm-pure

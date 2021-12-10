@@ -25,9 +25,11 @@ final class EitherFoldable implements Foldable
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return B
      *
      * @psalm-pure
@@ -39,11 +41,13 @@ final class EitherFoldable implements Foldable
         return $eitherA->eval(
             /**
              * @param C $_
+             *
              * @return B
              */
             fn ($_) => $b,
             /**
              * @param A $a
+             *
              * @return B
              */
             fn ($a) => $f($a, $b)

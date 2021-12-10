@@ -38,8 +38,10 @@ final class ValidationApplicative implements Applicative
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
+     *
      * @return Either<E, B>
      *
      * @psalm-pure
@@ -54,8 +56,10 @@ final class ValidationApplicative implements Applicative
     /**
      * @template A
      * @template B
+     *
      * @param HK1<EitherBrand<E>, callable(A): B> $f
      * @param HK1<EitherBrand<E>, A> $a
+     *
      * @return Either<E, B>
      *
      * @psalm-mutation-free
@@ -70,7 +74,9 @@ final class ValidationApplicative implements Applicative
     /**
      * @template A
      * @template B
+     *
      * @param A $a
+     *
      * @return Either<B, A>
      *
      * @psalm-pure

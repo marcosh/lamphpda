@@ -35,9 +35,11 @@ final class ExtraApply
      * @template A
      * @template B
      * @template C
+     *
      * @param callable(A, B): C $f
      * @param HK1<F, A> $a
      * @param HK1<F, B> $b
+     *
      * @return HK1<F, C>
      *
      * @psalm-suppress InvalidReturnType
@@ -47,11 +49,13 @@ final class ExtraApply
         $curriedF =
             /**
              * @param A $ca
+             *
              * @return callable(B): C
              */
             fn ($ca) =>
                 /**
                  * @param B $cb
+                 *
                  * @return C
                  */
             fn ($cb) => $f($ca, $cb);

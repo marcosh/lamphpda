@@ -24,9 +24,11 @@ final class ListFoldable implements Foldable
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<ListBrand, A> $a
+     *
      * @return B
      *
      * @psalm-pure

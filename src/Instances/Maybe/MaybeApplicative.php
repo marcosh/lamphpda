@@ -24,8 +24,10 @@ final class MaybeApplicative implements Applicative
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class MaybeApplicative implements Applicative
     /**
      * @template A
      * @template B
+     *
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @param HK1<MaybeBrand, A> $a
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -55,7 +59,9 @@ final class MaybeApplicative implements Applicative
 
     /**
      * @template A
+     *
      * @param A $a
+     *
      * @return Maybe<A>
      *
      * @psalm-pure

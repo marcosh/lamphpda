@@ -24,8 +24,10 @@ final class MaybeApply implements Apply
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class MaybeApply implements Apply
     /**
      * @template A
      * @template B
+     *
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @param HK1<MaybeBrand, A> $a
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -57,6 +61,7 @@ final class MaybeApply implements Apply
             Maybe::nothing(),
             /**
              * @param A $value
+             *
              * @return Maybe<B>
              */
             fn($value) => $maybeF->eval(

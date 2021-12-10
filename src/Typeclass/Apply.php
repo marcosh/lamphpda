@@ -24,8 +24,10 @@ interface Apply extends Functor
     /**
      * @template A
      * @template B
+     *
      * @param HK1<F, callable(A): B> $f
      * @param HK1<F, A> $a
+     *
      * @return HK1<F, B>
      *
      * @psalm-pure

@@ -25,8 +25,10 @@ final class ReaderFunctor implements Functor
      * @template A
      * @template B
      * @template E
+     *
      * @param callable(A): B $f
      * @param HK1<ReaderBrand, A> $a
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure

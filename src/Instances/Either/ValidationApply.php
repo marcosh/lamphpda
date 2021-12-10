@@ -38,8 +38,10 @@ final class ValidationApply implements Apply
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
+     *
      * @return Either<E, B>
      *
      * @psalm-pure
@@ -54,8 +56,10 @@ final class ValidationApply implements Apply
     /**
      * @template A
      * @template B
+     *
      * @param HK1<EitherBrand<E>, callable(A): B> $f
      * @param HK1<EitherBrand<E>, A> $a
+     *
      * @return Either<E, B>
      *
      * @psalm-pure
@@ -70,32 +74,38 @@ final class ValidationApply implements Apply
         return $eitherF->eval(
             /**
              * @param E $ef
+             *
              * @return Either<E, B>
              */
             fn ($ef) => $eitherA->eval(
                 /**
                  * @param E $ea
+                 *
                  * @return Either<E, B>
                  */
                 fn ($ea) => Either::left($this->semigroup->append($ef, $ea)),
                 /**
                  * @param A $_a
+                 *
                  * @return Either<E, B>
                  */
                 fn ($_a) => Either::left($ef)
             ),
             /**
              * @param callable(A): B $f
+             *
              * @return Either<E, B>
              */
             fn ($f) => $eitherA->eval(
                 /**
                  * @param E $e
+                 *
                  * @return Either<E, B>
                  */
                 fn ($e) => Either::left($e),
                 /**
                  * @param A $a
+                 *
                  * @return Either<E, B>
                  */
                 fn ($a) => Either::right($f($a))

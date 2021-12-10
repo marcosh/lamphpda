@@ -24,7 +24,9 @@ interface DefaultMonad extends DefaultApplicative
 {
     /**
      * @template B
+     *
      * @param callable(A): HK1<F, B> $f
+     *
      * @return HK1<F, B>
      */
     public function bind(callable $f): HK1;

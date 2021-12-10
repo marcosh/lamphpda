@@ -30,6 +30,7 @@ final class ConcatenationMonoid implements Monoid
     /**
      * @param list<A> $a
      * @param list<A> $b
+     *
      * @return list<A>
      */
     public function append($a, $b)

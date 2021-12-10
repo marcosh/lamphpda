@@ -25,8 +25,10 @@ final class ReaderApply implements Apply
      * @template A
      * @template B
      * @template E
+     *
      * @param callable(A): B $f
      * @param HK1<ReaderBrand, A> $a
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class ReaderApply implements Apply
      * @template A
      * @template B
      * @template E
+     *
      * @param HK1<ReaderBrand, callable(A): B> $f
      * @param HK1<ReaderBrand, A> $a
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -54,6 +58,7 @@ final class ReaderApply implements Apply
         return Reader::reader(
             /**
              * @param E $env
+             *
              * @return B
              */
             static fn($env) => ($readerF->runReader($env))($readerA->runReader($env))

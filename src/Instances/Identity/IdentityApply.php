@@ -24,8 +24,10 @@ final class IdentityApply implements Apply
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<IdentityBrand, A> $a
+     *
      * @return Identity<B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class IdentityApply implements Apply
     /**
      * @template A
      * @template B
+     *
      * @param HK1<IdentityBrand, callable(A): B> $f
      * @param HK1<IdentityBrand, A> $a
+     *
      * @return Identity<B>
      *
      * @psalm-mutation-free

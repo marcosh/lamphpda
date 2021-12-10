@@ -59,7 +59,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param B $value
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -71,6 +73,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -82,7 +85,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param HK1<MaybeBrand, B> $b
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -95,8 +100,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param B $ifNothing
      * @param callable(A): B $ifJust
+     *
      * @return B
      */
     public function eval(
@@ -113,6 +120,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @param A $a
+     *
      * @return A
      */
     public function withDefault($a)
@@ -121,6 +129,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
             $a,
             /**
              * @param A $a
+             *
              * @return A
              */
             fn($a) => $a
@@ -129,8 +138,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Functor<MaybeBrand> $functor
      * @param callable(A): B $f
+     *
      * @return Maybe<B>
      */
     public function imap(Functor $functor, callable $f): Maybe
@@ -141,7 +152,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param callable(A): B $f
+     *
      * @return Maybe<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -153,8 +166,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Apply<MaybeBrand> $apply
      * @param HK1<MaybeBrand, callable(A): B> $f
+     *
      * @return Maybe<B>
      */
     public function iapply(Apply $apply, HK1 $f): Maybe
@@ -165,7 +180,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param HK1<MaybeBrand, callable(A): B> $f
+     *
      * @return Maybe<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -177,8 +194,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Applicative<MaybeBrand> $applicative
      * @param B $a
+     *
      * @return Maybe<B>
      */
     public static function ipure(Applicative $applicative, $a): Maybe
@@ -188,7 +207,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param B $a
+     *
      * @return Maybe<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -200,8 +221,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Monad<MaybeBrand> $monad
      * @param callable(A): HK1<MaybeBrand, B> $f
+     *
      * @return Maybe<B>
      */
     public function ibind(Monad $monad, callable $f): Maybe
@@ -212,7 +235,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param callable(A): HK1<MaybeBrand, B> $f
+     *
      * @return Maybe<B>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -224,9 +249,11 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param Foldable<MaybeBrand> $foldable
      * @param pure-callable(A, B): B $f
      * @param B $b
+     *
      * @return B
      */
     public function ifoldr(Foldable $foldable, callable $f, $b)
@@ -237,8 +264,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
+     *
      * @return B
      */
     public function foldr(callable $f, $b)
@@ -249,9 +278,11 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     /**
      * @template F of Brand
      * @template B
+     *
      * @param Traversable<MaybeBrand> $traversable
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
+     *
      * @return HK1<F, Maybe<B>>
      */
     public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
@@ -266,8 +297,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     /**
      * @template F of Brand
      * @template B
+     *
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
+     *
      * @return HK1<F, Maybe<B>>
      *
      * @psalm-suppress LessSpecificImplementedReturnType

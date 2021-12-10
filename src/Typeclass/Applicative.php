@@ -23,7 +23,9 @@ interface Applicative extends Apply
 {
     /**
      * @template A
+     *
      * @param A $a
+     *
      * @return HK1<F, A>
      *
      * @psalm-pure

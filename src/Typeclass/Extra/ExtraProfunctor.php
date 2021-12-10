@@ -35,8 +35,10 @@ final class ExtraProfunctor
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A): B $f
      * @param HK2<F, C, A> $hk
+     *
      * @return HK2<F, C, B>
      */
     public function rmap(callable $f, HK2 $hk): HK2
@@ -44,6 +46,7 @@ final class ExtraProfunctor
         return $this->profunctor->diMap(
             /**
              * @param C $c
+             *
              * @return C
              */
             fn($c) => $c,
@@ -56,8 +59,10 @@ final class ExtraProfunctor
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A): B $f
      * @param HK2<F, B, C> $hk
+     *
      * @return HK2<F, A, C>
      */
     public function lmap(callable $f, HK2 $hk): HK2
@@ -66,6 +71,7 @@ final class ExtraProfunctor
             $f,
             /**
              * @param C $c
+             *
              * @return C
              */
             fn($c) => $c,

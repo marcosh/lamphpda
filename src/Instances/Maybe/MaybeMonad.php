@@ -24,8 +24,10 @@ final class MaybeMonad implements Monad
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class MaybeMonad implements Monad
     /**
      * @template A
      * @template B
+     *
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @param HK1<MaybeBrand, A> $a
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -55,7 +59,9 @@ final class MaybeMonad implements Monad
 
     /**
      * @template A
+     *
      * @param A $a
+     *
      * @return Maybe<A>
      *
      * @psalm-pure
@@ -70,8 +76,10 @@ final class MaybeMonad implements Monad
     /**
      * @template A
      * @template B
+     *
      * @param HK1<MaybeBrand, A> $a
      * @param callable(A): HK1<MaybeBrand, B> $f
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -86,6 +94,7 @@ final class MaybeMonad implements Monad
             Maybe::nothing(),
             /**
              * @param A $a
+             *
              * @return Maybe<B>
              */
             fn($a) => Maybe::fromBrand($f($a))

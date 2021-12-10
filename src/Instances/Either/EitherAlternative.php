@@ -39,8 +39,10 @@ final class EitherAlternative implements Alternative
     /**
      * @template A
      * @template B
+     *
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
+     *
      * @return Either<E, B>
      *
      * @psalm-pure
@@ -55,8 +57,10 @@ final class EitherAlternative implements Alternative
     /**
      * @template A
      * @template B
+     *
      * @param HK1<EitherBrand<E>, callable(A): B> $f
      * @param HK1<EitherBrand<E>, A> $a
+     *
      * @return Either<E, B>
      *
      * @psalm-pure
@@ -70,7 +74,9 @@ final class EitherAlternative implements Alternative
 
     /**
      * @template A
+     *
      * @param A $a
+     *
      * @return Either<E, A>
      *
      * @psalm-pure
@@ -84,6 +90,7 @@ final class EitherAlternative implements Alternative
 
     /**
      * @template A
+     *
      * @return Either<E, A>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -95,8 +102,10 @@ final class EitherAlternative implements Alternative
 
     /**
      * @template A
+     *
      * @param HK1<EitherBrand<E>, A> $a
      * @param HK1<EitherBrand<E>, A> $b
+     *
      * @return Either<E, A>
      *
      * @psalm-suppress LessSpecificImplementedReturnType

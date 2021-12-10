@@ -29,8 +29,10 @@ final class TraversableMonoid implements Monoid
 
     /**
      * @template A
+     *
      * @param Traversable<A> $a
      * @param Traversable<A> $b
+     *
      * @return Traversable<A>
      *
      * @psalm-pure

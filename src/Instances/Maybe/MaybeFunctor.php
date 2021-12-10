@@ -24,8 +24,10 @@ final class MaybeFunctor implements Functor
     /**
      * @template A
      * @template B
+     *
      * @param callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
+     *
      * @return Maybe<B>
      *
      * @psalm-pure
@@ -38,6 +40,7 @@ final class MaybeFunctor implements Functor
             Maybe::nothing(),
             /**
              * @param A $value
+             *
              * @return Maybe<B>
              */
             fn($value) => Maybe::just($f($value))

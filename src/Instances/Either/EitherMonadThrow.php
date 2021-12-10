@@ -27,8 +27,10 @@ final class EitherMonadThrow implements MonadThrow
      * @template A
      * @template B
      * @template C
+     *
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return Either<C, B>
      *
      * @psalm-pure
@@ -44,8 +46,10 @@ final class EitherMonadThrow implements MonadThrow
      * @template A
      * @template B
      * @template C
+     *
      * @param HK1<EitherBrand<C>, callable(A): B> $f
      * @param HK1<EitherBrand<C>, A> $a
+     *
      * @return Either<C, B>
      *
      * @psalm-pure
@@ -60,7 +64,9 @@ final class EitherMonadThrow implements MonadThrow
     /**
      * @template A
      * @template B
+     *
      * @param A $a
+     *
      * @return Either<B, A>
      *
      * @psalm-pure
@@ -76,8 +82,10 @@ final class EitherMonadThrow implements MonadThrow
      * @template A
      * @template B
      * @template C
+     *
      * @param HK1<EitherBrand<C>, A> $a
      * @param callable(A): HK1<EitherBrand<C>, B> $f
+     *
      * @return Either<C, B>
      *
      * @psalm-pure
@@ -91,7 +99,9 @@ final class EitherMonadThrow implements MonadThrow
 
     /**
      * @template A
+     *
      * @param E $e
+     *
      * @return Either<E, A>
      *
      * @psalm-pure

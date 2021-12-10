@@ -69,7 +69,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param C $value
+     *
      * @return Either<C, D>
      *
      * @psalm-pure
@@ -82,7 +84,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param D $value
+     *
      * @return Either<C, D>
      *
      * @psalm-pure
@@ -95,7 +99,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param HK1<EitherBrand<C>, D> $hk
+     *
      * @return Either<C, D>
      *
      * @psalm-pure
@@ -109,7 +115,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param HK2Covariant<EitherBrand2, C, D> $hk
+     *
      * @return Either<C, D>
      *
      * @psalm-pure
@@ -122,8 +130,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param callable(A): C $ifLeft
      * @param callable(B): C $ifRight
+     *
      * @return C
      *
      * @psalm-mutation-free
@@ -143,8 +153,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param Functor<EitherBrand<A>> $functor
      * @param pure-callable(B): C $f
+     *
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -157,7 +169,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param pure-callable(B): C $f
+     *
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -172,9 +186,11 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param Bifunctor<EitherBrand2> $bifunctor
      * @param callable(A): C $f
      * @param callable(B): D $g
+     *
      * @return Either<C, D>
      *
      * @psalm-mutation-free
@@ -187,8 +203,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param callable(A): C $f
      * @param callable(B): D $g
+     *
      * @return Either<C, D>
      *
      * @psalm-mutation-free
@@ -200,7 +218,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param callable(A): C $f
+     *
      * @return Either<C, B>
      *
      * @psalm-mutation-free
@@ -211,6 +231,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
             $f,
             /**
              * @param B $b
+             *
              * @return B
              */
             fn($b) => $b
@@ -219,8 +240,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param Apply<EitherBrand<A>> $apply
      * @param HK1<EitherBrand<A>, callable(B): C> $f
+     *
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -233,7 +256,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param HK1<EitherBrand<A>, callable(B): C> $f
+     *
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -248,8 +273,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param Applicative<EitherBrand<A>> $applicative
      * @param D $a
+     *
      * @return Either<C, D>
      *
      * @psalm-mutation-free
@@ -262,7 +289,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
+     *
      * @param D $a
+     *
      * @return Either<C, D>
      *
      * @psalm-mutation-free
@@ -276,8 +305,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param Monad<EitherBrand<A>> $monad
      * @param callable(B): HK1<EitherBrand<A>, C> $f
+     *
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -290,7 +321,9 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param callable(B): HK1<EitherBrand<A>, C> $f
+     *
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -304,9 +337,11 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param Foldable<EitherBrand<A>> $foldable
      * @param pure-callable(B, C): C $f
      * @param C $b
+     *
      * @return C
      *
      * @psalm-mutation-free
@@ -319,8 +354,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
      * @param pure-callable(B, C): C $f
      * @param C $b
+     *
      * @return C
      *
      * @psalm-mutation-free
@@ -333,9 +370,11 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template F of Brand
      * @template C
+     *
      * @param Traversable<EitherBrand<A>> $traversable
      * @param Applicative<F> $applicative
      * @param callable(B): HK1<F, C> $f
+     *
      * @return HK1<F, Either<A, C>>
      *
      * @psalm-mutation-free
@@ -355,8 +394,10 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template F of Brand
      * @template C
+     *
      * @param Applicative<F> $applicative
      * @param callable(B): HK1<F, C> $f
+     *
      * @return HK1<F, Either<A, C>>
      *
      * @psalm-mutation-free

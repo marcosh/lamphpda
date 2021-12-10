@@ -40,7 +40,9 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
 
     /**
      * @template B
+     *
      * @param PhpTraversable<B> $traversable
+     *
      * @return Traversable<B>
      *
      * @psalm-pure
@@ -52,7 +54,9 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
 
     /**
      * @template B
+     *
      * @param array<B> $array
+     *
      * @return Traversable<B>
      *
      * @psalm-pure
@@ -73,7 +77,9 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
 
     /**
      * @template B
+     *
      * @param HK1<TraversableBrand, B> $hk
+     *
      * @return Traversable<B>
      *
      * @psalm-pure
@@ -86,9 +92,11 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
 
     /**
      * @template B
+     *
      * @param Foldable<TraversableBrand> $foldable
      * @param pure-callable(A, B): B $f
      * @param B $b
+     *
      * @return B
      *
      * @psalm-mutation-free
@@ -100,8 +108,10 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
 
     /**
      * @template B
+     *
      * @param pure-callable(A, B): B $f
      * @param B $b
+     *
      * @return B
      *
      * @psalm-mutation-free

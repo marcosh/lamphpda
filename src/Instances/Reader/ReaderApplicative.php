@@ -25,8 +25,10 @@ final class ReaderApplicative implements Applicative
      * @template A
      * @template B
      * @template E
+     *
      * @param callable(A): B $f
      * @param HK1<ReaderBrand<E>, A> $a
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -40,8 +42,10 @@ final class ReaderApplicative implements Applicative
      * @template A
      * @template B
      * @template E
+     *
      * @param HK1<ReaderBrand<E>, callable(A): B> $f
      * @param HK1<ReaderBrand<E>, A> $a
+     *
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -54,7 +58,9 @@ final class ReaderApplicative implements Applicative
     /**
      * @template A
      * @template E
+     *
      * @param A $a
+     *
      * @return Reader<E, A>
      *
      * @psalm-pure

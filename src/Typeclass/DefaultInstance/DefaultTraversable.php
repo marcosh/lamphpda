@@ -27,8 +27,10 @@ interface DefaultTraversable extends DefaultFunctor, DefaultFoldable
     /**
      * @template F of Brand
      * @template B
+     *
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
+     *
      * @return HK1<F, HK1<T, B>>
      */
     public function traverse(Applicative $applicative, callable $f): HK1;

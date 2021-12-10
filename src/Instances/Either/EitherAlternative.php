@@ -40,20 +40,20 @@ final class EitherAlternative implements Alternative
 
     /**
      * @template A
-     * @template B
      *
-     * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
+     * @param HK1<EitherBrand<E>, A> $b
      *
-     * @return Either<E, B>
-     *
-     * @psalm-pure
+     * @return Either<E, A>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f, HK1 $a): HK1
+    public function alt(HK1 $a, HK1 $b): Either
     {
-        return (new EitherFunctor())->map($f, $a);
+        $aEither = Either::fromBrand($a);
+        $bEither = Either::fromBrand($b);
+
+        return (new MeetEitherSemigroup($this->eMonoid, new FirstSemigroup()))->append($aEither, $bEither);
     }
 
     /**
@@ -77,22 +77,6 @@ final class EitherAlternative implements Alternative
     /**
      * @template A
      *
-     * @param A $a
-     *
-     * @return Either<E, A>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function pure($a): Either
-    {
-        return (new EitherApplicative())->pure($a);
-    }
-
-    /**
-     * @template A
-     *
      * @return Either<E, A>
      *
      * @psalm-suppress LessSpecificImplementedReturnType
@@ -104,19 +88,35 @@ final class EitherAlternative implements Alternative
 
     /**
      * @template A
+     * @template B
      *
+     * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
-     * @param HK1<EitherBrand<E>, A> $b
      *
-     * @return Either<E, A>
+     * @return Either<E, B>
+     *
+     * @psalm-pure
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function alt(HK1 $a, HK1 $b): Either
+    public function map(callable $f, HK1 $a): HK1
     {
-        $aEither = Either::fromBrand($a);
-        $bEither = Either::fromBrand($b);
+        return (new EitherFunctor())->map($f, $a);
+    }
 
-        return (new MeetEitherSemigroup($this->eMonoid, new FirstSemigroup()))->append($aEither, $bEither);
+    /**
+     * @template A
+     *
+     * @param A $a
+     *
+     * @return Either<E, A>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function pure($a): Either
+    {
+        return (new EitherApplicative())->pure($a);
     }
 }

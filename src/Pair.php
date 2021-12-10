@@ -44,18 +44,14 @@ final class Pair implements HK2Covariant
 
     /**
      * @template C
-     * @template D
      *
-     * @param C $left
-     * @param D $right
+     * @param callable(A, B): C $f
      *
-     * @return Pair<C, D>
-     *
-     * @psalm-pure
+     * @return C
      */
-    public static function pair($left, $right): self
+    public function eval(callable $f)
     {
-        return new self($left, $right);
+        return $f($this->left, $this->right);
     }
 
     /**
@@ -76,13 +72,17 @@ final class Pair implements HK2Covariant
 
     /**
      * @template C
+     * @template D
      *
-     * @param callable(A, B): C $f
+     * @param C $left
+     * @param D $right
      *
-     * @return C
+     * @return Pair<C, D>
+     *
+     * @psalm-pure
      */
-    public function eval(callable $f)
+    public static function pair($left, $right): self
     {
-        return $f($this->left, $this->right);
+        return new self($left, $right);
     }
 }

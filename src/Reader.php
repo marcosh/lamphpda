@@ -47,41 +47,13 @@ final class Reader implements DefaultMonad
     /**
      * @template B
      *
-     * @param callable(E): B $f
+     * @param HK1<ReaderBrand<E>, callable(A): B> $f
      *
      * @return Reader<E, B>
-     *
-     * @psalm-pure
      */
-    public static function reader(callable $f): Reader
+    public function apply(HK1 $f): Reader
     {
-        return new self($f);
-    }
-
-    /**
-     * @template B
-     * @template F
-     *
-     * @param HK1<ReaderBrand<F>, B> $b
-     *
-     * @return Reader<F, B>
-     *
-     * @psalm-pure
-     */
-    public static function fromBrand(HK1 $b): Reader
-    {
-        /** @var Reader<F, B> $b */
-        return $b;
-    }
-
-    /**
-     * @param E $environment
-     *
-     * @return A
-     */
-    public function runReader($environment)
-    {
-        return ($this->action)($environment);
+        return $this->iapply(new ReaderApply(), $f);
     }
 
     /**
@@ -102,26 +74,29 @@ final class Reader implements DefaultMonad
     /**
      * @template B
      *
-     * @param Functor<ReaderBrand<E>> $functor
-     * @param pure-callable(A): B $f
+     * @param callable(A): HK1<ReaderBrand<E>, B> $f
      *
      * @return Reader<E, B>
      */
-    public function imap(Functor $functor, callable $f): Reader
+    public function bind(callable $f): Reader
     {
-        return self::fromBrand($functor->map($f, $this));
+        return $this->ibind(new ReaderMonad(), $f);
     }
 
     /**
      * @template B
+     * @template F
      *
-     * @param pure-callable(A): B $f
+     * @param HK1<ReaderBrand<F>, B> $b
      *
-     * @return Reader<E, B>
+     * @return Reader<F, B>
+     *
+     * @psalm-pure
      */
-    public function map(callable $f): Reader
+    public static function fromBrand(HK1 $b): Reader
     {
-        return $this->imap(new ReaderFunctor(), $f);
+        /** @var Reader<F, B> $b */
+        return $b;
     }
 
     /**
@@ -140,13 +115,27 @@ final class Reader implements DefaultMonad
     /**
      * @template B
      *
-     * @param HK1<ReaderBrand<E>, callable(A): B> $f
+     * @param Monad<ReaderBrand<E>> $monad
+     * @param callable(A): HK1<ReaderBrand<E>, B> $f
      *
      * @return Reader<E, B>
      */
-    public function apply(HK1 $f): Reader
+    public function ibind(Monad $monad, callable $f): Reader
     {
-        return $this->iapply(new ReaderApply(), $f);
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template B
+     *
+     * @param Functor<ReaderBrand<E>> $functor
+     * @param pure-callable(A): B $f
+     *
+     * @return Reader<E, B>
+     */
+    public function imap(Functor $functor, callable $f): Reader
+    {
+        return self::fromBrand($functor->map($f, $this));
     }
 
     /**
@@ -168,6 +157,18 @@ final class Reader implements DefaultMonad
     /**
      * @template B
      *
+     * @param pure-callable(A): B $f
+     *
+     * @return Reader<E, B>
+     */
+    public function map(callable $f): Reader
+    {
+        return $this->imap(new ReaderFunctor(), $f);
+    }
+
+    /**
+     * @template B
+     *
      * @param B $a
      *
      * @return Reader<E, B>
@@ -182,25 +183,24 @@ final class Reader implements DefaultMonad
     /**
      * @template B
      *
-     * @param Monad<ReaderBrand<E>> $monad
-     * @param callable(A): HK1<ReaderBrand<E>, B> $f
+     * @param callable(E): B $f
      *
      * @return Reader<E, B>
+     *
+     * @psalm-pure
      */
-    public function ibind(Monad $monad, callable $f): Reader
+    public static function reader(callable $f): Reader
     {
-        return self::fromBrand($monad->bind($this, $f));
+        return new self($f);
     }
 
     /**
-     * @template B
+     * @param E $environment
      *
-     * @param callable(A): HK1<ReaderBrand<E>, B> $f
-     *
-     * @return Reader<E, B>
+     * @return A
      */
-    public function bind(callable $f): Reader
+    public function runReader($environment)
     {
-        return $this->ibind(new ReaderMonad(), $f);
+        return ($this->action)($environment);
     }
 }

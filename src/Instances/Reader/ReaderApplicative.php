@@ -21,22 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
  */
 final class ReaderApplicative implements Applicative
 {
-    /**
-     * @template A
-     * @template B
-     * @template E
-     *
-     * @param callable(A): B $f
-     * @param HK1<ReaderBrand<E>, A> $a
-     *
-     * @return Reader<E, B>
-     *
-     * @psalm-pure
-     */
-    public function map(callable $f, HK1 $a): Reader
-    {
-        return (new ReaderFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -53,6 +37,22 @@ final class ReaderApplicative implements Applicative
     public function apply(HK1 $f, HK1 $a): Reader
     {
         return (new ReaderApply())->apply($f, $a);
+    }
+    /**
+     * @template A
+     * @template B
+     * @template E
+     *
+     * @param callable(A): B $f
+     * @param HK1<ReaderBrand<E>, A> $a
+     *
+     * @return Reader<E, B>
+     *
+     * @psalm-pure
+     */
+    public function map(callable $f, HK1 $a): Reader
+    {
+        return (new ReaderFunctor())->map($f, $a);
     }
 
     /**

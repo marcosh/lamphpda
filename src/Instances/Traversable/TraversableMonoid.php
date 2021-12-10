@@ -19,13 +19,6 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class TraversableMonoid implements Monoid
 {
-    /**
-     * @psalm-pure
-     */
-    public function mempty(): Traversable
-    {
-        return Traversable::fromArray([]);
-    }
 
     /**
      * @template A
@@ -52,5 +45,12 @@ final class TraversableMonoid implements Monoid
         }
 
         return Traversable::fromArray($ret);
+    }
+    /**
+     * @psalm-pure
+     */
+    public function mempty(): Traversable
+    {
+        return Traversable::fromArray([]);
     }
 }

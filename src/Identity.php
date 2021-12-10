@@ -53,15 +53,42 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @template B
      *
-     * @param B $value
+     * @param HK1<IdentityBrand, callable(A): B> $f
      *
      * @return Identity<B>
      *
-     * @psalm-pure
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function wrap($value): Identity
+    public function apply(HK1 $f): Identity
     {
-        return new self($value);
+        return $this->iapply(new IdentityApply(), $f);
+    }
+
+    /**
+     * @template B
+     *
+     * @param callable(A): HK1<IdentityBrand, B> $f
+     *
+     * @return Identity<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function bind(callable $f): Identity
+    {
+        return $this->ibind(new IdentityMonad(), $f);
+    }
+
+    /**
+     * @template B
+     *
+     * @param pure-callable(A, B): B $f
+     * @param B $b
+     *
+     * @return B
+     */
+    public function foldr(callable $f, $b)
+    {
+        return $this->ifoldr(new IdentityFoldable(), $f, $b);
     }
 
     /**
@@ -77,43 +104,6 @@ final class Identity implements DefaultMonad, DefaultTraversable
     {
         /** @var Identity $b */
         return $b;
-    }
-
-    /**
-     * @return A
-     */
-    public function unwrap()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @template B
-     *
-     * @param Functor<IdentityBrand> $functor
-     * @param callable(A): B $f
-     *
-     * @return Identity<B>
-     *
-     * @psalm-suppress ArgumentTypeCoercion
-     */
-    public function imap(Functor $functor, callable $f): Identity
-    {
-        return self::fromBrand($functor->map($f, $this));
-    }
-
-    /**
-     * @template B
-     *
-     * @param callable(A): B $f
-     *
-     * @return Identity<B>
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f): Identity
-    {
-        return $this->imap(new IdentityFunctor(), $f);
     }
 
     /**
@@ -134,47 +124,6 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @template B
      *
-     * @param HK1<IdentityBrand, callable(A): B> $f
-     *
-     * @return Identity<B>
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function apply(HK1 $f): Identity
-    {
-        return $this->iapply(new IdentityApply(), $f);
-    }
-
-    /**
-     * @template B
-     *
-     * @param Applicative<IdentityBrand> $applicative
-     * @param B $a
-     *
-     * @return Identity<B>
-     */
-    public static function ipure(Applicative $applicative, $a): Identity
-    {
-        return self::fromBrand($applicative->pure($a));
-    }
-
-    /**
-     * @template B
-     *
-     * @param B $a
-     *
-     * @return Identity<B>
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public static function pure($a): Identity
-    {
-        return self::ipure(new IdentityApplicative(), $a);
-    }
-
-    /**
-     * @template B
-     *
      * @param Monad<IdentityBrand> $monad
      * @param callable(A): HK1<IdentityBrand, B> $f
      *
@@ -185,20 +134,6 @@ final class Identity implements DefaultMonad, DefaultTraversable
     public function ibind(Monad $monad, callable $f): Identity
     {
         return self::fromBrand($monad->bind($this, $f));
-    }
-
-    /**
-     * @template B
-     *
-     * @param callable(A): HK1<IdentityBrand, B> $f
-     *
-     * @return Identity<B>
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function bind(callable $f): Identity
-    {
-        return $this->ibind(new IdentityMonad(), $f);
     }
 
     /**
@@ -220,14 +155,29 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @template B
      *
-     * @param pure-callable(A, B): B $f
-     * @param B $b
+     * @param Functor<IdentityBrand> $functor
+     * @param callable(A): B $f
      *
-     * @return B
+     * @return Identity<B>
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      */
-    public function foldr(callable $f, $b)
+    public function imap(Functor $functor, callable $f): Identity
     {
-        return $this->ifoldr(new IdentityFoldable(), $f, $b);
+        return self::fromBrand($functor->map($f, $this));
+    }
+
+    /**
+     * @template B
+     *
+     * @param Applicative<IdentityBrand> $applicative
+     * @param B $a
+     *
+     * @return Identity<B>
+     */
+    public static function ipure(Applicative $applicative, $a): Identity
+    {
+        return self::fromBrand($applicative->pure($a));
     }
 
     /**
@@ -249,6 +199,34 @@ final class Identity implements DefaultMonad, DefaultTraversable
     }
 
     /**
+     * @template B
+     *
+     * @param callable(A): B $f
+     *
+     * @return Identity<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f): Identity
+    {
+        return $this->imap(new IdentityFunctor(), $f);
+    }
+
+    /**
+     * @template B
+     *
+     * @param B $a
+     *
+     * @return Identity<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public static function pure($a): Identity
+    {
+        return self::ipure(new IdentityApplicative(), $a);
+    }
+
+    /**
      * @template F of Brand
      * @template B
      *
@@ -262,5 +240,27 @@ final class Identity implements DefaultMonad, DefaultTraversable
     public function traverse(Applicative $applicative, callable $f): HK1
     {
         return $this->itraverse(new IdentityTraversable(), $applicative, $f);
+    }
+
+    /**
+     * @return A
+     */
+    public function unwrap()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @template B
+     *
+     * @param B $value
+     *
+     * @return Identity<B>
+     *
+     * @psalm-pure
+     */
+    public static function wrap($value): Identity
+    {
+        return new self($value);
     }
 }

@@ -21,24 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class EitherApply implements Apply
 {
-    /**
-     * @template A
-     * @template B
-     * @template C
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<EitherBrand<C>, A> $a
-     *
-     * @return Either<C, B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): HK1
-    {
-        return (new EitherFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -86,5 +68,23 @@ final class EitherApply implements Apply
                 fn($a) => Either::right($f($a))
             )
         );
+    }
+    /**
+     * @template A
+     * @template B
+     * @template C
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<EitherBrand<C>, A> $a
+     *
+     * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): HK1
+    {
+        return (new EitherFunctor())->map($f, $a);
     }
 }

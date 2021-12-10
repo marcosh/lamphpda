@@ -43,15 +43,16 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
     /**
      * @template B
      *
-     * @param PhpTraversable<B> $traversable
+     * @param pure-callable(A, B): B $f
+     * @param B $b
      *
-     * @return Traversable<B>
+     * @return B
      *
-     * @psalm-pure
+     * @psalm-mutation-free
      */
-    public static function fromPhpTraversable(PhpTraversable $traversable): self
+    public function foldr(callable $f, $b)
     {
-        return new self($traversable);
+        return $this->ifoldr(new TraversableFoldable(), $f, $b);
     }
 
     /**
@@ -67,14 +68,6 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
     {
         /** @psalm-suppress ImpureMethodCall */
         return new self(new ArrayIterator($array));
-    }
-
-    /**
-     * @return PhpTraversable<A>
-     */
-    public function getIterator(): PhpTraversable
-    {
-        return $this->traversable;
     }
 
     /**
@@ -95,6 +88,28 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
     /**
      * @template B
      *
+     * @param PhpTraversable<B> $traversable
+     *
+     * @return Traversable<B>
+     *
+     * @psalm-pure
+     */
+    public static function fromPhpTraversable(PhpTraversable $traversable): self
+    {
+        return new self($traversable);
+    }
+
+    /**
+     * @return PhpTraversable<A>
+     */
+    public function getIterator(): PhpTraversable
+    {
+        return $this->traversable;
+    }
+
+    /**
+     * @template B
+     *
      * @param Foldable<TraversableBrand> $foldable
      * @param pure-callable(A, B): B $f
      * @param B $b
@@ -106,20 +121,5 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
     public function ifoldr(Foldable $foldable, callable $f, $b)
     {
         return $foldable->foldr($f, $b, $this);
-    }
-
-    /**
-     * @template B
-     *
-     * @param pure-callable(A, B): B $f
-     * @param B $b
-     *
-     * @return B
-     *
-     * @psalm-mutation-free
-     */
-    public function foldr(callable $f, $b)
-    {
-        return $this->ifoldr(new TraversableFoldable(), $f, $b);
     }
 }

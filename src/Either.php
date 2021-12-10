@@ -73,32 +73,88 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
-     * @template D
      *
-     * @param C $value
+     * @param HK1<EitherBrand<A>, callable(B): C> $f
      *
-     * @return Either<C, D>
+     * @return Either<A, C>
      *
-     * @psalm-pure
+     * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function left($value): Either
+    public function apply(HK1 $f): Either
     {
-        return new self(false, $value);
+        return $this->iapply(new EitherApply(), $f);
     }
 
     /**
      * @template C
      * @template D
      *
-     * @param D $value
+     * @param callable(A): C $f
+     * @param callable(B): D $g
      *
      * @return Either<C, D>
      *
-     * @psalm-pure
+     * @psalm-mutation-free
      */
-    public static function right($value): Either
+    public function biMap(callable $f, callable $g): Either
     {
-        return new self(true, null, $value);
+        return $this->ibiMap(new EitherBifunctor(), $f, $g);
+    }
+
+    /**
+     * @template C
+     *
+     * @param callable(B): HK1<EitherBrand<A>, C> $f
+     *
+     * @return Either<A, C>
+     *
+     * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function bind(callable $f): Either
+    {
+        return $this->ibind(new EitherMonad(), $f);
+    }
+
+    /**
+     * @template C
+     *
+     * @param callable(A): C $ifLeft
+     * @param callable(B): C $ifRight
+     *
+     * @return C
+     *
+     * @psalm-mutation-free
+     */
+    public function eval(
+        callable $ifLeft,
+        callable $ifRight
+    ) {
+        if ($this->isRight) {
+            /** @psalm-suppress PossiblyNullArgument */
+            return $ifRight($this->rightValue);
+        }
+
+        /** @psalm-suppress PossiblyNullArgument */
+        return $ifLeft($this->leftValue);
+    }
+
+    /**
+     * @template C
+     *
+     * @param pure-callable(B, C): C $f
+     * @param C $b
+     *
+     * @return C
+     *
+     * @psalm-mutation-free
+     */
+    public function foldr(callable $f, $b)
+    {
+        return $this->ifoldr(new EitherFoldable(), $f, $b);
     }
 
     /**
@@ -136,56 +192,17 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      *
-     * @param callable(A): C $ifLeft
-     * @param callable(B): C $ifRight
-     *
-     * @return C
-     *
-     * @psalm-mutation-free
-     */
-    public function eval(
-        callable $ifLeft,
-        callable $ifRight
-    ) {
-        if ($this->isRight) {
-            /** @psalm-suppress PossiblyNullArgument */
-            return $ifRight($this->rightValue);
-        }
-
-        /** @psalm-suppress PossiblyNullArgument */
-        return $ifLeft($this->leftValue);
-    }
-
-    /**
-     * @template C
-     *
-     * @param Functor<EitherBrand<A>> $functor
-     * @param pure-callable(B): C $f
+     * @param Apply<EitherBrand<A>> $apply
+     * @param HK1<EitherBrand<A>, callable(B): C> $f
      *
      * @return Either<A, C>
      *
      * @psalm-mutation-free
      */
-    public function imap(Functor $functor, callable $f): Either
+    public function iapply(Apply $apply, HK1 $f): Either
     {
         /** @psalm-suppress ArgumentTypeCoercion */
-        return self::fromBrand($functor->map($f, $this));
-    }
-
-    /**
-     * @template C
-     *
-     * @param pure-callable(B): C $f
-     *
-     * @return Either<A, C>
-     *
-     * @psalm-mutation-free
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f): Either
-    {
-        return $this->imap(new EitherFunctor(), $f);
+        return self::fromBrand($apply->apply($f, $this));
     }
 
     /**
@@ -207,18 +224,122 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     *
+     * @param Monad<EitherBrand<A>> $monad
+     * @param callable(B): HK1<EitherBrand<A>, C> $f
+     *
+     * @return Either<A, C>
+     *
+     * @psalm-mutation-free
+     */
+    public function ibind(Monad $monad, callable $f): Either
+    {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template C
+     *
+     * @param Foldable<EitherBrand<A>> $foldable
+     * @param pure-callable(B, C): C $f
+     * @param C $b
+     *
+     * @return C
+     *
+     * @psalm-mutation-free
+     */
+    public function ifoldr(Foldable $foldable, callable $f, $b)
+    {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return $foldable->foldr($f, $b, $this);
+    }
+
+    /**
+     * @template C
+     *
+     * @param Functor<EitherBrand<A>> $functor
+     * @param pure-callable(B): C $f
+     *
+     * @return Either<A, C>
+     *
+     * @psalm-mutation-free
+     */
+    public function imap(Functor $functor, callable $f): Either
+    {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return self::fromBrand($functor->map($f, $this));
+    }
+
+    /**
+     * @template C
      * @template D
      *
-     * @param callable(A): C $f
-     * @param callable(B): D $g
+     * @param Applicative<EitherBrand<A>> $applicative
+     * @param D $a
      *
      * @return Either<C, D>
      *
      * @psalm-mutation-free
      */
-    public function biMap(callable $f, callable $g): Either
+    public static function ipure(Applicative $applicative, $a): Either
     {
-        return $this->ibiMap(new EitherBifunctor(), $f, $g);
+        return self::fromBrand($applicative->pure($a));
+    }
+
+    /**
+     * @template F of Brand
+     * @template C
+     *
+     * @param Traversable<EitherBrand<A>> $traversable
+     * @param Applicative<F> $applicative
+     * @param callable(B): HK1<F, C> $f
+     *
+     * @return HK1<F, Either<A, C>>
+     *
+     * @psalm-mutation-free
+     *
+     * @psalm-suppress InvalidReturnType
+     */
+    public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
+    {
+        /**
+         * @psalm-suppress InvalidReturnStatement
+         * @psalm-suppress InvalidArgument
+         * @psalm-suppress ArgumentTypeCoercion
+         */
+        return $applicative->map([Either::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+    }
+
+    /**
+     * @template C
+     * @template D
+     *
+     * @param C $value
+     *
+     * @return Either<C, D>
+     *
+     * @psalm-pure
+     */
+    public static function left($value): Either
+    {
+        return new self(false, $value);
+    }
+
+    /**
+     * @template C
+     *
+     * @param pure-callable(B): C $f
+     *
+     * @return Either<A, C>
+     *
+     * @psalm-mutation-free
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f): Either
+    {
+        return $this->imap(new EitherFunctor(), $f);
     }
 
     /**
@@ -245,54 +366,6 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
-     *
-     * @param Apply<EitherBrand<A>> $apply
-     * @param HK1<EitherBrand<A>, callable(B): C> $f
-     *
-     * @return Either<A, C>
-     *
-     * @psalm-mutation-free
-     */
-    public function iapply(Apply $apply, HK1 $f): Either
-    {
-        /** @psalm-suppress ArgumentTypeCoercion */
-        return self::fromBrand($apply->apply($f, $this));
-    }
-
-    /**
-     * @template C
-     *
-     * @param HK1<EitherBrand<A>, callable(B): C> $f
-     *
-     * @return Either<A, C>
-     *
-     * @psalm-mutation-free
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function apply(HK1 $f): Either
-    {
-        return $this->iapply(new EitherApply(), $f);
-    }
-
-    /**
-     * @template C
-     * @template D
-     *
-     * @param Applicative<EitherBrand<A>> $applicative
-     * @param D $a
-     *
-     * @return Either<C, D>
-     *
-     * @psalm-mutation-free
-     */
-    public static function ipure(Applicative $applicative, $a): Either
-    {
-        return self::fromBrand($applicative->pure($a));
-    }
-
-    /**
-     * @template C
      * @template D
      *
      * @param D $a
@@ -310,90 +383,17 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
+     * @template D
      *
-     * @param Monad<EitherBrand<A>> $monad
-     * @param callable(B): HK1<EitherBrand<A>, C> $f
+     * @param D $value
      *
-     * @return Either<A, C>
+     * @return Either<C, D>
      *
-     * @psalm-mutation-free
+     * @psalm-pure
      */
-    public function ibind(Monad $monad, callable $f): Either
+    public static function right($value): Either
     {
-        /** @psalm-suppress ArgumentTypeCoercion */
-        return self::fromBrand($monad->bind($this, $f));
-    }
-
-    /**
-     * @template C
-     *
-     * @param callable(B): HK1<EitherBrand<A>, C> $f
-     *
-     * @return Either<A, C>
-     *
-     * @psalm-mutation-free
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function bind(callable $f): Either
-    {
-        return $this->ibind(new EitherMonad(), $f);
-    }
-
-    /**
-     * @template C
-     *
-     * @param Foldable<EitherBrand<A>> $foldable
-     * @param pure-callable(B, C): C $f
-     * @param C $b
-     *
-     * @return C
-     *
-     * @psalm-mutation-free
-     */
-    public function ifoldr(Foldable $foldable, callable $f, $b)
-    {
-        /** @psalm-suppress ArgumentTypeCoercion */
-        return $foldable->foldr($f, $b, $this);
-    }
-
-    /**
-     * @template C
-     *
-     * @param pure-callable(B, C): C $f
-     * @param C $b
-     *
-     * @return C
-     *
-     * @psalm-mutation-free
-     */
-    public function foldr(callable $f, $b)
-    {
-        return $this->ifoldr(new EitherFoldable(), $f, $b);
-    }
-
-    /**
-     * @template F of Brand
-     * @template C
-     *
-     * @param Traversable<EitherBrand<A>> $traversable
-     * @param Applicative<F> $applicative
-     * @param callable(B): HK1<F, C> $f
-     *
-     * @return HK1<F, Either<A, C>>
-     *
-     * @psalm-mutation-free
-     *
-     * @psalm-suppress InvalidReturnType
-     */
-    public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
-    {
-        /**
-         * @psalm-suppress InvalidReturnStatement
-         * @psalm-suppress InvalidArgument
-         * @psalm-suppress ArgumentTypeCoercion
-         */
-        return $applicative->map([Either::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+        return new self(true, null, $value);
     }
 
     /**

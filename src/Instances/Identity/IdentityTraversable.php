@@ -23,6 +23,21 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class IdentityTraversable implements Traversable
 {
+
+    /**
+     * @template A
+     * @template B
+     *
+     * @param pure-callable(A, B): B $f
+     * @param B $b
+     * @param HK1<IdentityBrand, A> $a
+     *
+     * @return B
+     */
+    public function foldr(callable $f, $b, HK1 $a)
+    {
+        return (new IdentityFoldable())->foldr($f, $b, $a);
+    }
     /**
      * @template A
      * @template B
@@ -39,21 +54,6 @@ final class IdentityTraversable implements Traversable
     public function map(callable $f, HK1 $a): Identity
     {
         return (new IdentityFunctor())->map($f, $a);
-    }
-
-    /**
-     * @template A
-     * @template B
-     *
-     * @param pure-callable(A, B): B $f
-     * @param B $b
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return B
-     */
-    public function foldr(callable $f, $b, HK1 $a)
-    {
-        return (new IdentityFoldable())->foldr($f, $b, $a);
     }
 
     /**

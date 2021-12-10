@@ -23,24 +23,6 @@ use Marcosh\LamPHPda\Typeclass\MonadThrow;
  */
 final class EitherMonadThrow implements MonadThrow
 {
-    /**
-     * @template A
-     * @template B
-     * @template C
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<EitherBrand<C>, A> $a
-     *
-     * @return Either<C, B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): HK1
-    {
-        return (new EitherFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -64,23 +46,6 @@ final class EitherMonadThrow implements MonadThrow
     /**
      * @template A
      * @template B
-     *
-     * @param A $a
-     *
-     * @return Either<B, A>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function pure($a): Either
-    {
-        return (new EitherApplicative())->pure($a);
-    }
-
-    /**
-     * @template A
-     * @template B
      * @template C
      *
      * @param HK1<EitherBrand<C>, A> $a
@@ -95,6 +60,41 @@ final class EitherMonadThrow implements MonadThrow
     public function bind(HK1 $a, callable $f): Either
     {
         return (new EitherMonad())->bind($a, $f);
+    }
+    /**
+     * @template A
+     * @template B
+     * @template C
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<EitherBrand<C>, A> $a
+     *
+     * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): HK1
+    {
+        return (new EitherFunctor())->map($f, $a);
+    }
+
+    /**
+     * @template A
+     * @template B
+     *
+     * @param A $a
+     *
+     * @return Either<B, A>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function pure($a): Either
+    {
+        return (new EitherApplicative())->pure($a);
     }
 
     /**

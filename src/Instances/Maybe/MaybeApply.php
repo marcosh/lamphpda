@@ -21,23 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class MaybeApply implements Apply
 {
-    /**
-     * @template A
-     * @template B
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<MaybeBrand, A> $a
-     *
-     * @return Maybe<B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): Maybe
-    {
-        return (new MaybeFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -73,5 +56,22 @@ final class MaybeApply implements Apply
                 fn($g) => Maybe::just($g($value))
             )
         );
+    }
+    /**
+     * @template A
+     * @template B
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<MaybeBrand, A> $a
+     *
+     * @return Maybe<B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): Maybe
+    {
+        return (new MaybeFunctor())->map($f, $a);
     }
 }

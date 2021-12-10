@@ -40,6 +40,24 @@ final class ListL implements IteratorAggregate, HK1
     }
 
     /**
+     * @param A $a
+     *
+     * @return ListL<A>
+     */
+    public function append($a): self
+    {
+        return new self(array_merge($this->list, [$a]));
+    }
+
+    /**
+     * @return list<A>
+     */
+    public function asNativeList(): array
+    {
+        return $this->list;
+    }
+
+    /**
      * @template B
      *
      * @param HK1<ListBrand, B> $hk
@@ -52,24 +70,6 @@ final class ListL implements IteratorAggregate, HK1
     {
         /** @var ListL<B> */
         return $hk;
-    }
-
-    /**
-     * @return list<A>
-     */
-    public function asNativeList(): array
-    {
-        return $this->list;
-    }
-
-    /**
-     * @param A $a
-     *
-     * @return ListL<A>
-     */
-    public function append($a): self
-    {
-        return new self(array_merge($this->list, [$a]));
     }
 
     /**

@@ -19,13 +19,6 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class ConcatenationMonoid implements Monoid
 {
-    /**
-     * @return list<A>
-     */
-    public function mempty(): array
-    {
-        return [];
-    }
 
     /**
      * @param list<A> $a
@@ -36,5 +29,12 @@ final class ConcatenationMonoid implements Monoid
     public function append($a, $b)
     {
         return array_merge($b, $a);
+    }
+    /**
+     * @return list<A>
+     */
+    public function mempty(): array
+    {
+        return [];
     }
 }

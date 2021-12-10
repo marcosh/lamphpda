@@ -21,24 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class EitherMonad implements Monad
 {
-    /**
-     * @template A
-     * @template B
-     * @template C
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<EitherBrand<C>, A> $a
-     *
-     * @return Either<C, B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): HK1
-    {
-        return (new EitherFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -57,23 +39,6 @@ final class EitherMonad implements Monad
     public function apply(HK1 $f, HK1 $a): Either
     {
         return (new EitherApply())->apply($f, $a);
-    }
-
-    /**
-     * @template A
-     * @template B
-     *
-     * @param A $a
-     *
-     * @return Either<B, A>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function pure($a): Either
-    {
-        return (new EitherApplicative())->pure($a);
     }
 
     /**
@@ -108,5 +73,40 @@ final class EitherMonad implements Monad
              */
             fn($b) => Either::fromBrand($f($b))
         );
+    }
+    /**
+     * @template A
+     * @template B
+     * @template C
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<EitherBrand<C>, A> $a
+     *
+     * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): HK1
+    {
+        return (new EitherFunctor())->map($f, $a);
+    }
+
+    /**
+     * @template A
+     * @template B
+     *
+     * @param A $a
+     *
+     * @return Either<B, A>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function pure($a): Either
+    {
+        return (new EitherApplicative())->pure($a);
     }
 }

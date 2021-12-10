@@ -21,22 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class ReaderApply implements Apply
 {
-    /**
-     * @template A
-     * @template B
-     * @template E
-     *
-     * @param callable(A): B $f
-     * @param HK1<ReaderBrand, A> $a
-     *
-     * @return Reader<E, B>
-     *
-     * @psalm-pure
-     */
-    public function map(callable $f, $a): Reader
-    {
-        return (new ReaderFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -63,5 +47,21 @@ final class ReaderApply implements Apply
              */
             static fn($env) => ($readerF->runReader($env))($readerA->runReader($env))
         );
+    }
+    /**
+     * @template A
+     * @template B
+     * @template E
+     *
+     * @param callable(A): B $f
+     * @param HK1<ReaderBrand, A> $a
+     *
+     * @return Reader<E, B>
+     *
+     * @psalm-pure
+     */
+    public function map(callable $f, $a): Reader
+    {
+        return (new ReaderFunctor())->map($f, $a);
     }
 }

@@ -21,23 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class MaybeMonad implements Monad
 {
-    /**
-     * @template A
-     * @template B
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<MaybeBrand, A> $a
-     *
-     * @return Maybe<B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): Maybe
-    {
-        return (new MaybeFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -55,22 +38,6 @@ final class MaybeMonad implements Monad
     public function apply(HK1 $f, HK1 $a): Maybe
     {
         return (new MaybeApply())->apply($f, $a);
-    }
-
-    /**
-     * @template A
-     *
-     * @param A $a
-     *
-     * @return Maybe<A>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function pure($a): Maybe
-    {
-        return (new MaybeApplicative())->pure($a);
     }
 
     /**
@@ -99,5 +66,38 @@ final class MaybeMonad implements Monad
              */
             fn($a) => Maybe::fromBrand($f($a))
         );
+    }
+    /**
+     * @template A
+     * @template B
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<MaybeBrand, A> $a
+     *
+     * @return Maybe<B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): Maybe
+    {
+        return (new MaybeFunctor())->map($f, $a);
+    }
+
+    /**
+     * @template A
+     *
+     * @param A $a
+     *
+     * @return Maybe<A>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function pure($a): Maybe
+    {
+        return (new MaybeApplicative())->pure($a);
     }
 }

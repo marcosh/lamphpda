@@ -18,10 +18,6 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class ConcatenationMonoid implements Monoid
 {
-    public function mempty(): string
-    {
-        return '';
-    }
 
     /**
      * @param string $a
@@ -30,5 +26,9 @@ final class ConcatenationMonoid implements Monoid
     public function append($a, $b): string
     {
         return $a . $b;
+    }
+    public function mempty(): string
+    {
+        return '';
     }
 }

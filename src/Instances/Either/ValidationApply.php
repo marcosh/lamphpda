@@ -41,24 +41,6 @@ final class ValidationApply implements Apply
      * @template A
      * @template B
      *
-     * @param pure-callable(A): B $f
-     * @param HK1<EitherBrand<E>, A> $a
-     *
-     * @return Either<E, B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): HK1
-    {
-        return (new EitherFunctor())->map($f, $a);
-    }
-
-    /**
-     * @template A
-     * @template B
-     *
      * @param HK1<EitherBrand<E>, callable(A): B> $f
      * @param HK1<EitherBrand<E>, A> $a
      *
@@ -113,5 +95,23 @@ final class ValidationApply implements Apply
                 fn ($a) => Either::right($f($a))
             )
         );
+    }
+
+    /**
+     * @template A
+     * @template B
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<EitherBrand<E>, A> $a
+     *
+     * @return Either<E, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): HK1
+    {
+        return (new EitherFunctor())->map($f, $a);
     }
 }

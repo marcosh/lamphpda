@@ -23,24 +23,6 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class EitherTraversable implements Traversable
 {
-    /**
-     * @template A
-     * @template B
-     * @template C
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<EitherBrand<C>, A> $a
-     *
-     * @return Either<C, B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): HK1
-    {
-        return (new EitherFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -58,6 +40,24 @@ final class EitherTraversable implements Traversable
     public function foldr(callable $f, $b, HK1 $a)
     {
         return (new EitherFoldable())->foldr($f, $b, $a);
+    }
+    /**
+     * @template A
+     * @template B
+     * @template C
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<EitherBrand<C>, A> $a
+     *
+     * @return Either<C, B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): HK1
+    {
+        return (new EitherFunctor())->map($f, $a);
     }
 
 

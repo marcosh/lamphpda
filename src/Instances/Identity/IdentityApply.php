@@ -21,23 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class IdentityApply implements Apply
 {
-    /**
-     * @template A
-     * @template B
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): Identity
-    {
-        return (new IdentityFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -58,5 +41,22 @@ final class IdentityApply implements Apply
         $identityA = Identity::fromBrand($a);
 
         return Identity::wrap(($identityF->unwrap())($identityA->unwrap()));
+    }
+    /**
+     * @template A
+     * @template B
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<IdentityBrand, A> $a
+     *
+     * @return Identity<B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): Identity
+    {
+        return (new IdentityFunctor())->map($f, $a);
     }
 }

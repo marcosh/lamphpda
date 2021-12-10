@@ -21,23 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class IdentityMonad implements Monad
 {
-    /**
-     * @template A
-     * @template B
-     *
-     * @param pure-callable(A): B $f
-     * @param HK1<IdentityBrand, A> $a
-     *
-     * @return Identity<B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function map(callable $f, HK1 $a): Identity
-    {
-        return (new IdentityFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -59,22 +42,6 @@ final class IdentityMonad implements Monad
 
     /**
      * @template A
-     *
-     * @param A $a
-     *
-     * @return Identity<A>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function pure($a): Identity
-    {
-        return (new IdentityApplicative())->pure($a);
-    }
-
-    /**
-     * @template A
      * @template B
      *
      * @param HK1<IdentityBrand, A> $a
@@ -91,5 +58,38 @@ final class IdentityMonad implements Monad
         $identityA = Identity::fromBrand($a);
 
         return Identity::fromBrand($f($identityA->unwrap()));
+    }
+    /**
+     * @template A
+     * @template B
+     *
+     * @param pure-callable(A): B $f
+     * @param HK1<IdentityBrand, A> $a
+     *
+     * @return Identity<B>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function map(callable $f, HK1 $a): Identity
+    {
+        return (new IdentityFunctor())->map($f, $a);
+    }
+
+    /**
+     * @template A
+     *
+     * @param A $a
+     *
+     * @return Identity<A>
+     *
+     * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function pure($a): Identity
+    {
+        return (new IdentityApplicative())->pure($a);
     }
 }

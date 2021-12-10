@@ -21,22 +21,6 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class ReaderMonad implements Monad
 {
-    /**
-     * @template A
-     * @template B
-     * @template E
-     *
-     * @param callable(A): B $f
-     * @param HK1<ReaderBrand, A> $a
-     *
-     * @return Reader<E, B>
-     *
-     * @psalm-pure
-     */
-    public function map(callable $f, HK1 $a): Reader
-    {
-        return (new ReaderFunctor())->map($f, $a);
-    }
 
     /**
      * @template A
@@ -53,21 +37,6 @@ final class ReaderMonad implements Monad
     public function apply(HK1 $f, HK1 $a): Reader
     {
         return (new ReaderApply())->apply($f, $a);
-    }
-
-    /**
-     * @template A
-     * @template E
-     *
-     * @param A $a
-     *
-     * @return Reader<E, A>
-     *
-     * @psalm-pure
-     */
-    public function pure($a): Reader
-    {
-        return (new ReaderApplicative())->pure($a);
     }
 
     /**
@@ -89,5 +58,36 @@ final class ReaderMonad implements Monad
         return Reader::reader(
             static fn ($env) => Reader::fromBrand($f($readerA->runReader($env)))->runReader($env)
         );
+    }
+    /**
+     * @template A
+     * @template B
+     * @template E
+     *
+     * @param callable(A): B $f
+     * @param HK1<ReaderBrand, A> $a
+     *
+     * @return Reader<E, B>
+     *
+     * @psalm-pure
+     */
+    public function map(callable $f, HK1 $a): Reader
+    {
+        return (new ReaderFunctor())->map($f, $a);
+    }
+
+    /**
+     * @template A
+     * @template E
+     *
+     * @param A $a
+     *
+     * @return Reader<E, A>
+     *
+     * @psalm-pure
+     */
+    public function pure($a): Reader
+    {
+        return (new ReaderApplicative())->pure($a);
     }
 }

@@ -10,7 +10,7 @@ use Marcosh\LamPHPda\Reader;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 
 /**
- * @implements Applicative<ReaderBrand<E>>
+ * @implements Applicative<ReaderBrand>
  *
  * @psalm-immutable
  */

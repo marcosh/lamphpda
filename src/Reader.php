@@ -33,8 +33,6 @@ final class Reader implements DefaultMonad
 
     /**
      * @param callable(E): A $f
-     *
-     * @psalm-mutation-free
      */
     private function __construct(callable $f)
     {
@@ -55,22 +53,21 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param HK1<ReaderBrand<E>, B> $b
-     * @return Reader<E, B>
+     * @template F
+     * @param HK1<ReaderBrand<F>, B> $b
+     * @return Reader<F, B>
      *
      * @psalm-pure
      */
     public static function fromBrand(HK1 $b): Reader
     {
-        /** @var Reader<E, B> $b */
+        /** @var Reader<F, B> $b */
         return $b;
     }
 
     /**
      * @param E $environment
      * @return A
-     *
-     * @psalm-mutation-free
      */
     public function runReader($environment)
     {
@@ -80,10 +77,8 @@ final class Reader implements DefaultMonad
     /**
      * @template B
      * @param Functor<ReaderBrand<E>> $functor
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @return Reader<E, B>
-     *
-     * @psalm-mutation-free
      */
     public function imap(Functor $functor, callable $f): Reader
     {
@@ -92,10 +87,8 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @return Reader<E, B>
-     *
-     * @psalm-mutation-free
      */
     public function map(callable $f): Reader
     {
@@ -107,8 +100,6 @@ final class Reader implements DefaultMonad
      * @param Apply<ReaderBrand<E>> $apply
      * @param HK1<ReaderBrand<E>, callable(A): B> $f
      * @return Reader<E, B>
-     *
-     * @psalm-mutation-free
      */
     public function iapply(Apply $apply, HK1 $f): Reader
     {
@@ -119,8 +110,6 @@ final class Reader implements DefaultMonad
      * @template B
      * @param HK1<ReaderBrand<E>, callable(A): B> $f
      * @return Reader<E, B>
-     *
-     * @psalm-pure
      */
     public function apply(HK1 $f): Reader
     {
@@ -129,9 +118,10 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param Applicative<ReaderBrand<E>> $applicative
+     * @template F
+     * @param Applicative<ReaderBrand<F>> $applicative
      * @param B $a
-     * @return Reader<E, B>
+     * @return Reader<F, B>
      *
      * @psalm-pure
      */
@@ -157,8 +147,6 @@ final class Reader implements DefaultMonad
      * @param Monad<ReaderBrand<E>> $monad
      * @param callable(A): HK1<ReaderBrand<E>, B> $f
      * @return Reader<E, B>
-     *
-     * @psalm-pure
      */
     public function ibind(Monad $monad, callable $f): Reader
     {
@@ -167,10 +155,8 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param callable(A): Monad<ReaderBrand<E>> $f
+     * @param callable(A): HK1<ReaderBrand<E>, B> $f
      * @return Reader<E, B>
-     *
-     * @psalm-pure
      */
     public function bind(callable $f): Reader
     {

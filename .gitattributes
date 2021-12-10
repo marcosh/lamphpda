@@ -1,9 +1,12 @@
 *.php text eol=lf
-/.gitattributes export-ignore
 /.github/ export-ignore
+/adr/ export-ignore
+/bin/ export-ignore
+/spec/ export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
 /.gitignore export-ignore
 /composer.lock export-ignore
 /crc-config.json export-ignore
-/phpstan.neon export-ignore
+/phpcs.xml.dist export-ignore
 /psalm.xml export-ignore
-/spec/ export-ignore

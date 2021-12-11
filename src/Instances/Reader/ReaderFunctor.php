@@ -10,7 +10,9 @@ use Marcosh\LamPHPda\Reader;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
- * @implements Functor<ReaderBrand>
+ * @template E
+ *
+ * @implements Functor<ReaderBrand<E>>
  *
  * @psalm-immutable
  */
@@ -19,9 +21,8 @@ final class ReaderFunctor implements Functor
     /**
      * @template A
      * @template B
-     * @template E
      * @param callable(A): B $f
-     * @param HK1<ReaderBrand, A> $a
+     * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -31,6 +32,10 @@ final class ReaderFunctor implements Functor
         $readerA = Reader::fromBrand($a);
 
         return Reader::reader(
+            /**
+             * @param E $env
+             * @return B
+             */
             static fn ($env) => $f($readerA->runReader($env))
         );
     }

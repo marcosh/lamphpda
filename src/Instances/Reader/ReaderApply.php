@@ -10,7 +10,9 @@ use Marcosh\LamPHPda\Reader;
 use Marcosh\LamPHPda\Typeclass\Apply;
 
 /**
- * @implements Apply<ReaderBrand>
+ * @template E
+ *
+ * @implements Apply<ReaderBrand<E>>
  *
  * @psalm-immutable
  */
@@ -19,9 +21,8 @@ final class ReaderApply implements Apply
     /**
      * @template A
      * @template B
-     * @template E
      * @param callable(A): B $f
-     * @param HK1<ReaderBrand, A> $a
+     * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -34,9 +35,8 @@ final class ReaderApply implements Apply
     /**
      * @template A
      * @template B
-     * @template E
-     * @param HK1<ReaderBrand, callable(A): B> $f
-     * @param HK1<ReaderBrand, A> $a
+     * @param HK1<ReaderBrand<E>, callable(A): B> $f
+     * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *
      * @psalm-pure

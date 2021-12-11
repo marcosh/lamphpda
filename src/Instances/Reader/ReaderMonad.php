@@ -10,7 +10,9 @@ use Marcosh\LamPHPda\Reader;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
- * @implements Monad<ReaderBrand>
+ * @template E
+ *
+ * @implements Monad<ReaderBrand<E>>
  *
  * @psalm-immutable
  */
@@ -19,9 +21,8 @@ final class ReaderMonad implements Monad
     /**
      * @template A
      * @template B
-     * @template E
      * @param callable(A): B $f
-     * @param HK1<ReaderBrand, A> $a
+     * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -34,9 +35,8 @@ final class ReaderMonad implements Monad
     /**
      * @template A
      * @template B
-     * @template E
-     * @param HK1<ReaderBrand, callable(A): B> $f
-     * @param HK1<ReaderBrand, A> $a
+     * @param HK1<ReaderBrand<E>, callable(A): B> $f
+     * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -48,7 +48,6 @@ final class ReaderMonad implements Monad
 
     /**
      * @template A
-     * @template E
      * @param A $a
      * @return Reader<E, A>
      *
@@ -62,9 +61,8 @@ final class ReaderMonad implements Monad
     /**
      * @template A
      * @template B
-     * @template E
-     * @param HK1<ReaderBrand, A> $a
-     * @param callable(A): HK1<ReaderBrand, B> $f
+     * @param HK1<ReaderBrand<E>, A> $a
+     * @param callable(A): HK1<ReaderBrand<E>, B> $f
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -74,6 +72,9 @@ final class ReaderMonad implements Monad
         $readerA = Reader::fromBrand($a);
 
         return Reader::reader(
+            /**
+             * @param E $env
+             */
             static fn ($env) => Reader::fromBrand($f($readerA->runReader($env)))->runReader($env)
         );
     }

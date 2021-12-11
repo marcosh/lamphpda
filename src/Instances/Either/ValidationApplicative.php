@@ -13,7 +13,7 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 /**
  * @template E
  *
- * @implements Applicative<EitherBrand>
+ * @implements Applicative<EitherBrand<E>>
  *
  * @psalm-immutable
  */

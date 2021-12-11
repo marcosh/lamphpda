@@ -10,7 +10,9 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
- * @implements Monad<EitherBrand>
+ * @template C
+ *
+ * @implements Monad<EitherBrand<C>>
  *
  * @psalm-immutable
  */
@@ -19,7 +21,6 @@ final class EitherMonad implements Monad
     /**
      * @template A
      * @template B
-     * @template C
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
@@ -36,7 +37,6 @@ final class EitherMonad implements Monad
     /**
      * @template A
      * @template B
-     * @template C
      * @param HK1<EitherBrand<C>, callable(A): B> $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
@@ -68,7 +68,6 @@ final class EitherMonad implements Monad
     /**
      * @template A
      * @template B
-     * @template C
      * @param HK1<EitherBrand<C>, A> $a
      * @param callable(A): HK1<EitherBrand<C>, B> $f
      * @return Either<C, B>

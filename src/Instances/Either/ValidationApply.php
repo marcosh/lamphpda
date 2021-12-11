@@ -13,14 +13,14 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 /**
  * @template E
  *
- * @implements Apply<EitherBrand>
+ * @implements Apply<EitherBrand<E>>
  *
  * @psalm-immutable
  */
 final class ValidationApply implements Apply
 {
     /** @var Semigroup<E> */
-    private $semigroup;
+    private Semigroup $semigroup;
 
     /**
      * @param Semigroup<E> $semigroup

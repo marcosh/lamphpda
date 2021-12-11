@@ -10,7 +10,9 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
- * @implements Functor<EitherBrand>
+ * @template C
+ *
+ * @implements Functor<EitherBrand<C>>
  *
  * @psalm-immutable
  */
@@ -19,7 +21,6 @@ final class EitherFunctor implements Functor
     /**
      * @template A
      * @template B
-     * @template C
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>

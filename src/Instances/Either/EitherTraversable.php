@@ -12,7 +12,9 @@ use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
- * @implements Traversable<EitherBrand>
+ * @template C
+ *
+ * @implements Traversable<EitherBrand<C>>
  *
  * @psalm-immutable
  */
@@ -21,7 +23,6 @@ final class EitherTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @template C
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
@@ -38,7 +39,6 @@ final class EitherTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @template C
      * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a
@@ -55,7 +55,6 @@ final class EitherTraversable implements Traversable
      * @template F of Brand
      * @template A
      * @template B
-     * @template C
      * @param Applicative<F> $applicative
      * @param callable(A): HK1<F, B> $f
      * @param HK1<EitherBrand<C>, A> $a

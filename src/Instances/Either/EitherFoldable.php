@@ -10,7 +10,9 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 
 /**
- * @implements Foldable<EitherBrand>
+ * @template C
+ *
+ * @implements Foldable<EitherBrand<C>>
  *
  * @psalm-immutable
  */
@@ -19,7 +21,6 @@ final class EitherFoldable implements Foldable
     /**
      * @template A
      * @template B
-     * @template C
      * @param pure-callable(A, B): B $f
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a

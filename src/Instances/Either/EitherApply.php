@@ -10,7 +10,9 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Typeclass\Apply;
 
 /**
- * @implements Apply<EitherBrand>
+ * @template C
+ *
+ * @implements Apply<EitherBrand<C>>
  *
  * @psalm-immutable
  */
@@ -19,7 +21,6 @@ final class EitherApply implements Apply
     /**
      * @template A
      * @template B
-     * @template C
      * @param pure-callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
@@ -36,7 +37,6 @@ final class EitherApply implements Apply
     /**
      * @template A
      * @template B
-     * @template C
      * @param HK1<EitherBrand<C>, callable(A): B> $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>

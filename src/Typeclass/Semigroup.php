@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marcosh\LamPHPda\Typeclass;
 
 /**
- * @template A
+ * @template-covariant A
  *
  * @psalm-immutable
  */

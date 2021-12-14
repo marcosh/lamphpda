@@ -51,7 +51,6 @@ final class EitherTraversable implements Traversable
         return (new EitherFoldable())->foldr($f, $b, $a);
     }
 
-
     /**
      * @template F of Brand
      * @template A
@@ -74,7 +73,7 @@ final class EitherTraversable implements Traversable
              * @param C $c
              * @return HK1<F, Either<C, B>>
              */
-            function ($c) use ($applicative) {
+            static function ($c) use ($applicative) {
                 /** @var Either<C, B> $eitherCB */
                 $eitherCB = Either::left($c);
 
@@ -86,7 +85,7 @@ final class EitherTraversable implements Traversable
              *
              * @psalm-suppress InvalidArgument
              */
-            fn($a) => $applicative->map([Either::class, 'right'], $f($a))
+            static fn ($a) => $applicative->map([Either::class, 'right'], $f($a))
         );
     }
 }

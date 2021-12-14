@@ -56,6 +56,6 @@ final class ReaderApplicative implements Applicative
      */
     public function pure($a): Reader
     {
-        return Reader::reader(static fn($_) => $a);
+        return Reader::reader(static fn ($_) => $a);
     }
 }

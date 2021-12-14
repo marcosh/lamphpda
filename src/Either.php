@@ -41,16 +41,15 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /** @var bool */
     private $isRight;
 
-    /** @var A|null */
+    /** @var null|A */
     private $leftValue;
 
-    /** @var B|null */
+    /** @var null|B */
     private $rightValue;
 
     /**
-     * @param bool $isRight
-     * @param A|null $leftValue
-     * @param B|null $rightValue
+     * @param null|A $leftValue
+     * @param null|B $rightValue
      *
      * @psalm-mutation-free
      */
@@ -69,7 +68,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function left($value): Either
+    public static function left($value): self
     {
         return new self(false, $value);
     }
@@ -82,7 +81,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function right($value): Either
+    public static function right($value): self
     {
         return new self(true, null, $value);
     }
@@ -95,7 +94,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function fromBrand(HK1 $hk): Either
+    public static function fromBrand(HK1 $hk): self
     {
         /** @var Either<C, D> */
         return $hk;
@@ -109,7 +108,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function fromBrand2(HK2Covariant $hk): Either
+    public static function fromBrand2(HK2Covariant $hk): self
     {
         /** @var Either<C, D> */
         return $hk;
@@ -144,7 +143,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function imap(Functor $functor, callable $f): Either
+    public function imap(Functor $functor, callable $f): self
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($functor->map($f, $this));
@@ -159,7 +158,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f): Either
+    public function map(callable $f): self
     {
         return $this->imap(new EitherFunctor(), $f);
     }
@@ -174,7 +173,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function ibiMap(Bifunctor $bifunctor, callable $f, callable $g): Either
+    public function ibiMap(Bifunctor $bifunctor, callable $f, callable $g): self
     {
         return self::fromBrand2($bifunctor->biMap($f, $g, $this));
     }
@@ -188,7 +187,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function biMap(callable $f, callable $g): Either
+    public function biMap(callable $f, callable $g): self
     {
         return $this->ibiMap(new EitherBifunctor(), $f, $g);
     }
@@ -200,7 +199,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function mapLeft(callable $f): Either
+    public function mapLeft(callable $f): self
     {
         return $this->biMap(
             $f,
@@ -208,7 +207,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
              * @param B $b
              * @return B
              */
-            fn($b) => $b
+            static fn ($b) => $b
         );
     }
 
@@ -220,7 +219,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function iapply(Apply $apply, HK1 $f): Either
+    public function iapply(Apply $apply, HK1 $f): self
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($apply->apply($f, $this));
@@ -235,7 +234,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function apply(HK1 $f): Either
+    public function apply(HK1 $f): self
     {
         return $this->iapply(new EitherApply(), $f);
     }
@@ -249,7 +248,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public static function ipure(Applicative $applicative, $a): Either
+    public static function ipure(Applicative $applicative, $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -264,7 +263,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function pure($a): Either
+    public static function pure($a): self
     {
         return self::ipure(new EitherApplicative(), $a);
     }
@@ -277,7 +276,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function ibind(Monad $monad, callable $f): Either
+    public function ibind(Monad $monad, callable $f): self
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($monad->bind($this, $f));
@@ -292,7 +291,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function bind(callable $f): Either
+    public function bind(callable $f): self
     {
         return $this->ibind(new EitherMonad(), $f);
     }
@@ -344,7 +343,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
          * @psalm-suppress InvalidArgument
          * @psalm-suppress ArgumentTypeCoercion
          */
-        return $applicative->map([Either::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+        return $applicative->map([self::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
     }
 
     /**

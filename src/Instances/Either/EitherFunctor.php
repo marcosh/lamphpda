@@ -35,12 +35,12 @@ final class EitherFunctor implements Functor
              * @param C $b
              * @return Either<C, B>
              */
-            fn ($b) => Either::left($b),
+            static fn ($b) => Either::left($b),
             /**
              * @param A $b
              * @return Either<C, B>
              */
-            fn ($b) => Either::right($f($b))
+            static fn ($b) => Either::right($f($b))
         );
     }
 }

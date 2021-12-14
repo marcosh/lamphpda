@@ -35,7 +35,7 @@ final class MaybeFunctor implements Functor
              * @param A $value
              * @return Maybe<B>
              */
-            fn($value) => Maybe::just($f($value))
+            static fn ($value) => Maybe::just($f($value))
         );
     }
 }

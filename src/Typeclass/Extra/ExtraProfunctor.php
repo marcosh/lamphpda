@@ -41,7 +41,7 @@ final class ExtraProfunctor
              * @param C $c
              * @return C
              */
-            fn($c) => $c,
+            static fn ($c) => $c,
             $f,
             $hk
         );
@@ -63,7 +63,7 @@ final class ExtraProfunctor
              * @param C $c
              * @return C
              */
-            fn($c) => $c,
+            static fn ($c) => $c,
             $hk
         );
     }

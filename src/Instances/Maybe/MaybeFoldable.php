@@ -34,7 +34,7 @@ final class MaybeFoldable implements Foldable
              * @param A $a
              * @return B
              */
-            fn ($a) => $f($a, $b)
+            static fn ($a) => $f($a, $b)
         );
     }
 }

@@ -42,7 +42,7 @@ final class ExtraTraversable
              * @param HK1<F, A> $fa
              * @return HK1<F, A>
              */
-            fn($fa) => $fa,
+            static fn ($fa) => $fa,
             $hk
         );
     }

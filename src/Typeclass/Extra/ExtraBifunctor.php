@@ -42,7 +42,7 @@ final class ExtraBifunctor
              * @param B $b
              * @return B
              */
-            fn($b) => $b,
+            static fn ($b) => $b,
             $hk2
         );
     }
@@ -62,7 +62,7 @@ final class ExtraBifunctor
              * @param A $a
              * @return A
              */
-            fn($a) => $a,
+            static fn ($a) => $a,
             $g,
             $hk2
         );

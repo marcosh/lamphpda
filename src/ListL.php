@@ -11,7 +11,7 @@ use Marcosh\LamPHPda\Brand\ListBrand;
 use Marcosh\LamPHPda\HK\HK1;
 
 /**
- * a type wrapper around the psalm list type
+ * a type wrapper around the psalm list type.
  *
  * @template-covariant A
  *
@@ -39,7 +39,7 @@ final class ListL implements IteratorAggregate, HK1
      *
      * @psalm-pure
      */
-    public static function fromBrand(HK1 $hk): ListL
+    public static function fromBrand(HK1 $hk): self
     {
         /** @var ListL<B> */
         return $hk;

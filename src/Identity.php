@@ -11,8 +11,8 @@ use Marcosh\LamPHPda\Instances\Identity\IdentityApplicative;
 use Marcosh\LamPHPda\Instances\Identity\IdentityApply;
 use Marcosh\LamPHPda\Instances\Identity\IdentityFoldable;
 use Marcosh\LamPHPda\Instances\Identity\IdentityFunctor;
-use Marcosh\LamPHPda\Instances\Identity\IdentityTraversable;
 use Marcosh\LamPHPda\Instances\Identity\IdentityMonad;
+use Marcosh\LamPHPda\Instances\Identity\IdentityTraversable;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
@@ -52,7 +52,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function wrap($value): Identity
+    public static function wrap($value): self
     {
         return new self($value);
     }
@@ -64,7 +64,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function fromBrand(HK1 $b): Identity
+    public static function fromBrand(HK1 $b): self
     {
         /** @var Identity $b */
         return $b;
@@ -86,7 +86,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress ArgumentTypeCoercion
      */
-    public function imap(Functor $functor, callable $f): Identity
+    public function imap(Functor $functor, callable $f): self
     {
         return self::fromBrand($functor->map($f, $this));
     }
@@ -98,7 +98,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f): Identity
+    public function map(callable $f): self
     {
         return $this->imap(new IdentityFunctor(), $f);
     }
@@ -111,7 +111,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress ArgumentTypeCoercion
      */
-    public function iapply(Apply $apply, HK1 $f): Identity
+    public function iapply(Apply $apply, HK1 $f): self
     {
         return self::fromBrand($apply->apply($f, $this));
     }
@@ -123,7 +123,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function apply(HK1 $f): Identity
+    public function apply(HK1 $f): self
     {
         return $this->iapply(new IdentityApply(), $f);
     }
@@ -134,7 +134,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      * @param B $a
      * @return Identity<B>
      */
-    public static function ipure(Applicative $applicative, $a): Identity
+    public static function ipure(Applicative $applicative, $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -146,7 +146,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function pure($a): Identity
+    public static function pure($a): self
     {
         return self::ipure(new IdentityApplicative(), $a);
     }
@@ -159,7 +159,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress ArgumentTypeCoercion
      */
-    public function ibind(Monad $monad, callable $f): Identity
+    public function ibind(Monad $monad, callable $f): self
     {
         return self::fromBrand($monad->bind($this, $f));
     }
@@ -171,7 +171,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function bind(callable $f): Identity
+    public function bind(callable $f): self
     {
         return $this->ibind(new IdentityMonad(), $f);
     }
@@ -214,7 +214,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      */
     public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
     {
-        return $applicative->map([Identity::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+        return $applicative->map([self::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
     }
 
     /**

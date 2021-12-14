@@ -69,13 +69,13 @@ final class ListTraversable implements Traversable
              * @param HK1<F, HK1<ListBrand, B>> $d
              * @return HK1<F, HK1<ListBrand, B>>
              */
-            fn($c, $d) => (new ExtraApply($applicative))->lift2(
+            static fn ($c, $d) => (new ExtraApply($applicative))->lift2(
                 /**
                  * @param B $h
                  * @param HK1<ListBrand, B> $t
                  * @return HK1<ListBrand, B>
                  */
-                fn($h, $t) => ListL::fromBrand($t)->append($h),
+                static fn ($h, $t) => ListL::fromBrand($t)->append($h),
                 $f($c),
                 $d
             ),

@@ -10,7 +10,7 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 /**
  * joins the errors with an E semigroup
  * if one fails, then it all fails
- * if both validations succeed, we join the results with a B semigroup
+ * if both validations succeed, we join the results with a B semigroup.
  *
  * @template E
  * @template B
@@ -51,33 +51,33 @@ final class JoinEitherSemigroup implements Semigroup
              * @param E $ea
              * @return Either<E, B>
              */
-            fn($ea) => $b->eval(
+            fn ($ea) => $b->eval(
                 /**
                  * @param E $eb
                  * @return Either<E, B>
                  */
-                fn($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
+                fn ($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
                 /**
                  * @param B $_
                  * @return Either<E, B>
                  */
-                fn($_) => Either::left($ea)
+                static fn ($_) => Either::left($ea)
             ),
             /**
              * @param B $va
              * @return Either<E, B>
              */
-            fn($va) => $b->eval(
+            fn ($va) => $b->eval(
                 /**
                  * @param E $eb
                  * @return Either<E, B>
                  */
-                fn ($eb) => Either::left($eb),
+                static fn ($eb) => Either::left($eb),
                 /**
                  * @param B $vb
                  * @return Either<E, B>
                  */
-                fn($vb) => Either::right($this->bSemigroup->append($va, $vb))
+                fn ($vb) => Either::right($this->bSemigroup->append($va, $vb))
             )
         );
     }

@@ -77,23 +77,23 @@ final class ValidationApply implements Apply
                  * @param A $_a
                  * @return Either<E, B>
                  */
-                fn ($_a) => Either::left($ef)
+                static fn ($_a) => Either::left($ef)
             ),
             /**
              * @param callable(A): B $f
              * @return Either<E, B>
              */
-            fn ($f) => $eitherA->eval(
+            static fn ($f) => $eitherA->eval(
                 /**
                  * @param E $e
                  * @return Either<E, B>
                  */
-                fn ($e) => Either::left($e),
+                static fn ($e) => Either::left($e),
                 /**
                  * @param A $a
                  * @return Either<E, B>
                  */
-                fn ($a) => Either::right($f($a))
+                static fn ($a) => Either::right($f($a))
             )
         );
     }

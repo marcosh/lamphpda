@@ -10,7 +10,7 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 /**
  * joins the errors with an E semigroup
  * if one succeeds, then it all succeeds
- * if both validations succeed, we join the results with a B semigroup
+ * if both validations succeed, we join the results with a B semigroup.
  *
  * @template E
  * @template B
@@ -47,37 +47,37 @@ final class MeetEitherSemigroup implements Semigroup
     public function append($a, $b): Either
     {
         return $a->eval(
-        /**
-         * @param E $ea
-         * @return Either<E, B>
-         */
-            fn($ea) => $b->eval(
             /**
-             * @param E $eb
+             * @param E $ea
              * @return Either<E, B>
              */
-                fn($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
+            fn ($ea) => $b->eval(
+                /**
+                 * @param E $eb
+                 * @return Either<E, B>
+                 */
+                fn ($eb) => Either::left($this->eSemigroup->append($ea, $eb)),
                 /**
                  * @param B $vb
                  * @return Either<E, B>
                  */
-                fn($vb) => Either::right($vb)
+                static fn ($vb) => Either::right($vb)
             ),
             /**
              * @param B $va
              * @return Either<E, B>
              */
-            fn($va) => $b->eval(
-            /**
-             * @param E $_
-             * @return Either<E, B>
-             */
-                fn($_) => Either::right($va),
+            fn ($va) => $b->eval(
+                /**
+                 * @param E $_
+                 * @return Either<E, B>
+                 */
+                static fn ($_) => Either::right($va),
                 /**
                  * @param B $vb
                  * @return Either<E, B>
                  */
-                fn($vb) => Either::right($this->bSemigroup->append($va, $vb))
+                fn ($vb) => Either::right($this->bSemigroup->append($va, $vb))
             )
         );
     }

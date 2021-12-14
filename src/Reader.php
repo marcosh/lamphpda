@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\ReaderBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\Reader\ReaderApplicative;
 use Marcosh\LamPHPda\Instances\Reader\ReaderApply;
@@ -14,7 +15,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
-use Marcosh\LamPHPda\Brand\ReaderBrand;
 
 /**
  * @template E
@@ -44,7 +44,7 @@ final class Reader implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function reader(callable $f): Reader
+    public static function reader(callable $f): self
     {
         return new self($f);
     }
@@ -57,7 +57,7 @@ final class Reader implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function fromBrand(HK1 $b): Reader
+    public static function fromBrand(HK1 $b): self
     {
         /** @var Reader<F, B> $b */
         return $b;
@@ -82,7 +82,7 @@ final class Reader implements DefaultMonad
              * @param E $e
              * @return E
              */
-            fn($e) => $e
+            static fn ($e) => $e
         );
     }
 
@@ -92,7 +92,7 @@ final class Reader implements DefaultMonad
      * @param pure-callable(A): B $f
      * @return Reader<E, B>
      */
-    public function imap(Functor $functor, callable $f): Reader
+    public function imap(Functor $functor, callable $f): self
     {
         return self::fromBrand($functor->map($f, $this));
     }
@@ -102,7 +102,7 @@ final class Reader implements DefaultMonad
      * @param pure-callable(A): B $f
      * @return Reader<E, B>
      */
-    public function map(callable $f): Reader
+    public function map(callable $f): self
     {
         return $this->imap(new ReaderFunctor(), $f);
     }
@@ -113,7 +113,7 @@ final class Reader implements DefaultMonad
      * @param HK1<ReaderBrand<E>, callable(A): B> $f
      * @return Reader<E, B>
      */
-    public function iapply(Apply $apply, HK1 $f): Reader
+    public function iapply(Apply $apply, HK1 $f): self
     {
         return self::fromBrand($apply->apply($f, $this));
     }
@@ -123,7 +123,7 @@ final class Reader implements DefaultMonad
      * @param HK1<ReaderBrand<E>, callable(A): B> $f
      * @return Reader<E, B>
      */
-    public function apply(HK1 $f): Reader
+    public function apply(HK1 $f): self
     {
         return $this->iapply(new ReaderApply(), $f);
     }
@@ -137,7 +137,7 @@ final class Reader implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): Reader
+    public static function ipure(Applicative $applicative, $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -160,7 +160,7 @@ final class Reader implements DefaultMonad
      * @param callable(A): HK1<ReaderBrand<E>, B> $f
      * @return Reader<E, B>
      */
-    public function ibind(Monad $monad, callable $f): Reader
+    public function ibind(Monad $monad, callable $f): self
     {
         return self::fromBrand($monad->bind($this, $f));
     }
@@ -170,7 +170,7 @@ final class Reader implements DefaultMonad
      * @param callable(A): HK1<ReaderBrand<E>, B> $f
      * @return Reader<E, B>
      */
-    public function bind(callable $f): Reader
+    public function bind(callable $f): self
     {
         return $this->ibind(new ReaderMonad(), $f);
     }

@@ -38,13 +38,12 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     private $isJust;
 
     /**
-     * @var A|null
+     * @var null|A
      */
-    private $value = null;
+    private $value;
 
     /**
-     * @param bool $isJust
-     * @param A|null $value
+     * @param null|A $value
      */
     private function __construct(bool $isJust, $value = null)
     {
@@ -59,7 +58,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function just($value): Maybe
+    public static function just($value): self
     {
         return new self(true, $value);
     }
@@ -70,7 +69,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function nothing(): Maybe
+    public static function nothing(): self
     {
         return new self(false);
     }
@@ -82,7 +81,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function fromBrand(HK1 $b): Maybe
+    public static function fromBrand(HK1 $b): self
     {
         /** @var Maybe $b */
         return $b;
@@ -118,7 +117,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
              * @param A $a
              * @return A
              */
-            fn($a) => $a
+            static fn ($a) => $a
         );
     }
 
@@ -128,7 +127,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param callable(A): B $f
      * @return Maybe<B>
      */
-    public function imap(Functor $functor, callable $f): Maybe
+    public function imap(Functor $functor, callable $f): self
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($functor->map($f, $this));
@@ -141,7 +140,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function map(callable $f): Maybe
+    public function map(callable $f): self
     {
         return $this->imap(new MaybeFunctor(), $f);
     }
@@ -152,7 +151,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param HK1<MaybeBrand, callable(A): B> $f
      * @return Maybe<B>
      */
-    public function iapply(Apply $apply, HK1 $f): Maybe
+    public function iapply(Apply $apply, HK1 $f): self
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($apply->apply($f, $this));
@@ -165,7 +164,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function apply(HK1 $f): Maybe
+    public function apply(HK1 $f): self
     {
         return $this->iapply(new MaybeApply(), $f);
     }
@@ -176,7 +175,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param B $a
      * @return Maybe<B>
      */
-    public static function ipure(Applicative $applicative, $a): Maybe
+    public static function ipure(Applicative $applicative, $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -188,7 +187,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function pure($a): Maybe
+    public static function pure($a): self
     {
         return self::ipure(new MaybeApplicative(), $a);
     }
@@ -199,7 +198,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param callable(A): HK1<MaybeBrand, B> $f
      * @return Maybe<B>
      */
-    public function ibind(Monad $monad, callable $f): Maybe
+    public function ibind(Monad $monad, callable $f): self
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($monad->bind($this, $f));
@@ -212,7 +211,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function bind(callable $f): Maybe
+    public function bind(callable $f): self
     {
         return $this->ibind(new MaybeMonad(), $f);
     }
@@ -255,7 +254,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
          * @psalm-suppress InvalidArgument
          * @psalm-suppress ArgumentTypeCoercion
          */
-        return $applicative->map([Maybe::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+        return $applicative->map([self::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
     }
 
     /**

@@ -67,6 +67,9 @@ final class EitherTraversable implements Traversable
     {
         $eitherA = Either::fromBrand($a);
 
+        /** @var pure-callable(B): Either<C, B> $right */
+        $right = [Either::class, 'right'];
+
         return $eitherA->eval(
             /**
              * @param C $c
@@ -84,7 +87,7 @@ final class EitherTraversable implements Traversable
              *
              * @psalm-suppress InvalidArgument
              */
-            static fn ($a): HK1 => $applicative->map([Either::class, 'right'], $f($a))
+            static fn ($a): HK1 => $applicative->map($right, $f($a))
         );
     }
 }

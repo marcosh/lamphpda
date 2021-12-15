@@ -18,7 +18,7 @@ use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template E
- * @template A
+ * @template-covariant A
  *
  * @implements DefaultMonad<ReaderBrand<E>, A>
  *

@@ -21,11 +21,13 @@ final class ReaderMonad implements Monad
     /**
      * @template A
      * @template B
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function map(callable $f, HK1 $a): Reader
     {
@@ -40,6 +42,8 @@ final class ReaderMonad implements Monad
      * @return Reader<E, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function apply(HK1 $f, HK1 $a): Reader
     {
@@ -52,6 +56,8 @@ final class ReaderMonad implements Monad
      * @return Reader<E, A>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function pure($a): Reader
     {
@@ -66,6 +72,8 @@ final class ReaderMonad implements Monad
      * @return Reader<E, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function bind(HK1 $a, callable $f): Reader
     {

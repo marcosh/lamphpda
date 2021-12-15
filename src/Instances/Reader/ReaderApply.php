@@ -21,11 +21,13 @@ final class ReaderApply implements Apply
     /**
      * @template A
      * @template B
-     * @param callable(A): B $f
+     * @param pure-callable(A): B $f
      * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function map(callable $f, $a): Reader
     {
@@ -40,6 +42,8 @@ final class ReaderApply implements Apply
      * @return Reader<E, B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function apply(HK1 $f, HK1 $a): Reader
     {

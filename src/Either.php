@@ -25,6 +25,7 @@ use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
+use Throwable;
 
 /**
  * @template-covariant A
@@ -132,6 +133,69 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
         /** @psalm-suppress PossiblyNullArgument */
         return $ifLeft($this->leftValue);
+    }
+
+    /**
+     * @param A $a
+     * @return A
+     */
+    public function fromLeft($a)
+    {
+        return $this->eval(
+            /**
+             * @param A $aa
+             * @return A
+             */
+            static fn ($aa) => $aa,
+            /**
+             * @param B $_
+             * @return A
+             */
+            static fn ($_) => $a
+        );
+    }
+
+    /**
+     * @param B $b
+     * @return B
+     */
+    public function fromRight($b)
+    {
+        return $this->eval(
+            /**
+             * @param A $_
+             * @return B
+             */
+            static fn ($_) => $b,
+            /**
+             * @param B $bb
+             * @return B
+             */
+            static fn ($bb) => $bb
+        );
+    }
+
+    /**
+     * @throws Throwable
+     * @return B
+     */
+    public function fromRightThrow(Throwable $e)
+    {
+        return $this->eval(
+            /**
+             * @param A $_
+             * @throws Throwable
+             * @return B
+             */
+            static function ($_) use ($e) {
+                throw $e;
+            },
+            /**
+             * @param B $b
+             * @return B
+             */
+            static fn ($b) => $b
+        );
     }
 
     /**

@@ -83,10 +83,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     }
 
     /**
-     * this might not do what you expect when B contains null
+     * this might not do what you expect when B contains null.
      *
      * @template B
-     * @param B|null $a
+     * @param null|B $a
      * @return Maybe<B>
      */
     public static function fromNullable($a): self

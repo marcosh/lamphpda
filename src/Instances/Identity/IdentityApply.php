@@ -48,6 +48,7 @@ final class IdentityApply implements Apply
         $identityF = Identity::fromBrand($f);
         $identityA = Identity::fromBrand($a);
 
+        /** @psalm-suppress ImpureFunctionCall */
         return Identity::wrap(($identityF->unwrap())($identityA->unwrap()));
     }
 }

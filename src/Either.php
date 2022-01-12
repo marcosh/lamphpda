@@ -116,8 +116,8 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
-     * @param callable(A): C $ifLeft
-     * @param callable(B): C $ifRight
+     * @param pure-callable(A): C $ifLeft
+     * @param pure-callable(B): C $ifRight
      * @return C
      *
      * @psalm-mutation-free

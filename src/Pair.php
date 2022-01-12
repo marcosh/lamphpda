@@ -63,7 +63,7 @@ final class Pair implements HK2Covariant
 
     /**
      * @template C
-     * @param callable(A, B): C $f
+     * @param pure-callable(A, B): C $f
      * @return C
      */
     public function eval(callable $f)

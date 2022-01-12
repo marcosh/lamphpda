@@ -101,7 +101,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     /**
      * @template B
      * @param B $ifNothing
-     * @param callable(A): B $ifJust
+     * @param pure-callable(A): B $ifJust
      * @return B
      */
     public function eval(

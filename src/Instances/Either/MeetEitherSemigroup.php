@@ -46,6 +46,9 @@ final class MeetEitherSemigroup implements Semigroup
      */
     public function append($a, $b): Either
     {
+        /**
+         * @psalm-suppress InvalidArgument
+         */
         return $a->eval(
             /**
              * @param E $ea

@@ -26,11 +26,11 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class Reader implements DefaultMonad
 {
-    /** @var callable(E): A */
+    /** @var pure-callable(E): A */
     private $action;
 
     /**
-     * @param callable(E): A $f
+     * @param pure-callable(E): A $f
      */
     private function __construct(callable $f)
     {
@@ -39,7 +39,7 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param callable(E): B $f
+     * @param pure-callable(E): B $f
      * @return Reader<E, B>
      *
      * @psalm-pure

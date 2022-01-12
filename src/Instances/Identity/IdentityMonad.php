@@ -77,6 +77,7 @@ final class IdentityMonad implements Monad
     {
         $identityA = Identity::fromBrand($a);
 
+        /** @psalm-suppress ImpureFunctionCall */
         return Identity::fromBrand($f($identityA->unwrap()));
     }
 }

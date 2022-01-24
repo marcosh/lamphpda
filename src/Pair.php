@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\PairBrand;
 use Marcosh\LamPHPda\Brand\PairBrand2;
+use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\HK\HK2Covariant;
+use Marcosh\LamPHPda\Instances\Pair\PairFunctor;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
+use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
- * @template A
- * @template B
+ * @template-covariant A
+ * @template-covariant B
  *
+ * @implements DefaultFunctor<PairBrand<A>, B>
  * @implements HK2Covariant<PairBrand2, A, B>
  *
  * @psalm-immutable
  */
-final class Pair implements HK2Covariant
+final class Pair implements DefaultFunctor, HK2Covariant
 {
     /** @var A */
     private $left;
@@ -50,6 +56,20 @@ final class Pair implements HK2Covariant
     /**
      * @template C
      * @template D
+     * @param HK1<PairBrand<C>, D> $hk
+     * @return Pair<C, D>
+     *
+     * @psalm-pure
+     */
+    public static function fromBrand(HK1 $hk): self
+    {
+        /** @var Pair<C, D> */
+        return $hk;
+    }
+
+    /**
+     * @template C
+     * @template D
      * @param HK2Covariant<PairBrand2, C, D> $hk
      * @return Pair<C, D>
      *
@@ -69,5 +89,26 @@ final class Pair implements HK2Covariant
     public function eval(callable $f)
     {
         return $f($this->left, $this->right);
+    }
+
+    /**
+     * @template C
+     * @param Functor<PairBrand> $functor
+     * @param pure-callable(B): C $f
+     * @return Pair<A, C>
+     */
+    public function imap(Functor $functor, callable $f): self
+    {
+        return self::fromBrand($functor->map($f, $this));
+    }
+
+    /**
+     * @template C
+     * @param pure-callable(B): C $f
+     * @return Pair<A, C>
+     */
+    public function map(callable $f): self
+    {
+        return $this->imap(new PairFunctor(), $f);
     }
 }

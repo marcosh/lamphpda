@@ -19,7 +19,7 @@ final class IdentityFunctor implements Functor
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<IdentityBrand, A> $a
      * @return Identity<B>
      *
@@ -31,6 +31,7 @@ final class IdentityFunctor implements Functor
     {
         $identityA = Identity::fromBrand($a);
 
+        /** @psalm-suppress ImpureFunctionCall */
         return Identity::wrap($f($identityA->unwrap()));
     }
 }

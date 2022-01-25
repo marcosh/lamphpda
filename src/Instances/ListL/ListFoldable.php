@@ -19,7 +19,7 @@ final class ListFoldable implements Foldable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<ListBrand, A> $a
      * @return B
@@ -32,6 +32,7 @@ final class ListFoldable implements Foldable
 
         /** @psalm-suppress ImpureMethodCall */
         foreach ($aList as $aElement) {
+            /** @psalm-suppress ImpureFunctionCall */
             $b = $f($aElement, $b);
         }
 

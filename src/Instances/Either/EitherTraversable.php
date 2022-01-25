@@ -23,7 +23,7 @@ final class EitherTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<EitherBrand<C>, A> $a
      * @return Either<C, B>
      *
@@ -39,7 +39,7 @@ final class EitherTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a
      * @return B
@@ -67,7 +67,7 @@ final class EitherTraversable implements Traversable
     {
         $eitherA = Either::fromBrand($a);
 
-        /** @var pure-callable(B): Either<C, B> $right */
+        /** @var callable(B): Either<C, B> $right */
         $right = [Either::class, 'right'];
 
         return $eitherA->eval(

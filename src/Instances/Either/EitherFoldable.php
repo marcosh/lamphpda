@@ -21,7 +21,7 @@ final class EitherFoldable implements Foldable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<EitherBrand<C>, A> $a
      * @return B

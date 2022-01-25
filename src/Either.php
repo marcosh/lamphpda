@@ -116,8 +116,8 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
-     * @param pure-callable(A): C $ifLeft
-     * @param pure-callable(B): C $ifRight
+     * @param callable(A): C $ifLeft
+     * @param callable(B): C $ifRight
      * @return C
      *
      * @psalm-mutation-free
@@ -127,11 +127,17 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
         callable $ifRight
     ) {
         if ($this->isRight) {
-            /** @psalm-suppress PossiblyNullArgument */
+            /**
+             * @psalm-suppress PossiblyNullArgument
+             * @psalm-suppress ImpureFunctionCall
+             */
             return $ifRight($this->rightValue);
         }
 
-        /** @psalm-suppress PossiblyNullArgument */
+        /**
+         * @psalm-suppress PossiblyNullArgument
+         * @psalm-suppress ImpureFunctionCall
+         */
         return $ifLeft($this->leftValue);
     }
 
@@ -201,7 +207,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @param Functor<EitherBrand<A>> $functor
-     * @param pure-callable(B): C $f
+     * @param callable(B): C $f
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -214,7 +220,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
-     * @param pure-callable(B): C $f
+     * @param callable(B): C $f
      * @return Either<A, C>
      *
      * @psalm-mutation-free
@@ -362,7 +368,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @param Foldable<EitherBrand<A>> $foldable
-     * @param pure-callable(B, C): C $f
+     * @param callable(B, C): C $f
      * @param C $b
      * @return C
      *
@@ -376,7 +382,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 
     /**
      * @template C
-     * @param pure-callable(B, C): C $f
+     * @param callable(B, C): C $f
      * @param C $b
      * @return C
      *

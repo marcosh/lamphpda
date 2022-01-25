@@ -19,7 +19,7 @@ final class TraversableFoldable implements Foldable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<TraversableBrand, A> $a
      * @return B
@@ -34,6 +34,7 @@ final class TraversableFoldable implements Foldable
 
         /** @psalm-suppress ImpureMethodCall */
         foreach ($arrayA as $element) {
+            /** @psalm-suppress ImpureFunctionCall */
             $ret = $f($element, $ret);
         }
 

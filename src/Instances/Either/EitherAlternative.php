@@ -34,7 +34,7 @@ final class EitherAlternative implements Alternative
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<EitherBrand<E>, A> $a
      * @return Either<E, B>
      *

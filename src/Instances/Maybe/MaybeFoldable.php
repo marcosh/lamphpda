@@ -19,7 +19,7 @@ final class MaybeFoldable implements Foldable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<MaybeBrand, A> $a
      * @return B

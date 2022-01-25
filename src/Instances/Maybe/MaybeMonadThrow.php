@@ -21,7 +21,7 @@ final class MaybeMonadThrow implements MonadThrow
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
      * @return Maybe<B>
      *

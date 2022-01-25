@@ -26,11 +26,11 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class Reader implements DefaultMonad
 {
-    /** @var pure-callable(E): A */
+    /** @var callable(E): A */
     private $action;
 
     /**
-     * @param pure-callable(E): A $f
+     * @param callable(E): A $f
      */
     private function __construct(callable $f)
     {
@@ -39,7 +39,7 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param pure-callable(E): B $f
+     * @param callable(E): B $f
      * @return Reader<E, B>
      *
      * @psalm-pure
@@ -69,6 +69,7 @@ final class Reader implements DefaultMonad
      */
     public function runReader($environment)
     {
+        /** @psalm-suppress ImpureFunctionCall */
         return ($this->action)($environment);
     }
 
@@ -89,7 +90,7 @@ final class Reader implements DefaultMonad
     /**
      * @template B
      * @param Functor<ReaderBrand<E>> $functor
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @return Reader<E, B>
      */
     public function imap(Functor $functor, callable $f): self
@@ -99,7 +100,7 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @return Reader<E, B>
      */
     public function map(callable $f): self

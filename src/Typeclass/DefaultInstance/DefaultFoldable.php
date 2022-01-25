@@ -19,7 +19,7 @@ interface DefaultFoldable extends HK1
 {
     /**
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @return B
      */

@@ -19,7 +19,7 @@ final class ListFunctor implements Functor
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<ListBrand, A> $a
      * @return ListL<B>
      *
@@ -33,6 +33,7 @@ final class ListFunctor implements Functor
 
         /** @psalm-suppress ImpureMethodCall */
         foreach ($aList as $aElement) {
+            /** @psalm-suppress ImpureFunctionCall */
             $bList[] = $f($aElement);
         }
 

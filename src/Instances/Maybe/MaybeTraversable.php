@@ -21,7 +21,7 @@ final class MaybeTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<MaybeBrand, A> $a
      * @return Maybe<B>
      *
@@ -37,7 +37,7 @@ final class MaybeTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<MaybeBrand, A> $a
      * @return B

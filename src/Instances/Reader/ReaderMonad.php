@@ -21,7 +21,7 @@ final class ReaderMonad implements Monad
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<ReaderBrand<E>, A> $a
      * @return Reader<E, B>
      *

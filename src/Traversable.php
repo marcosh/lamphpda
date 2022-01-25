@@ -83,7 +83,7 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
     /**
      * @template B
      * @param Foldable<TraversableBrand> $foldable
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @return B
      *
@@ -96,7 +96,7 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
 
     /**
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @return B
      *

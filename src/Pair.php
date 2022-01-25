@@ -83,18 +83,19 @@ final class Pair implements DefaultFunctor, HK2Covariant
 
     /**
      * @template C
-     * @param pure-callable(A, B): C $f
+     * @param callable(A, B): C $f
      * @return C
      */
     public function eval(callable $f)
     {
+        /** @psalm-suppress ImpureFunctionCall */
         return $f($this->left, $this->right);
     }
 
     /**
      * @template C
      * @param Functor<PairBrand> $functor
-     * @param pure-callable(B): C $f
+     * @param callable(B): C $f
      * @return Pair<A, C>
      */
     public function imap(Functor $functor, callable $f): self
@@ -104,7 +105,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
 
     /**
      * @template C
-     * @param pure-callable(B): C $f
+     * @param callable(B): C $f
      * @return Pair<A, C>
      */
     public function map(callable $f): self

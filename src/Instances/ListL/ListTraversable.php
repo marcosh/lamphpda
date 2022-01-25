@@ -22,7 +22,7 @@ final class ListTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @param HK1<ListBrand, A> $a
      * @return B
@@ -37,7 +37,7 @@ final class ListTraversable implements Traversable
     /**
      * @template A
      * @template B
-     * @param pure-callable(A): B $f
+     * @param callable(A): B $f
      * @param HK1<ListBrand, A> $a
      * @return ListL<B>
      *

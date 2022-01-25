@@ -101,7 +101,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     /**
      * @template B
      * @param B $ifNothing
-     * @param pure-callable(A): B $ifJust
+     * @param callable(A): B $ifJust
      * @return B
      */
     public function eval(
@@ -109,7 +109,10 @@ final class Maybe implements DefaultMonad, DefaultTraversable
         callable $ifJust
     ) {
         if ($this->isJust) {
-            /** @psalm-suppress PossiblyNullArgument */
+            /**
+             * @psalm-suppress PossiblyNullArgument
+             * @psalm-suppress ImpureFunctionCall
+             */
             return $ifJust($this->value);
         }
 
@@ -230,7 +233,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     /**
      * @template B
      * @param Foldable<MaybeBrand> $foldable
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @return B
      */
@@ -242,7 +245,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
-     * @param pure-callable(A, B): B $f
+     * @param callable(A, B): B $f
      * @param B $b
      * @return B
      */

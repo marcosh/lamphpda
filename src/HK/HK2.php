@@ -7,7 +7,7 @@ namespace Marcosh\LamPHPda\HK;
 use Marcosh\LamPHPda\Brand\Brand;
 
 /**
- * @template F of Brand
+ * @template-covariant F of Brand
  * @template A
  * @template-covariant B
  *

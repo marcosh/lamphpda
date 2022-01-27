@@ -11,10 +11,12 @@ use Marcosh\LamPHPda\HK\HK2Covariant;
 use Marcosh\LamPHPda\Instances\Pair\PairApplicative;
 use Marcosh\LamPHPda\Instances\Pair\PairApply;
 use Marcosh\LamPHPda\Instances\Pair\PairFunctor;
+use Marcosh\LamPHPda\Instances\Pair\PairMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Monoid;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
 
@@ -163,5 +165,27 @@ final class Pair implements DefaultFunctor, HK2Covariant
     public static function pure(Monoid $monoid, $a): self
     {
         return self::ipure(new PairApplicative($monoid), $a);
+    }
+
+    /**
+     * @template C
+     * @param Monad<PairBrand<A>> $monad
+     * @param callable(B): HK1<PairBrand<A>, C> $f
+     * @return Pair<A, C>
+     */
+    public function ibind(Monad $monad, callable $f): self
+    {
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template C
+     * @param Monoid<A> $monoid
+     * @param callable(B): HK1<PairBrand<A>, C> $f
+     * @return Pair<A, C>
+     */
+    public function bind(Monoid $monoid, callable $f): self
+    {
+        return $this->ibind(new PairMonad($monoid), $f);
     }
 }

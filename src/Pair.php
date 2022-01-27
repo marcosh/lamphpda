@@ -13,7 +13,7 @@ use Marcosh\LamPHPda\Instances\Pair\PairFunctor;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
 use Marcosh\LamPHPda\Typeclass\Functor;
-use Marcosh\LamPHPda\Typeclass\Monoid;
+use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
  * @template-covariant A
@@ -129,12 +129,12 @@ final class Pair implements DefaultFunctor, HK2Covariant
 
     /**
      * @template C
-     * @param Monoid<A> $monoid
+     * @param Semigroup<A> $semigroup
      * @param HK1<PairBrand<A>, callable(B): C> $f
      * @return Pair<A, C>
      */
-    public function apply(Monoid $monoid, HK1 $f): self
+    public function apply(Semigroup $semigroup, HK1 $f): self
     {
-        return $this->iapply(new PairApply($monoid), $f);
+        return $this->iapply(new PairApply($semigroup), $f);
     }
 }

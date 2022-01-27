@@ -8,7 +8,7 @@ use Marcosh\LamPHPda\Brand\PairBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Pair;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\Monoid;
+use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
  * @template C
@@ -19,15 +19,15 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class PairApply implements Apply
 {
-    /** @var Monoid<C> */
-    private Monoid $monoid;
+    /** @var Semigroup<C> */
+    private Semigroup $semigroup;
 
     /**
-     * @param Monoid<C> $monoid
+     * @param Semigroup<C> $semigroup
      */
-    public function __construct(Monoid $monoid)
+    public function __construct(Semigroup $semigroup)
     {
-        $this->monoid = $monoid;
+        $this->semigroup = $semigroup;
     }
 
     /**
@@ -74,7 +74,7 @@ final class PairApply implements Apply
                  * @param A $a
                  * @return Pair<C, B>
                  */
-                fn ($ca, callable $a) => Pair::pair($this->monoid->append($cf, $ca), $f($a))
+                fn ($ca, callable $a) => Pair::pair($this->semigroup->append($cf, $ca), $f($a))
             )
         );
     }

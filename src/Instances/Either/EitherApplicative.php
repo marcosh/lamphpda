@@ -52,9 +52,8 @@ final class EitherApplicative implements Applicative
 
     /**
      * @template A
-     * @template B
      * @param A $a
-     * @return Either<B, A>
+     * @return Either<C, A>
      *
      * @psalm-pure
      *

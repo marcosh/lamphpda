@@ -311,7 +311,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     /**
      * @template C
      * @template D
-     * @param Applicative<EitherBrand<A>> $applicative
+     * @param Applicative<EitherBrand<C>> $applicative
      * @param D $a
      * @return Either<C, D>
      *

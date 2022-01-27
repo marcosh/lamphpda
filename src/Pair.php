@@ -8,11 +8,14 @@ use Marcosh\LamPHPda\Brand\PairBrand;
 use Marcosh\LamPHPda\Brand\PairBrand2;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\HK\HK2Covariant;
+use Marcosh\LamPHPda\Instances\Pair\PairApplicative;
 use Marcosh\LamPHPda\Instances\Pair\PairApply;
 use Marcosh\LamPHPda\Instances\Pair\PairFunctor;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monoid;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
@@ -136,5 +139,29 @@ final class Pair implements DefaultFunctor, HK2Covariant
     public function apply(Semigroup $semigroup, HK1 $f): self
     {
         return $this->iapply(new PairApply($semigroup), $f);
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param Applicative<PairBrand<C>> $applicative
+     * @param D $a
+     * @return Pair<C, D>
+     */
+    public static function ipure(Applicative $applicative, $a): self
+    {
+        return self::fromBrand($applicative->pure($a));
+    }
+
+    /**
+     * @template C
+     * @template D
+     * @param Monoid<C> $monoid
+     * @param D $a
+     * @return Pair<C, D>
+     */
+    public static function pure(Monoid $monoid, $a): self
+    {
+        return self::ipure(new PairApplicative($monoid), $a);
     }
 }

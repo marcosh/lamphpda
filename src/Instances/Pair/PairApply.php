@@ -53,8 +53,6 @@ final class PairApply implements Apply
      * @param HK1<PairBrand<C>, A> $a
      * @return Pair<C, B>
      *
-     * @psalm-pure
-     *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function apply(HK1 $f, HK1 $a): Pair

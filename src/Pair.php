@@ -8,9 +8,12 @@ use Marcosh\LamPHPda\Brand\PairBrand;
 use Marcosh\LamPHPda\Brand\PairBrand2;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\HK\HK2Covariant;
+use Marcosh\LamPHPda\Instances\Pair\PairApply;
 use Marcosh\LamPHPda\Instances\Pair\PairFunctor;
+use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monoid;
 
 /**
  * @template-covariant A
@@ -111,5 +114,27 @@ final class Pair implements DefaultFunctor, HK2Covariant
     public function map(callable $f): self
     {
         return $this->imap(new PairFunctor(), $f);
+    }
+
+    /**
+     * @template C
+     * @param Apply<PairBrand<A>> $apply
+     * @param HK1<PairBrand<A>, callable(B): C> $f
+     * @return Pair<A, C>
+     */
+    public function iapply(Apply $apply, HK1 $f): self
+    {
+        return self::fromBrand($apply->apply($f, $this));
+    }
+
+    /**
+     * @template C
+     * @param Monoid<A> $monoid
+     * @param HK1<PairBrand<A>, callable(B): C> $f
+     * @return Pair<A, C>
+     */
+    public function apply(Monoid $monoid, HK1 $f): self
+    {
+        return $this->iapply(new PairApply($monoid), $f);
     }
 }

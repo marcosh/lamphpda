@@ -23,4 +23,8 @@ describe('IO', function () {
 
         expect($io->apply($ioF)->eval())->toBe(47);
     });
+
+    it('creates pure IO as constant callables', function () {
+        expect(IO::pure(42)->eval())->toBe(42);
+    });
 });

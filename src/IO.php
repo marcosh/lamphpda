@@ -6,10 +6,12 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\IOBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\IO\IOApplicative;
 use Marcosh\LamPHPda\Instances\IO\IOApply;
 use Marcosh\LamPHPda\Instances\IO\IOFunctor;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApplicative;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
@@ -17,11 +19,11 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  *
  * @template-covariant A
  *
- * @implements DefaultApply<IOBrand, A>
+ * @implements DefaultApplicative<IOBrand, A>
  *
  * @psalm-immutable
  */
-final class IO implements DefaultApply
+final class IO implements DefaultApplicative
 {
     /** @var callable(): A */
     private $action;
@@ -108,5 +110,30 @@ final class IO implements DefaultApply
     public function apply(HK1 $f): self
     {
         return $this->iapply(new IOApply(), $f);
+    }
+
+    /**
+     * @template B
+     * @param Applicative<IOBrand> $applicative
+     * @param B $a
+     * @return IO<B>
+     *
+     * @psalm-pure
+     */
+    public static function ipure(Applicative $applicative, $a): self
+    {
+        return self::fromBrand($applicative->pure($a));
+    }
+
+    /**
+     * @template B
+     * @param B $a
+     * @return IO<B>
+     *
+     * @psalm-pure
+     */
+    public static function pure($a): self
+    {
+        return self::ipure(new IOApplicative(), $a);
     }
 }

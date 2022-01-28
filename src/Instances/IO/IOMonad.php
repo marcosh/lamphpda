@@ -69,6 +69,6 @@ final class IOMonad implements Monad
     {
         $ioA = IO::fromBrand($a);
 
-        return IO::action(fn () => IO::fromBrand($f($ioA->eval()))->eval());
+        return IO::action(static fn () => IO::fromBrand($f($ioA->eval()))->eval());
     }
 }

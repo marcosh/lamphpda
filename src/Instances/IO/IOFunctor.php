@@ -27,6 +27,6 @@ final class IOFunctor implements Functor
      */
     public function map(callable $f, HK1 $a): IO
     {
-        return IO::action(fn () => $f(IO::fromBrand($a)->eval()));
+        return IO::action(static fn () => $f(IO::fromBrand($a)->eval()));
     }
 }

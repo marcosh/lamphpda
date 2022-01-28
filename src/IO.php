@@ -17,7 +17,7 @@ use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
- * an instance of IO<A> represents a computation which will return an instance of type A
+ * an instance of IO<A> represents a computation which will return an instance of type A.
  *
  * @template-covariant A
  *

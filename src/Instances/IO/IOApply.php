@@ -44,6 +44,6 @@ final class IOApply implements Apply
         $ioF = IO::fromBrand($f);
         $ioA = IO::fromBrand($a);
 
-        return IO::action(fn () => $ioF->eval()($ioA->eval()));
+        return IO::action(static fn () => $ioF->eval()($ioA->eval()));
     }
 }

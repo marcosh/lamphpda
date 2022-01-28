@@ -9,21 +9,23 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\IO\IOApplicative;
 use Marcosh\LamPHPda\Instances\IO\IOApply;
 use Marcosh\LamPHPda\Instances\IO\IOFunctor;
+use Marcosh\LamPHPda\Instances\IO\IOMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApplicative;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * an instance of IO<A> represents a computation which will return an instance of type A
  *
  * @template-covariant A
  *
- * @implements DefaultApplicative<IOBrand, A>
+ * @implements DefaultMonad<IOBrand, A>
  *
  * @psalm-immutable
  */
-final class IO implements DefaultApplicative
+final class IO implements DefaultMonad
 {
     /** @var callable(): A */
     private $action;
@@ -135,5 +137,26 @@ final class IO implements DefaultApplicative
     public static function pure($a): self
     {
         return self::ipure(new IOApplicative(), $a);
+    }
+
+    /**
+     * @template B
+     * @param Monad<IOBrand> $monad
+     * @param callable(A): HK1<IOBrand, B> $f
+     * @return IO<B>
+     */
+    public function ibind(Monad $monad, callable $f): self
+    {
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template B
+     * @param callable(A): HK1<IOBrand, B> $f
+     * @return IO<B>
+     */
+    public function bind(callable $f): self
+    {
+        return $this->ibind(new IOMonad(), $f);
     }
 }

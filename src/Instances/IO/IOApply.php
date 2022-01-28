@@ -10,8 +10,6 @@ use Marcosh\LamPHPda\IO;
 use Marcosh\LamPHPda\Typeclass\Apply;
 
 /**
- * @template E
- *
  * @implements Apply<IOBrand>
  *
  * @psalm-immutable

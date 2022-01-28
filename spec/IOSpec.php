@@ -27,4 +27,11 @@ describe('IO', function () {
     it('creates pure IO as constant callables', function () {
         expect(IO::pure(42)->eval())->toBe(42);
     });
+
+    it('binds correctly a function', function () {
+        $io = IO::action(fn () => 42);
+        $f = fn (int $i) => IO::action(fn () => $i + 5);
+
+        expect($io->bind($f)->eval())->toBe(47);
+    });
 });

@@ -16,4 +16,11 @@ describe('IO', function () {
 
         expect($io->map(fn (int $i) => $i + 5)->eval())->toBe(47);
     });
+
+    it('applies correctly a function', function () {
+        $io = IO::action(fn () => 42);
+        $ioF = IO::action(fn () => fn ($x) => $x + 5);
+
+        expect($io->apply($ioF)->eval())->toBe(47);
+    });
 });

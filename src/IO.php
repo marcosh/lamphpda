@@ -6,8 +6,10 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\IOBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\IO\IOApply;
 use Marcosh\LamPHPda\Instances\IO\IOFunctor;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
+use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
@@ -15,11 +17,11 @@ use Marcosh\LamPHPda\Typeclass\Functor;
  *
  * @template-covariant A
  *
- * @implements DefaultFunctor<IOBrand, A>
+ * @implements DefaultApply<IOBrand, A>
  *
  * @psalm-immutable
  */
-final class IO implements DefaultFunctor
+final class IO implements DefaultApply
 {
     /** @var callable(): A */
     private $action;
@@ -85,5 +87,26 @@ final class IO implements DefaultFunctor
     public function map(callable $f): self
     {
         return $this->imap(new IOFunctor(), $f);
+    }
+
+    /**
+     * @template B
+     * @param Apply<IOBrand> $apply
+     * @param HK1<IOBrand, callable(A): B> $f
+     * @return IO<B>
+     */
+    public function iapply(Apply $apply, HK1 $f): self
+    {
+        return self::fromBrand($apply->apply($f, $this));
+    }
+
+    /**
+     * @template B
+     * @param HK1<IOBrand, callable(A): B> $f
+     * @return IO<B>
+     */
+    public function apply(HK1 $f): self
+    {
+        return $this->iapply(new IOApply(), $f);
     }
 }

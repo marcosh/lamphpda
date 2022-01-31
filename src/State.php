@@ -45,4 +45,22 @@ final class State
         /** @psalm-suppress ImpureFunctionCall */
         return ($this->runState)($state);
     }
+
+    /**
+     * @param S $state
+     * @return A
+     */
+    public function evalState($state)
+    {
+        return $this->runState($state)->first();
+    }
+
+    /**
+     * @param S $state
+     * @return S
+     */
+    public function execState($state)
+    {
+        return $this->runState($state)->second();
+    }
 }

@@ -349,4 +349,93 @@ final class ExtraApply
             $h
         );
     }
+
+    /**
+     * @template A
+     * @template B
+     * @template C
+     * @template D
+     * @template E
+     * @template G
+     * @template H
+     * @template I
+     * @template J
+     * @param callable(A, B, C, D, E, G, H, I): J $f
+     * @param HK1<F, A> $a
+     * @param HK1<F, B> $b
+     * @param HK1<F, C> $c
+     * @param HK1<F, D> $d
+     * @param HK1<F, E> $e
+     * @param HK1<F, G> $g
+     * @param HK1<F, H> $h
+     * @param HK1<F, I> $i
+     * @return HK1<F, J>
+     */
+    public function lift8(callable $f, HK1 $a, HK1 $b, HK1 $c, HK1 $d, HK1 $e, HK1 $g, HK1 $h, HK1 $i): HK1
+    {
+        $curriedF =
+            /**
+             * @param A $ca
+             * @return callable(B): (callable(C): (callable(D): (callable(E): (callable(G): (callable(H): (callable(I): J))))))
+             */
+            static fn ($ca) =>
+            /**
+             * @param B $cb
+             * @return callable(C): (callable(D): (callable(E): (callable(G): (callable(H): (callable(I): J)))))
+             */
+            static fn ($cb) =>
+            /**
+             * @param C $cc
+             * @return callable(D): (callable(E): (callable(G): (callable(H): (callable(I): J))))
+             */
+            static fn ($cc) =>
+            /**
+             * @param D $cd
+             * @return callable(E): (callable(G): (callable(H): (callable(I): J)))
+             */
+            static fn ($cd) =>
+            /**
+             * @param E $ce
+             * @return callable(G): (callable(H): (callable(I): J))
+             */
+            static fn ($ce) =>
+            /**
+             * @param G $cg
+             * @return callable(H): (callable(I): J)
+             */
+            static fn ($cg) =>
+            /**
+             * @param H $ch
+             * @return callable(I): J
+             */
+            static fn ($ch) =>
+            /**
+             * @param I $ci
+             * @return J
+             */
+            static fn ($ci) => $f($ca, $cb, $cc, $cd, $ce, $cg, $ch, $ci);
+
+        return $this->apply->apply(
+            $this->apply->apply(
+                $this->apply->apply(
+                    $this->apply->apply(
+                        $this->apply->apply(
+                            $this->apply->apply(
+                                $this->apply->apply(
+                                    $this->apply->map($curriedF, $a),
+                                    $b
+                                ),
+                                $c
+                            ),
+                            $d
+                        ),
+                        $e
+                    ),
+                    $g
+                ),
+                $h,
+            ),
+            $i
+        );
+    }
 }

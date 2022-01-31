@@ -41,6 +41,12 @@ describe('Maybe', function () {
         expect($maybe->withDefault(37))->toBe(42);
     });
 
+    it('converts to either and back', function () {
+        $maybe = Maybe::just(42);
+
+        expect($maybe->toEither(37)->toMaybe())->toEqual($maybe);
+    });
+
     it('maps a nothing to a nothing', function () {
         $maybe = Maybe::nothing();
 

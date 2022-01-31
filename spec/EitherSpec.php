@@ -31,6 +31,12 @@ describe('Either', function () {
         expect($result)->toEqual(21);
     });
 
+    it('converts to maybe and back', function () {
+        $right = Either::right(42);
+
+        expect($right->toMaybe()->toEither(37))->toEqual($right);
+    });
+
     it('maps correctly a left', function () {
         $either = Either::left(42);
 

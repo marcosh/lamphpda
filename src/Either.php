@@ -205,6 +205,17 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     }
 
     /**
+     * @return Maybe<B>
+     */
+    public function toMaybe(): Maybe
+    {
+        return $this->eval(
+            static fn () => Maybe::nothing(),
+            static fn ($b) => Maybe::just($b)
+        );
+    }
+
+    /**
      * @template C
      * @param Functor<EitherBrand<A>> $functor
      * @param callable(B): C $f

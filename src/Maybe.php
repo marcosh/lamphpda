@@ -137,6 +137,19 @@ final class Maybe implements DefaultMonad, DefaultTraversable
 
     /**
      * @template B
+     * @param B $b
+     * @return Either<B, A>
+     */
+    public function toEither($b): Either
+    {
+        return $this->eval(
+            Either::left($b),
+            static fn ($a) => Either::right($a)
+        );
+    }
+
+    /**
+     * @template B
      * @param Functor<MaybeBrand> $functor
      * @param callable(A): B $f
      * @return Maybe<B>

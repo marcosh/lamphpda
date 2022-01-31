@@ -101,6 +101,36 @@ final class Pair implements DefaultFunctor, HK2Covariant
     }
 
     /**
+     * @return A
+     */
+    public function first()
+    {
+        return $this->eval(
+            /**
+             * @param A $a
+             * @param B $_
+             * @return A
+             */
+            fn ($a, $_) => $a
+        );
+    }
+
+    /**
+     * @return B
+     */
+    public function second()
+    {
+        return $this->eval(
+            /**
+             * @param A $_
+             * @param B $b
+             * @return B
+             */
+            fn ($_, $b) => $b
+        );
+    }
+
+    /**
      * @template C
      * @param Functor<PairBrand> $functor
      * @param callable(B): C $f

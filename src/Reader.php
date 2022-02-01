@@ -59,7 +59,7 @@ final class Reader implements DefaultMonad
      */
     public static function fromBrand(HK1 $b): self
     {
-        /** @var Reader<F, B> $b */
+        /** @var Reader<F, B> */
         return $b;
     }
 

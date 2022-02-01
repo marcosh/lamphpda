@@ -4,19 +4,27 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\StateBrand;
+use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\State\StateFunctor;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
+use Marcosh\LamPHPda\Typeclass\Functor;
+
 /**
  * @template S
  * @template-covariant A
  *
+ * @implements DefaultFunctor<StateBrand<S>, A>
+ *
  * @psalm-immutable
  */
-final class State
+final class State implements DefaultFunctor
 {
-    /** @var callable(S): Pair<A, S> */
+    /** @var callable(S): Pair<S, A> */
     private $runState;
 
     /**
-     * @param callable(S): Pair<A, S> $runState
+     * @param callable(S): Pair<S, A> $runState
      */
     private function __construct(callable $runState)
     {
@@ -26,7 +34,7 @@ final class State
     /**
      * @template T
      * @template B
-     * @param callable(T): Pair<B, T> $runState
+     * @param callable(T): Pair<T, B> $runState
      * @return State<T, B>
      *
      * @psalm-pure
@@ -37,8 +45,22 @@ final class State
     }
 
     /**
+     * @template B
+     * @template T
+     * @param HK1<StateBrand<T>, B> $b
+     * @return State<T, B>
+     *
+     * @psalm-pure
+     */
+    public static function fromBrand(HK1 $b): self
+    {
+        /** @var State<T, B> */
+        return $b;
+    }
+
+    /**
      * @param S $state
-     * @return Pair<A, S>
+     * @return Pair<S, A>
      */
     public function runState($state): Pair
     {
@@ -52,7 +74,7 @@ final class State
      */
     public function evalState($state)
     {
-        return $this->runState($state)->first();
+        return $this->runState($state)->second();
     }
 
     /**
@@ -61,6 +83,27 @@ final class State
      */
     public function execState($state)
     {
-        return $this->runState($state)->second();
+        return $this->runState($state)->first();
+    }
+
+    /**
+     * @template B
+     * @param Functor<StateBrand<S>> $functor
+     * @param callable(A): B $f
+     * @return State<S, B>
+     */
+    public function imap(Functor $functor, callable $f): self
+    {
+        return self::fromBrand($functor->map($f, $this));
+    }
+
+    /**
+     * @template B
+     * @param callable(A): B $f
+     * @return State<S, B>
+     */
+    public function map(callable $f): self
+    {
+        return $this->imap(new StateFunctor(), $f);
     }
 }

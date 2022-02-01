@@ -145,8 +145,9 @@ final class Reader implements DefaultMonad
 
     /**
      * @template B
+     * @template F
      * @param B $a
-     * @return Reader<E, B>
+     * @return Reader<F, B>
      *
      * @psalm-pure
      */

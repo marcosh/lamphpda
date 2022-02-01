@@ -6,21 +6,23 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\StateBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\State\StateApplicative;
 use Marcosh\LamPHPda\Instances\State\StateApply;
 use Marcosh\LamPHPda\Instances\State\StateFunctor;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApplicative;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template S
  * @template-covariant A
  *
- * @implements DefaultApply<StateBrand<S>, A>
+ * @implements DefaultApplicative<StateBrand<S>, A>
  *
  * @psalm-immutable
  */
-final class State implements DefaultApply
+final class State implements DefaultApplicative
 {
     /** @var callable(S): Pair<S, A> */
     private $runState;
@@ -128,5 +130,32 @@ final class State implements DefaultApply
     public function apply(HK1 $f): self
     {
         return $this->iapply(new StateApply(), $f);
+    }
+
+    /**
+     * @template B
+     * @template T
+     * @param Applicative<StateBrand<T>> $applicative
+     * @param B $a
+     * @return State<T, B>
+     *
+     * @psalm-pure
+     */
+    public static function ipure(Applicative $applicative, $a): self
+    {
+        return self::fromBrand($applicative->pure($a));
+    }
+
+    /**
+     * @template B
+     * @template T
+     * @param B $a
+     * @return State<T, B>
+     *
+     * @psalm-pure
+     */
+    public static function pure($a): self
+    {
+        return self::ipure(new StateApplicative(), $a);
     }
 }

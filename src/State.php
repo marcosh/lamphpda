@@ -6,19 +6,21 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\StateBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\State\StateApply;
 use Marcosh\LamPHPda\Instances\State\StateFunctor;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
+use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApply;
 use Marcosh\LamPHPda\Typeclass\Functor;
 
 /**
  * @template S
  * @template-covariant A
  *
- * @implements DefaultFunctor<StateBrand<S>, A>
+ * @implements DefaultApply<StateBrand<S>, A>
  *
  * @psalm-immutable
  */
-final class State implements DefaultFunctor
+final class State implements DefaultApply
 {
     /** @var callable(S): Pair<S, A> */
     private $runState;
@@ -39,7 +41,7 @@ final class State implements DefaultFunctor
      *
      * @psalm-pure
      */
-    public static function state(callable $runState): State
+    public static function state(callable $runState): self
     {
         return new self($runState);
     }
@@ -105,5 +107,26 @@ final class State implements DefaultFunctor
     public function map(callable $f): self
     {
         return $this->imap(new StateFunctor(), $f);
+    }
+
+    /**
+     * @template B
+     * @param Apply<StateBrand<S>> $apply
+     * @param HK1<StateBrand<S>, callable(A): B> $f
+     * @return State<S, B>
+     */
+    public function iapply(Apply $apply, HK1 $f): self
+    {
+        return self::fromBrand($apply->apply($f, $this));
+    }
+
+    /**
+     * @template B
+     * @param HK1<StateBrand<S>, callable(A): B> $f
+     * @return State<S, B>
+     */
+    public function apply(HK1 $f): self
+    {
+        return $this->iapply(new StateApply(), $f);
     }
 }

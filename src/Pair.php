@@ -111,7 +111,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
              * @param B $_
              * @return A
              */
-            fn ($a, $_) => $a
+            static fn ($a, $_) => $a
         );
     }
 
@@ -126,7 +126,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
              * @param B $b
              * @return B
              */
-            fn ($_, $b) => $b
+            static fn ($_, $b) => $b
         );
     }
 

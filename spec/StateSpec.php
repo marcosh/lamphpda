@@ -17,4 +17,11 @@ describe('State', function () {
 
         expect($state->map(fn ($x) => $x + 5)->runState(42))->toEqual(Pair::pair(42, 47));
     });
+
+    it('applies a stateful function to a stateful value', function () {
+        $stateF = State::state(fn ($s) => Pair::pair($s + 1, fn ($a) => $s + $a));
+        $stateA = State::state(fn ($s) => Pair::pair($s * 2, $s));
+
+        expect($stateA->apply($stateF)->runState(42))->toEqual(Pair::pair((42 + 1) * 2, 42 + 43));
+    });
 });

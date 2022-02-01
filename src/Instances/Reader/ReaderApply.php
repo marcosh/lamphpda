@@ -29,7 +29,7 @@ final class ReaderApply implements Apply
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function map(callable $f, $a): Reader
+    public function map(callable $f, HK1 $a): Reader
     {
         return (new ReaderFunctor())->map($f, $a);
     }

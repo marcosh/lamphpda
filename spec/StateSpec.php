@@ -30,4 +30,11 @@ describe('State', function () {
 
         expect($state->runState(37))->toEqual(Pair::pair(37, 42));
     });
+
+    it('binds a function to a stateful value', function () {
+        $stateA = State::state(fn ($s) => Pair::pair($s * 2, $s + 1));
+        $stateF = fn ($a) => State::state(fn ($s) => Pair::pair($s * $a, $s - $a));
+
+        expect($stateA->bind($stateF)->runState(42))->toEqual(Pair::pair(42 * 2 * (42 + 1), (42 * 2) - (42 + 1)));
+    });
 });

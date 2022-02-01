@@ -9,20 +9,22 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\State\StateApplicative;
 use Marcosh\LamPHPda\Instances\State\StateApply;
 use Marcosh\LamPHPda\Instances\State\StateFunctor;
+use Marcosh\LamPHPda\Instances\State\StateMonad;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultApplicative;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
  * @template S
  * @template-covariant A
  *
- * @implements DefaultApplicative<StateBrand<S>, A>
+ * @implements DefaultMonad<StateBrand<S>, A>
  *
  * @psalm-immutable
  */
-final class State implements DefaultApplicative
+final class State implements DefaultMonad
 {
     /** @var callable(S): Pair<S, A> */
     private $runState;
@@ -157,5 +159,26 @@ final class State implements DefaultApplicative
     public static function pure($a): self
     {
         return self::ipure(new StateApplicative(), $a);
+    }
+
+    /**
+     * @template B
+     * @param Monad<StateBrand<S>> $monad
+     * @param callable(A): HK1<StateBrand<S>, B> $f
+     * @return State<S, B>
+     */
+    public function ibind(Monad $monad, callable $f): self
+    {
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template B
+     * @param callable(A): HK1<StateBrand<S>, B> $f
+     * @return State<S, B>
+     */
+    public function bind(callable $f): self
+    {
+        return $this->ibind(new StateMonad(), $f);
     }
 }

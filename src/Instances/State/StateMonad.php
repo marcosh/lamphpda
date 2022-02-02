@@ -83,12 +83,12 @@ final class StateMonad implements Monad
             /**
              * @param S $s
              */
-            fn ($s) => $stateA->runState($s)->eval(
+            static fn ($s) => $stateA->runState($s)->eval(
                 /**
                  * @param S $ss
                  * @param A $aa
                  */
-                fn ($ss, $aa) => State::fromBrand($f($aa))->runState($ss)
+                static fn ($ss, $aa) => State::fromBrand($f($aa))->runState($ss)
             )
         );
     }

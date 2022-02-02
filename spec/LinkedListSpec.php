@@ -17,11 +17,15 @@ describe('LinkedList', function () {
         expect($list->foldr(fn ($x, $y) => $x + $y, 0))->toBe(6);
     });
 
-    it('builds a linked list from a PHP list', function () {
-        $list = [1, 2, 3];
+    it('builds a linked list from a PHP list and goes back', function () {
+        $list = LinkedList::fromList([1, 2, 3]);
 
-        expect(LinkedList::fromList($list))->toEqual(
-            LinkedList::cons(1, LinkedList::cons(2, LinkedList::cons(3, LinkedList::empty())))
-        );
+        expect($list->toList())->toEqual([1, 2, 3]);
+    });
+
+    it('maps a function over every element of the list', function () {
+        $list = LinkedList::fromList([1, 2, 3]);
+
+        expect($list->map(fn ($x) => $x * 2))->toEqual(LinkedList::fromList([2, 4, 6]));
     });
 });

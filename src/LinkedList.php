@@ -13,7 +13,6 @@ use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
-use function array_slice;
 
 /**
  * @template-covariant A
@@ -77,7 +76,7 @@ final class LinkedList implements DefaultFunctor
             return self::empty();
         }
 
-        return self::cons($list[0], self::fromList(array_slice($list, 1)));
+        return self::cons($list[0], self::fromList(\array_slice($list, 1)));
     }
 
     /**

@@ -37,7 +37,7 @@ final class LinkedListMonoid implements Monoid
              * @param LinkedList<A> $list
              * @return LinkedList<A>
              */
-            fn ($element, LinkedList $list) => LinkedList::cons($element, $list),
+            static fn ($element, LinkedList $list) => LinkedList::cons($element, $list),
             $a
         );
     }

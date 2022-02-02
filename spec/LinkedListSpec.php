@@ -28,4 +28,11 @@ describe('LinkedList', function () {
 
         expect($list->map(fn ($x) => $x * 2))->toEqual(LinkedList::fromList([2, 4, 6]));
     });
+
+    it('applies a list of functions to a list of values', function () {
+        $listOfFunctions = LinkedList::fromList([fn ($x) => $x + 1, fn ($x) => $x * 2]);
+        $listOfValues = LinkedList::fromList([1, 2, 3]);
+
+        expect($listOfValues->apply($listOfFunctions))->toEqual(LinkedList::fromList([2, 3, 4, 2, 4, 6]));
+    });
 });

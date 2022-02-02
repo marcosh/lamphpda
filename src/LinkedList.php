@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use function array_slice;
+
 /**
  * @template-covariant A
  *
@@ -14,17 +16,17 @@ final class LinkedList
     /** @var bool */
     private $isEmpty;
 
-    /** @var A|null */
+    /** @var null|A */
     private $head;
 
-    /** @var LinkedList<A>|null */
+    /** @var null|LinkedList<A> */
     private $tail;
 
     /**
-     * @param A|null $head
-     * @param LinkedList<A>|null $tail
+     * @param null|A $head
+     * @param null|LinkedList<A> $tail
      */
-    private function __construct(bool $isEmpty, $head = null, ?LinkedList $tail = null)
+    private function __construct(bool $isEmpty, $head = null, ?self $tail = null)
     {
         $this->isEmpty = $isEmpty;
         $this->head = $head;
@@ -37,7 +39,7 @@ final class LinkedList
      *
      * @psalm-pure
      */
-    public static function empty(): LinkedList
+    public static function empty(): self
     {
         return new self(true);
     }
@@ -48,9 +50,23 @@ final class LinkedList
      * @param LinkedList<B> $tail
      * @return LinkedList<B>
      */
-    public static function cons($head, LinkedList $tail): LinkedList
+    public static function cons($head, self $tail): self
     {
         return new self(false, $head, $tail);
+    }
+
+    /**
+     * @template B
+     * @param list<B> $list
+     * @return LinkedList<B>
+     */
+    public static function fromList(array $list): self
+    {
+        if (empty($list)) {
+            return self::empty();
+        }
+
+        return self::cons($list[0], self::fromList(array_slice($list, 1)));
     }
 
     /**
@@ -65,6 +81,11 @@ final class LinkedList
             return $unit;
         }
 
+        /**
+         * @psalm-suppress ImpureFunctionCall
+         * @psalm-suppress PossiblyNullArgument
+         * @psalm-suppress PossiblyNullReference
+         */
         return $op($this->head, $this->tail->foldr($op, $unit));
     }
 }

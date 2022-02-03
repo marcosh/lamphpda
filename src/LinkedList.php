@@ -13,7 +13,7 @@ use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonad;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonoid;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
@@ -21,11 +21,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 /**
  * @template-covariant A
  *
- * @implements DefaultFunctor<LinkedListBrand, A>
+ * @implements DefaultMonad<LinkedListBrand, A>
  *
  * @psalm-immutable
  */
-final class LinkedList implements DefaultFunctor
+final class LinkedList implements DefaultMonad
 {
     /** @var bool */
     private $isEmpty;

@@ -9,7 +9,7 @@ use Marcosh\LamPHPda\IO;
 /**
  * @psalm-immutable
  */
-final class User
+final class IOUser
 {
     public int $id;
 
@@ -26,20 +26,20 @@ final class User
 
 /**
  * @param int $id
- * @return IO<User>
+ * @return IO<IOUser>
  */
 function getUser(int $id): IO
 {
-    return IO::action(fn () => new User($id, 'marco'));
+    return IO::action(fn () => new IOUser($id, 'marco'));
 }
 
 // 'retrieveRemoteData' plays the role of a network call which, given the name of the user, retrieves an integer value
 
 /**
- * @param User $user
+ * @param IOUser $user
  * @return IO<int>
  */
-function retrieveRemoteData(User $user): IO
+function retrieveRemoteData(IOUser $user): IO
 {
     return IO::action(fn () => strlen($user->name));
 }

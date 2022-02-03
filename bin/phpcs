@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-docker run --rm -v $(pwd):/app -w=/app php:7.4.11 vendor/bin/phpcs "$@"

@@ -62,9 +62,6 @@ final class ValidationApply implements Apply
         $eitherF = Either::fromBrand($f);
         $eitherA = Either::fromBrand($a);
 
-        /**
-         * @psalm-suppress InvalidArgument
-         */
         return $eitherF->eval(
             /**
              * @param E $ef

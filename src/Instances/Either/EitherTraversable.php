@@ -60,7 +60,6 @@ final class EitherTraversable implements Traversable
      * @param HK1<EitherBrand<C>, A> $a
      * @return HK1<F, Either<C, B>>
      *
-     * @psalm-suppress ImplementedReturnTypeMismatch
      * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function traverse(Applicative $applicative, callable $f, HK1 $a): HK1
@@ -84,8 +83,6 @@ final class EitherTraversable implements Traversable
             /**
              * @param A $a
              * @return HK1<F, Either<C, B>>
-             *
-             * @psalm-suppress InvalidArgument
              */
             static fn ($a): HK1 => $applicative->map($right, $f($a))
         );

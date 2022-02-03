@@ -213,7 +213,6 @@ final class Identity implements DefaultMonad, DefaultTraversable
      * @param callable(A): HK1<F, B> $f
      * @return HK1<F, Identity<B>>
      *
-     * @psalm-suppress InvalidArgument
      * @psalm-suppress ArgumentTypeCoercion
      */
     public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1

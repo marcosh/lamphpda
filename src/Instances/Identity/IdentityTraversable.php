@@ -63,7 +63,6 @@ final class IdentityTraversable implements Traversable
         $identityA = Identity::fromBrand($a);
 
         /**
-         * @psalm-suppress InvalidArgument
          * @psalm-suppress ImpureFunctionCall
          */
         return $applicative->map([Identity::class, 'wrap'], $f($identityA->unwrap()));

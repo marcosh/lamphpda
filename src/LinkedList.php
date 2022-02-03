@@ -8,12 +8,15 @@ use Marcosh\LamPHPda\Brand\LinkedListBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListApplicative;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListApply;
+use Marcosh\LamPHPda\Instances\LinkedList\LinkedListFoldable;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListFunctor;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonad;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonoid;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFoldable;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
+use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
@@ -22,10 +25,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  * @template-covariant A
  *
  * @implements DefaultMonad<LinkedListBrand, A>
+ * @implements DefaultFoldable<LinkedListBrand, A>
  *
  * @psalm-immutable
  */
-final class LinkedList implements DefaultMonad
+final class LinkedList implements DefaultMonad, DefaultFoldable
 {
     /** @var bool */
     private $isEmpty;
@@ -106,7 +110,7 @@ final class LinkedList implements DefaultMonad
      * @param B $unit
      * @return B
      */
-    public function foldr(callable $op, $unit)
+    public function eval(callable $op, $unit)
     {
         if ($this->isEmpty) {
             return $unit;
@@ -117,7 +121,7 @@ final class LinkedList implements DefaultMonad
          * @psalm-suppress PossiblyNullArgument
          * @psalm-suppress PossiblyNullReference
          */
-        return $op($this->head, $this->tail->foldr($op, $unit));
+        return $op($this->head, $this->tail->eval($op, $unit));
     }
 
     public function toList(): array
@@ -241,5 +245,29 @@ final class LinkedList implements DefaultMonad
     public function bind(callable $f): self
     {
         return $this->ibind(new LinkedListMonad(), $f);
+    }
+
+    /**
+     * @template B
+     * @param Foldable<LinkedListBrand> $foldable
+     * @param callable(A, B): B $f
+     * @param B $b
+     * @return B
+     */
+    public function ifoldr(Foldable $foldable, callable $f, $b)
+    {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return $foldable->foldr($f, $b, $this);
+    }
+
+    /**
+     * @template B
+     * @param callable(A, B): B $f
+     * @param B $b
+     * @return B
+     */
+    public function foldr(callable $f, $b)
+    {
+        return $this->ifoldr(new LinkedListFoldable(), $f, $b);
     }
 }

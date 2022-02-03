@@ -46,7 +46,7 @@ final class LinkedListApply implements Apply
         $listF = LinkedList::fromBrand($f);
         $listA = LinkedList::fromBrand($a);
 
-        return $listF->foldr(
+        return $listF->eval(
             /**
              * @param callable(A): B $ff
              * @param LinkedList<B> $l

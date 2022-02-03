@@ -31,7 +31,7 @@ final class LinkedListMonoid implements Monoid
      */
     public function append($a, $b): LinkedList
     {
-        return $b->foldr(
+        return $b->eval(
             /**
              * @param A $element,
              * @param LinkedList<A> $list

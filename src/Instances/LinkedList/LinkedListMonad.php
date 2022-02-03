@@ -69,7 +69,7 @@ final class LinkedListMonad implements Monad
     {
         $listA = LinkedList::fromBrand($a);
 
-        return $listA->foldr(
+        return $listA->eval(
             /**
              * @param A $element
              * @param LinkedList<B> $l

@@ -29,7 +29,7 @@ final class LinkedListFunctor implements Functor
     {
         $listA = LinkedList::fromBrand($a);
 
-        return $listA->foldr(
+        return $listA->eval(
             /**
              * @param A $element
              * @param LinkedList<B> $l

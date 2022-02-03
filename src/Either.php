@@ -326,7 +326,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      * @param D $a
      * @return Either<C, D>
      *
-     * @psalm-mutation-free
+     * @psalm-pure
      */
     public static function ipure(Applicative $applicative, $a): self
     {
@@ -339,7 +339,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      * @param D $a
      * @return Either<C, D>
      *
-     * @psalm-mutation-free
+     * @psalm-pure
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */

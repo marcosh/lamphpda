@@ -133,6 +133,8 @@ final class Identity implements DefaultMonad, DefaultTraversable
      * @param Applicative<IdentityBrand> $applicative
      * @param B $a
      * @return Identity<B>
+     *
+     * @psalm-pure
      */
     public static function ipure(Applicative $applicative, $a): self
     {
@@ -143,6 +145,8 @@ final class Identity implements DefaultMonad, DefaultTraversable
      * @template B
      * @param B $a
      * @return Identity<B>
+     *
+     * @psalm-pure
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */

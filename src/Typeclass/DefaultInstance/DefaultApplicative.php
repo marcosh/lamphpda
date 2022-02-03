@@ -21,6 +21,8 @@ interface DefaultApplicative extends DefaultApply
      * @template B
      * @param B $a
      * @return HK1<F, B>
+     *
+     * @psalm-pure
      */
     public static function pure($a): HK1;
 }

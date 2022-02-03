@@ -201,6 +201,8 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param Applicative<MaybeBrand> $applicative
      * @param B $a
      * @return Maybe<B>
+     *
+     * @psalm-pure
      */
     public static function ipure(Applicative $applicative, $a): self
     {
@@ -211,6 +213,8 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @template B
      * @param B $a
      * @return Maybe<B>
+     *
+     * @psalm-pure
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */

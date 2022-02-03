@@ -179,6 +179,8 @@ final class Pair implements DefaultFunctor, HK2Covariant
      * @param Applicative<PairBrand<C>> $applicative
      * @param D $a
      * @return Pair<C, D>
+     *
+     * @psalm-pure
      */
     public static function ipure(Applicative $applicative, $a): self
     {
@@ -191,6 +193,8 @@ final class Pair implements DefaultFunctor, HK2Covariant
      * @param Monoid<C> $monoid
      * @param D $a
      * @return Pair<C, D>
+     *
+     * @psalm-pure
      */
     public static function pure(Monoid $monoid, $a): self
     {

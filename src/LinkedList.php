@@ -6,9 +6,11 @@ namespace Marcosh\LamPHPda;
 
 use Marcosh\LamPHPda\Brand\LinkedListBrand;
 use Marcosh\LamPHPda\HK\HK1;
+use Marcosh\LamPHPda\Instances\LinkedList\LinkedListApplicative;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListApply;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListFunctor;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonoid;
+use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
 use Marcosh\LamPHPda\Typeclass\Functor;
@@ -59,6 +61,8 @@ final class LinkedList implements DefaultFunctor
      * @param B $head
      * @param LinkedList<B> $tail
      * @return LinkedList<B>
+     *
+     * @psalm-pure
      */
     public static function cons($head, self $tail): self
     {
@@ -69,6 +73,8 @@ final class LinkedList implements DefaultFunctor
      * @template B
      * @param list<B> $list
      * @return LinkedList<B>
+     *
+     * @psalm-pure
      */
     public static function fromList(array $list): self
     {
@@ -184,5 +190,30 @@ final class LinkedList implements DefaultFunctor
     public function apply(HK1 $f): self
     {
         return $this->iapply(new LinkedListApply(), $f);
+    }
+
+    /**
+     * @template B
+     * @param Applicative<LinkedListBrand> $applicative
+     * @param B $a
+     * @return LinkedList<B>
+     *
+     * @psalm-pure
+     */
+    public static function ipure(Applicative $applicative, $a): self
+    {
+        return self::fromBrand($applicative->pure($a));
+    }
+
+    /**
+     * @template B
+     * @param B $a
+     * @return LinkedList<B>
+     *
+     * @psalm-pure
+     */
+    public static function pure($a): self
+    {
+        return self::ipure(new LinkedListApplicative(), $a);
     }
 }

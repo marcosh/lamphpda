@@ -35,4 +35,8 @@ describe('LinkedList', function () {
 
         expect($listOfValues->apply($listOfFunctions))->toEqual(LinkedList::fromList([2, 3, 4, 2, 4, 6]));
     });
+
+    it('creates a singleton list', function () {
+        expect(LinkedList::pure(42))->toEqual(LinkedList::fromList([42]));
+    });
 });

@@ -28,6 +28,8 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
 use Throwable;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/Either.md
+ *
  * @template-covariant A
  * @template-covariant B
  *

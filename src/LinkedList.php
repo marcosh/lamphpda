@@ -9,11 +9,13 @@ use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListApplicative;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListApply;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListFunctor;
+use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonad;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonoid;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFunctor;
 use Marcosh\LamPHPda\Typeclass\Functor;
+use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
@@ -215,5 +217,29 @@ final class LinkedList implements DefaultFunctor
     public static function pure($a): self
     {
         return self::ipure(new LinkedListApplicative(), $a);
+    }
+
+    /**
+     * @template B
+     * @param Monad<LinkedListBrand> $monad
+     * @param callable(A): HK1<LinkedListBrand, B> $f
+     * @return LinkedList<B>
+     */
+    public function ibind(Monad $monad, callable $f): self
+    {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return self::fromBrand($monad->bind($this, $f));
+    }
+
+    /**
+     * @template B
+     * @param callable(A): HK1<LinkedListBrand, B> $f
+     * @return LinkedList<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function bind(callable $f): self
+    {
+        return $this->ibind(new LinkedListMonad(), $f);
     }
 }

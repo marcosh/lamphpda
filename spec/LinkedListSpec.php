@@ -39,4 +39,11 @@ describe('LinkedList', function () {
     it('creates a singleton list', function () {
         expect(LinkedList::pure(42))->toEqual(LinkedList::fromList([42]));
     });
+
+    it('binds a function to a linked list', function () {
+        $list = LinkedList::fromList([1, 2, 3]);
+        $f = fn (int $i) => LinkedList::fromList([$i + 1, $i + 42]);
+
+        expect($list->bind($f))->toEqual(LinkedList::fromList([2, 43, 3, 44, 4, 45]));
+    });
 });

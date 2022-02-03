@@ -87,7 +87,7 @@ final class LinkedList implements DefaultMonad, DefaultTraversable
      */
     public static function fromList(array $list): self
     {
-        if (empty($list)) {
+        if ([] === $list) {
             return self::empty();
         }
 

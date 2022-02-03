@@ -15,9 +15,9 @@ final class Identity
     /**
      * @template B
      * @param B $b
-     * @return self<B>
+     * @return IO<B>
      */
-    public static function wrap($b)
+    public static function wrap($b): self
 }
 ```
 

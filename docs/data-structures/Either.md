@@ -20,10 +20,7 @@ final class Either
      * @param C $value
      * @return Either<C, D>
      */
-    public static function left($value): Either
-    {
-        return new self(false, $value);
-    }
+    public static function left($value): self
 
     /**
      * @template C
@@ -31,10 +28,7 @@ final class Either
      * @param D $value
      * @return Either<C, D>
      */
-    public static function right($value): Either
-    {
-        return new self(true, null, $value);
-    }
+    public static function right($value): self
 ```
 
 Written more synthetically, the type of `left` and `right` are
@@ -57,16 +51,7 @@ inner value of `Either` providing two callbacks, one for the `left` case, one fo
      * @param callable(B): C $ifRight
      * @return C
      */
-    public function eval(
-        callable $ifLeft,
-        callable $ifRight
-    ) {
-        if ($this->isRight) {
-            return $ifRight($this->rightValue);
-        }
-
-        return $ifLeft($this->leftValue);
-    }
+    public function eval(callable $ifLeft, callable $ifRight)
 ```
 
 Its simplified type is

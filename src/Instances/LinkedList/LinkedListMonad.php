@@ -83,7 +83,7 @@ final class LinkedListMonad implements Monad
              * @param LinkedList<B> $l
              * @return LinkedList<B>
              */
-            fn ($element, LinkedList $l) => $l->append(LinkedList::fromBrand($f($element))),
+            static fn ($element, LinkedList $l) => $l->append(LinkedList::fromBrand($f($element))),
             LinkedList::empty()
         );
     }

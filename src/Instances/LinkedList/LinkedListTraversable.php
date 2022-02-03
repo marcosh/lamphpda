@@ -75,7 +75,7 @@ final class LinkedListTraversable implements Traversable
              * @param HK1<F, LinkedList<B>> $acc
              * @return HK1<F, LinkedList<B>>
              */
-            fn ($element, HK1 $acc) => (new ExtraApply($applicative))->lift2(
+            static fn ($element, HK1 $acc) => (new ExtraApply($applicative))->lift2(
                 [LinkedList::class, 'cons'],
                 $f($element),
                 $acc

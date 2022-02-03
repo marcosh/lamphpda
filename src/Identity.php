@@ -23,6 +23,8 @@ use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/Identity.md
+ *
  * @template-covariant A
  *
  * @implements DefaultMonad<IdentityBrand, A>

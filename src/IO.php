@@ -17,7 +17,7 @@ use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
- * an instance of IO<A> represents a computation which will return an instance of type A.
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/IO.md
  *
  * @template-covariant A
  *

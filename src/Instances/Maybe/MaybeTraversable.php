@@ -41,6 +41,8 @@ final class MaybeTraversable implements Traversable
      * @param B $b
      * @param HK1<MaybeBrand, A> $a
      * @return B
+     *
+     * @psalm-pure
      */
     public function foldr(callable $f, $b, HK1 $a)
     {
@@ -55,6 +57,8 @@ final class MaybeTraversable implements Traversable
      * @param callable(A): HK1<F, B> $f
      * @param HK1<MaybeBrand, A> $a
      * @return HK1<F, Maybe<B>>
+     *
+     * @psalm-pure
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      * @psalm-suppress LessSpecificImplementedReturnType

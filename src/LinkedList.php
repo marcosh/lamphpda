@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
+use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\Brand\LinkedListBrand;
 use Marcosh\LamPHPda\HK\HK1;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListApplicative;
@@ -12,24 +13,26 @@ use Marcosh\LamPHPda\Instances\LinkedList\LinkedListFoldable;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListFunctor;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonad;
 use Marcosh\LamPHPda\Instances\LinkedList\LinkedListMonoid;
+use Marcosh\LamPHPda\Instances\LinkedList\LinkedListTraversable;
 use Marcosh\LamPHPda\Typeclass\Applicative;
 use Marcosh\LamPHPda\Typeclass\Apply;
-use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultFoldable;
 use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultMonad;
+use Marcosh\LamPHPda\Typeclass\DefaultInstance\DefaultTraversable;
 use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
+use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
  * @template-covariant A
  *
  * @implements DefaultMonad<LinkedListBrand, A>
- * @implements DefaultFoldable<LinkedListBrand, A>
+ * @implements DefaultTraversable<LinkedListBrand, A>
  *
  * @psalm-immutable
  */
-final class LinkedList implements DefaultMonad, DefaultFoldable
+final class LinkedList implements DefaultMonad, DefaultTraversable
 {
     /** @var bool */
     private $isEmpty;
@@ -164,6 +167,7 @@ final class LinkedList implements DefaultMonad, DefaultFoldable
      */
     public function imap(Functor $functor, callable $f): self
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($functor->map($f, $this));
     }
 
@@ -171,6 +175,8 @@ final class LinkedList implements DefaultMonad, DefaultFoldable
      * @template B
      * @param callable(A): B $f
      * @return LinkedList<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f): self
     {
@@ -185,6 +191,7 @@ final class LinkedList implements DefaultMonad, DefaultFoldable
      */
     public function iapply(Apply $apply, HK1 $f): self
     {
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromBrand($apply->apply($f, $this));
     }
 
@@ -192,6 +199,8 @@ final class LinkedList implements DefaultMonad, DefaultFoldable
      * @template B
      * @param HK1<LinkedListBrand, callable(A): B> $f
      * @return LinkedList<B>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f): self
     {
@@ -217,6 +226,8 @@ final class LinkedList implements DefaultMonad, DefaultFoldable
      * @return LinkedList<B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public static function pure($a): self
     {
@@ -269,5 +280,33 @@ final class LinkedList implements DefaultMonad, DefaultFoldable
     public function foldr(callable $f, $b)
     {
         return $this->ifoldr(new LinkedListFoldable(), $f, $b);
+    }
+
+    /**
+     * @template F of Brand
+     * @template B
+     * @param Traversable<LinkedListBrand> $traversable
+     * @param Applicative<F> $applicative
+     * @param callable(A): HK1<F, B> $f
+     * @return HK1<F, LinkedList<B>>
+     */
+    public function itraverse(Traversable $traversable, Applicative $applicative, callable $f): HK1
+    {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return $applicative->map([self::class, 'fromBrand'], $traversable->traverse($applicative, $f, $this));
+    }
+
+    /**
+     * @template F of Brand
+     * @template B
+     * @param Applicative<F> $applicative
+     * @param callable(A): HK1<F, B> $f
+     * @return HK1<F, LinkedList<B>>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
+     */
+    public function traverse(Applicative $applicative, callable $f): HK1
+    {
+        return $this->itraverse(new LinkedListTraversable(), $applicative, $f);
     }
 }

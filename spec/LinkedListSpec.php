@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+use Marcosh\LamPHPda\Instances\Maybe\MaybeApplicative;
 use Marcosh\LamPHPda\LinkedList;
+use Marcosh\LamPHPda\Maybe;
+use const Marcosh\LamPHPda\Instances\Maybe\MaybeApplicative;
 
 describe('LinkedList', function () {
     it('folds an empty list to the unit', function () {
@@ -45,5 +48,12 @@ describe('LinkedList', function () {
         $f = fn (int $i) => LinkedList::fromList([$i + 1, $i + 42]);
 
         expect($list->bind($f))->toEqual(LinkedList::fromList([2, 43, 3, 44, 4, 45]));
+    });
+
+    it('traverses a linked list with an applicative', function () {
+        $f = fn (int $i) => $i % 2 === 0 ? Maybe::just($i / 2) : Maybe::nothing();
+
+        expect(LinkedList::fromList([1, 2, 3])->traverse(new MaybeApplicative(), $f))->toEqual(Maybe::nothing());
+        expect(LinkedList::fromList([2, 4, 6])->traverse(new MaybeApplicative(), $f))->toEqual(Maybe::just(LinkedList::fromList([1, 2, 3])));
     });
 });

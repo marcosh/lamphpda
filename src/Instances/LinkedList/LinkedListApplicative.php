@@ -24,6 +24,8 @@ final class LinkedListApplicative implements Applicative
      * @return LinkedList<B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): LinkedList
     {
@@ -38,6 +40,8 @@ final class LinkedListApplicative implements Applicative
      * @return LinkedList<B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function apply(HK1 $f, HK1 $a): LinkedList
     {
@@ -50,6 +54,8 @@ final class LinkedListApplicative implements Applicative
      * @return LinkedList<A>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function pure($a): LinkedList
     {

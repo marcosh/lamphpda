@@ -24,6 +24,8 @@ final class LinkedListFunctor implements Functor
      * @return LinkedList<B>
      *
      * @psalm-pure
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function map(callable $f, HK1 $a): LinkedList
     {

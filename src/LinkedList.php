@@ -25,6 +25,8 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
 use Marcosh\LamPHPda\Typeclass\Traversable;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/LinkedList.md
+ *
  * @template-covariant A
  *
  * @implements DefaultMonad<LinkedListBrand, A>

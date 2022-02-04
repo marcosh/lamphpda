@@ -17,6 +17,8 @@ use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/Reader.md
+ *
  * @template E
  * @template-covariant A
  *
@@ -38,9 +40,10 @@ final class Reader implements DefaultMonad
     }
 
     /**
+     * @template F
      * @template B
-     * @param callable(E): B $f
-     * @return Reader<E, B>
+     * @param callable(F): B $f
+     * @return Reader<F, B>
      *
      * @psalm-pure
      */

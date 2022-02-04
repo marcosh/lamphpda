@@ -17,6 +17,8 @@ use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/State.md
+ *
  * @template S
  * @template-covariant A
  *

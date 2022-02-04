@@ -21,6 +21,8 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
 use Marcosh\LamPHPda\Typeclass\Semigroup;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/Pair.md
+ *
  * @template-covariant A
  * @template-covariant B
  *

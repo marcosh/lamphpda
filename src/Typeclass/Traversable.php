@@ -8,6 +8,8 @@ use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\HK\HK1;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/typeclasses/Traversable.md
+ *
  * @template T of Brand
  *
  * @extends Functor<T>

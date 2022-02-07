@@ -8,6 +8,8 @@ use Marcosh\LamPHPda\Brand\Brand;
 use Marcosh\LamPHPda\HK\HK2Covariant;
 
 /**
+ * @see https://github.com/marcosh/lamphpda/tree/master/docs/typeclasses/Bifunctor.md
+ *
  * @template F of Brand
  *
  * @psalm-immutable

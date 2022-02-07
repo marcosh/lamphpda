@@ -80,3 +80,7 @@ $alternative->apply($alternative->alt($f, $g), $x) == $alternative->alt($alterna
 ```php
 $alternative->apply($alternative->empty(), $f) == $alternative->empty()
 ```
+
+## Implemented instances
+
+- `EitherAlternative`

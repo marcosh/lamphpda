@@ -50,3 +50,10 @@ Representing a generic computation, the `IO` datatype given access to any possib
 
 The `IO` data structure should be used whenever there is the need to interact with the external world, being it a
 database, a user or a web api.
+
+## Typeclass instances
+
+- `IOApplicative`
+- `IOApply`
+- `IOFunctor`
+- `IOMonad`

@@ -73,3 +73,14 @@ $monad->bind($a, fn($x) => $monad->pure($x)) == $a
 ```php
 $monad->bind($a, fn($x) => $monad->bind($f($x), $g)) == $monad->bind($monad->bind($a, $g), $g)
 ```
+
+## Implemented instances
+
+- `EitherMonad`
+- `IdentityMonad`
+- `IOMonad`
+- `LinkedListMonad`
+- `MaybeMonad`
+- `PairMonad`
+- `ReaderMonad`
+- `StateMonad`

@@ -67,6 +67,20 @@ error messages of type `A`.
 
 ## Typeclass instances
 
+- `EitherAlternative`
+- `EitherApplicative`
+- `EitherApply`
+- `EitherBifunctor`
+- `EitherFoldable`
+- `EitherFunctor`
+- `EitherMonad`
+- `EitherMonadThrow`
+- `EitherTraversable`
+- `JoinEitherSemigroup`
+- `MeetEitherSemigroup`
+- `ValidationApplicative`
+- `ValidationApply`
+
 ### Semigroup
 
 We define two instances of `Semigroup` for `Either`. The difference between the two lies on their behaviour when they

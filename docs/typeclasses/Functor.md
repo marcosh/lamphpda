@@ -49,3 +49,14 @@ Mapping the composition of two functions or composing the mapping of those funct
 ```php
 $functor->map(fn($x) => $f($g($x)), $y) == $functor->map(fn($x) => $f($x), $functor->map(fn($x) => $g($x), $y))
 ```
+
+## Implemented instances
+
+- `EitherFunctor`
+- `IdentityFunctor`
+- `IOApplyFunctor`
+- `LinkedListFunctor`
+- `MaybeFunctor`
+- `PairFunctor`
+- `ReaderFunctor`
+- `StateFunctor`

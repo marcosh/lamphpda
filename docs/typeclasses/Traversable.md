@@ -60,3 +60,10 @@ $traversable->traverse(new IdentityApplicative(), fn($x) => new Identity($x), $y
 ### Composition
 
 // TODO
+
+## Implemented instances
+
+- `EitherTraversable`
+- `IdentityTraversable`
+- `LinkedListTraversable`
+- `MaybeTraversable`

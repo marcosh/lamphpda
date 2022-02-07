@@ -25,3 +25,10 @@ Its simplified type is
 ```
 foldr :: ((A, B) -> B, B, T<A>) -> B
 ```
+
+## Implemented instances
+
+- `EitherFoldable`
+- `IdentityFoldable`
+- `LinkedListFoldable`
+- `MaybeFoldable`

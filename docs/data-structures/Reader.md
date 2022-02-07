@@ -53,3 +53,10 @@ runReader :: (Reader<E, A>, E) -> A
 ## Interpretation as an effect
 
 The `Reader` datatype allows modelling values and computation which depend on an environment.
+
+## Typeclass instances
+
+- `ReaderApplicative`
+- `ReaderApply`
+- `ReaderFunctor`
+- `ReaderMonad`

@@ -47,3 +47,12 @@ unwrap :: Identity A -> A
 ## Interpretation as an effect
 
 The `Identity` datatype actually describes the absence of effects.
+
+## Typeclass instances
+
+- `IdentityApplicative`
+- `IdentityApply`
+- `IdentityFoldable`
+- `IdentityFunctor`
+- `IdentityMonad`
+- `IdentityTraversable`

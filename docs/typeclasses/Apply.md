@@ -62,3 +62,15 @@ application is associative
 ```php
 $apply->apply($apply->apply($apply->map(fn ($f, $g) => fn ($x) => $f($g($x)), $a), $b), $c) == $apply->apply($a, $apply->apply($b, $c))
 ```
+
+## Implemented instances
+
+- `EitherApply`
+- `ValidationApply`
+- `IdentityApply`
+- `IOApply`
+- `LinkedListApply`
+- `MaybeApply`
+- `PairApply`
+- `ReaderApply`
+- `StateApply`

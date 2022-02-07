@@ -54,3 +54,15 @@ $applicative->apply($applicative->pure($f), $applicative->pure($x)) == $applicat
 ```php
 $applicative->apply($f, $applicative->pure($x)) == $applicative->apply(fn (callable $g) => $g($x), $f)
 ```
+
+## Implemented instances
+
+- `EitherApplicative`
+- `ValidationApplicative`
+- `IdentityApplicative`
+- `IOApplicative`
+- `LinkedListApplicative`
+- `MaybeApplicative`
+- `PairApplicative`
+- `ReaderApplicative`
+- `StateApplicative`

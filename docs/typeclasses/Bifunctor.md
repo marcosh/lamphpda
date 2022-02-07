@@ -71,3 +71,8 @@ $bifunctor->biMap(fn($x) => $x, fn($x) => $x, $a) == $a
 ```php
 $bifunctor->biMap(fn($x) => $f($g($x)), fn($x) => $h($k($x)), $a) == $bifunctor->biMap(fn($x) => $f($x), fn($x) => $h($x), $bifunctor->biMap(fn($x) => $g($x), fn($x) => $k($x)), $a)
 ```
+
+## Implemented instances
+
+- `EitherBifunctor`
+- `PairBifunctor`

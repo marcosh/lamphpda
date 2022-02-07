@@ -42,3 +42,7 @@ $monoid->append($a, $monoid->mempty()) == $a
 ```php
 $monoid->append($monoid->mempty(), $a) == $a
 ```
+
+## Implemented instances
+
+- `LinkedListMonoid`

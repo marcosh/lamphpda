@@ -66,3 +66,13 @@ looking at a list as the possible values of a probabilistic variable.
 This interpretation is consistent with the behaviour of the `Apply` and the `Monad` instance for a `LinkedList`. For
 example, the `Apply` instance allows to apply a `LinkedList` of functions to a `LinkedList` of values; the result is the
 `LinkedList` containing all the results of applying every function to every value.
+
+## Typeclass instances
+
+- `LinkedListApplicative`
+- `LinkedListApply`
+- `LinkedListFoldable`
+- `LinkedListFunctor`
+- `LinkedListMonad`
+- `LinkedListMonoid`
+- `LinkedListTraversable`

@@ -38,3 +38,8 @@ The `MonadThrow` typeclass should satisfy one addition laws with respect to the 
 ```php
 $monadThrow->bind($monadThrow->throwError($e), $f) == $monadThrow->throwError($e)
 ```
+
+## Implemented instances
+
+- `EitherMonadThrow`
+- `MaybeMonadThrow`

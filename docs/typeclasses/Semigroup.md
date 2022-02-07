@@ -37,3 +37,9 @@ The only law associated to the `Semigroup` typeclass states that it should be as
 ```php
 $semigroup->append($a, $semigroup->append($b, $c)) == $semigroup->append($semigroup->append($a, $b), $c)
 ```
+
+## Implemented instances
+
+- `JoinEitherSemigroup`
+- `MeetEitherSemigroup`
+- `LinkedListMonoid`

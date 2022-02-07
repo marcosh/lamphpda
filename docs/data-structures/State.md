@@ -54,3 +54,10 @@ runState :: (State<S, A>, S) -> Pair<S, A>
 
 The `State` data structure is used to model stateful computations in a pure fashion. A value of type `State<S, A>`
 represents a stateful computation interacting with a state of type `S` and returning a value of type `A`.
+
+## Typeclass instances
+
+- `StateApplicative`
+- `StateApply`
+- `StateFunctor`
+- `StateMonad`

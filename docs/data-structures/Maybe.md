@@ -65,3 +65,13 @@ The `Maybe` datatype can be interpreted as a model to denote the possibility of 
 
 Its instances allow composing `Maybe` values as if the values were always there, managing the possibility of absence
 under the hood.
+
+## Typeclass instances
+
+- `MaybeApplicative`
+- `MaybeApply`
+- `MaybeFoldable`
+- `MaybeFunctor`
+- `MaybeMonad`
+- `MaybeMonadThrow`
+- `MaybeTraversable`

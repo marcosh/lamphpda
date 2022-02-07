@@ -56,3 +56,11 @@ attached additional information to a value; this information could be metadata o
 
 Pay attention that all the instances, except the `Bifunctor` one, work exclusively on the second component of the pair.
 For example, if you map a pair, only the second component will be affected.
+
+## Typeclass instances
+
+- `PairApplicative`
+- `PairApply`
+- `PairBifunctor`
+- `PairFunctor`
+- `PairMonad`

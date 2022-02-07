@@ -14,8 +14,6 @@ structure.
 interface Functor
 {
     /**
-     * @template A
-     * @template B
      * @param callable(A): B $f
      * @param F<A> $a
      * @return F<B>

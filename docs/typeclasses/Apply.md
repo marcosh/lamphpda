@@ -17,8 +17,6 @@ value.
 interface Apply extends Functor
 {
     /**
-     * @template A
-     * @template B
      * @param F<callable(A): B> $f
      * @param F<A> $a
      * @return F<B>
@@ -42,9 +40,6 @@ functions of arity 2.
 final class ExtraApply
 {
     /**
-     * @template A
-     * @template B
-     * @template C
      * @param callable(A, B): C $f
      * @param F<A> $a
      * @param F<B> $b

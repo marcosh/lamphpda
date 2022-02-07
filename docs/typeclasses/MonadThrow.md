@@ -15,7 +15,6 @@ with an error value.
 interface MonadThrow extends Monad
 {
     /**
-     * @template A
      * @param E $e
      * @return F<A>
      */

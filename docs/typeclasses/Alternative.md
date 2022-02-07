@@ -14,13 +14,11 @@ The `Alternative` typeclass provides two methods, an associative binary operatio
 interface Alternative extends Applicative
 {
     /**
-     * @template A
      * @return F<A>
      */
     public function empty();
 
     /**
-     * @template A
      * @param F<A> $a
      * @param F<A> $b
      * @return F<A>

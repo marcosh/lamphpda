@@ -15,8 +15,6 @@ which produces a result in a context, to a value already in that context.
 interface Monad extends Applicative
 {
     /**
-     * @template A
-     * @template B
      * @param F<A> $a
      * @param callable(A): F<B> $f
      * @return F<B>
@@ -40,7 +38,6 @@ additional layers of the wrapping datatype
 final class ExtraMonad
 {
     /**
-     * @template A
      * @param F<F<A>> $ffa
      * @return F<A>
      */

@@ -11,8 +11,6 @@ initial value and a function to join two elements.
 interface Foldable
 {
     /**
-     * @template A
-     * @template B
      * @param callable(A, B): B $f
      * @param B $b
      * @param T<A> $a

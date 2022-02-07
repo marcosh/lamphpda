@@ -14,7 +14,6 @@ The `Applicative` typeclass adds a single method which allows wrapping values in
 interface Applicative extends Apply
 {
     /**
-     * @template A
      * @param A $a
      * @return F<A>
      */

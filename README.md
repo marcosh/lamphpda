@@ -20,12 +20,8 @@ are:
 
 ## Installation
 
-There is currently no stable version available, we are currently working on it.
-
-To install the latest development branch:
-
 ```shell
-composer require marcosh/lamphpda:dev-master
+composer require marcosh/lamphpda
 ```
 
 ## Tools

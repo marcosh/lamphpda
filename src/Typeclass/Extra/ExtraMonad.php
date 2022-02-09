@@ -21,7 +21,7 @@ final class ExtraMonad
     /**
      * @param Monad<F> $monad
      */
-    private function __construct(Monad $monad)
+    public function __construct(Monad $monad)
     {
         $this->monad = $monad;
     }

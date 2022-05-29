@@ -68,7 +68,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      */
     public static function fromBrand(HK1 $b): self
     {
-        /** @var Identity $b */
+        /** @var Identity<B> $b */
         return $b;
     }
 

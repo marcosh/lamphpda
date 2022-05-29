@@ -146,7 +146,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     {
         return $this->eval(
             Either::left($b),
-            static fn ($a) => Either::right($a)
+            static fn ($a): Either => Either::right($a)
         );
     }
 

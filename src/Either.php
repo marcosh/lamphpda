@@ -212,8 +212,8 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     public function toMaybe(): Maybe
     {
         return $this->eval(
-            static fn () => Maybe::nothing(),
-            static fn ($b) => Maybe::just($b)
+            static fn (): Maybe => Maybe::nothing(),
+            static fn ($b): Maybe => Maybe::just($b)
         );
     }
 

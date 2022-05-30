@@ -16,6 +16,7 @@ jobs:
         - "locked"
         php-version:
         - "7.4"
+        - "8.1"
         operating-system:
         - "ubuntu-latest"
 
@@ -53,4 +54,4 @@ jobs:
       run: "composer install --no-interaction --no-progress --no-suggest"
 
     - name: "psalm"
-      run: "vendor/bin/psalm  --output-format=github --shepherd --stats"
+      run: "vendor/bin/psalm --output-format=github --shepherd --stats"

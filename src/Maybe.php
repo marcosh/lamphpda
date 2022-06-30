@@ -122,8 +122,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     }
 
     /**
-     * @param A $a
-     * @return A
+     * @template B
+     * @param B $a
+     * @return A|B
      */
     public function withDefault($a)
     {

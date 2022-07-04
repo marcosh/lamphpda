@@ -146,6 +146,9 @@ final class Maybe implements DefaultMonad, DefaultTraversable
         // This can be implemented in terms of eval(), however the actual implementation is optimized:
         // return $this->eval($ifNothing, fn($value) => fn() => $ifJust($value))();
 
+        /**
+         * @psalm-suppress ImpureFunctionCall
+         */
         return $this->isJust
             ? $this->value
             : $a();

@@ -138,6 +138,20 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     }
 
     /**
+     * @param callable(): A $a
+     * @return A
+     */
+    public function withLazyDefault(callable $a)
+    {
+        // This can be implemented in terms of eval(), however the actual implementation is optimized:
+        // return $this->eval($ifNothing, fn($value) => fn() => $ifJust($value))();
+
+        return $this->isJust
+            ? $this->value
+            : $a();
+    }
+
+    /**
      * @template B
      * @param B $b
      * @return Either<B, A>

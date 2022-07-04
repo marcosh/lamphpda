@@ -41,6 +41,18 @@ describe('Maybe', function () {
         expect($maybe->withDefault(37))->toBe(42);
     });
 
+    it('uses the default value when extracting a Nothing lazily', function () {
+        $maybe = Maybe::nothing();
+
+        expect($maybe->withLazyDefault(fn() => 42))->toBe(42);
+    });
+
+    it('return the inner value when extracting a Just lazily', function () {
+        $maybe = Maybe::just(42);
+
+        expect($maybe->withLazyDefault(fn() => 37))->toBe(42);
+    });
+
     it('converts to either and back', function () {
         $maybe = Maybe::just(42);
 

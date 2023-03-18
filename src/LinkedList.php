@@ -36,24 +36,15 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class LinkedList implements DefaultMonad, DefaultTraversable
 {
-    /** @var bool */
-    private $isEmpty;
-
-    /** @var null|A */
-    private $head;
-
-    /** @var null|LinkedList<A> */
-    private $tail;
-
     /**
      * @param null|A $head
      * @param null|LinkedList<A> $tail
      */
-    private function __construct(bool $isEmpty, $head = null, ?self $tail = null)
-    {
-        $this->isEmpty = $isEmpty;
-        $this->head = $head;
-        $this->tail = $tail;
+    private function __construct(
+        private readonly bool $isEmpty,
+        private readonly mixed $head = null,
+        private readonly ?self $tail = null
+    ) {
     }
 
     /**
@@ -75,7 +66,7 @@ final class LinkedList implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function cons($head, self $tail): self
+    public static function cons(mixed $head, self $tail): self
     {
         return new self(false, $head, $tail);
     }
@@ -115,7 +106,7 @@ final class LinkedList implements DefaultMonad, DefaultTraversable
      * @param B $unit
      * @return B
      */
-    public function eval(callable $op, $unit)
+    public function eval(callable $op, mixed $unit)
     {
         if ($this->isEmpty) {
             return $unit;
@@ -217,7 +208,7 @@ final class LinkedList implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): self
+    public static function ipure(Applicative $applicative, mixed $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -231,7 +222,7 @@ final class LinkedList implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function pure($a): self
+    public static function pure(mixed $a): self
     {
         return self::ipure(new LinkedListApplicative(), $a);
     }
@@ -267,7 +258,7 @@ final class LinkedList implements DefaultMonad, DefaultTraversable
      * @param B $b
      * @return B
      */
-    public function ifoldr(Foldable $foldable, callable $f, $b)
+    public function ifoldr(Foldable $foldable, callable $f, mixed $b)
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return $foldable->foldr($f, $b, $this);
@@ -279,7 +270,7 @@ final class LinkedList implements DefaultMonad, DefaultTraversable
      * @param B $b
      * @return B
      */
-    public function foldr(callable $f, $b)
+    public function foldr(callable $f, mixed $b): mixed
     {
         return $this->ifoldr(new LinkedListFoldable(), $f, $b);
     }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
-use ArrayIterator;
-use Iterator;
 use IteratorAggregate;
 use Marcosh\LamPHPda\Brand\ListBrand;
 use Marcosh\LamPHPda\HK\HK1;
@@ -20,17 +18,13 @@ use Marcosh\LamPHPda\HK\HK1;
  *
  * @psalm-immutable
  */
-final class ListL implements IteratorAggregate, HK1
+final class ListL implements \IteratorAggregate, HK1
 {
-    /** @var list<A> */
-    private array $list;
-
     /**
      * @param list<A> $list
      */
-    public function __construct(array $list)
+    public function __construct(private readonly array $list)
     {
-        $this->list = $list;
     }
 
     /**
@@ -58,16 +52,16 @@ final class ListL implements IteratorAggregate, HK1
      * @param A $a
      * @return ListL<A>
      */
-    public function append($a): self
+    public function append(mixed $a): self
     {
-        return new self(array_merge($this->list, [$a]));
+        return new self([...$this->list, ...[$a]]);
     }
 
     /**
-     * @return Iterator<A>
+     * @return \Iterator<A>
      */
-    public function getIterator(): Iterator
+    public function getIterator(): \Iterator
     {
-        return new ArrayIterator($this->list);
+        return new \ArrayIterator($this->list);
     }
 }

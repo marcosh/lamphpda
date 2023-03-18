@@ -30,7 +30,7 @@ final class TraversableMonoid implements Monoid
      *
      * @psalm-pure
      */
-    public function append($a, $b): Traversable
+    public function append(mixed $a, mixed $b): Traversable
     {
         $ret = [];
 

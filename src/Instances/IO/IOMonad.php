@@ -51,7 +51,7 @@ final class IOMonad implements Monad
      *
      * @psalm-pure
      */
-    public function pure($a): IO
+    public function pure(mixed $a): IO
     {
         return (new IOApplicative())->pure($a);
     }
@@ -69,6 +69,6 @@ final class IOMonad implements Monad
     {
         $ioA = IO::fromBrand($a);
 
-        return IO::action(static fn () => IO::fromBrand($f($ioA->eval()))->eval());
+        return IO::action(static fn (): mixed => IO::fromBrand($f($ioA->eval()))->eval());
     }
 }

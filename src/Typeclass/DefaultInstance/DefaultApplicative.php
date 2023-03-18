@@ -24,5 +24,5 @@ interface DefaultApplicative extends DefaultApply
      *
      * @psalm-pure
      */
-    public static function pure($a): HK1;
+    public static function pure(mixed $a): HK1;
 }

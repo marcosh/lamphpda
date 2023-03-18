@@ -59,7 +59,7 @@ final class StateMonad implements Monad
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function pure($a): State
+    public function pure(mixed $a): State
     {
         return (new StateApplicative())->pure($a);
     }
@@ -83,12 +83,12 @@ final class StateMonad implements Monad
             /**
              * @param S $s
              */
-            static fn ($s) => $stateA->runState($s)->eval(
+            static fn (mixed $s): mixed => $stateA->runState($s)->eval(
                 /**
                  * @param S $ss
                  * @param A $aa
                  */
-                static fn ($ss, $aa) => State::fromBrand($f($aa))->runState($ss)
+                static fn (mixed $ss, mixed $aa): mixed => State::fromBrand($f($aa))->runState($ss)
             )
         );
     }

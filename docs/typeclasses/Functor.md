@@ -39,7 +39,7 @@ A `Functor` instance needs to abide by two laws:
 The identity function should be mapped to the identity function
 
 ```php
-$functor->map(fn($x) => $x, $y) == $y
+$functor->map(fn(mixed $x): mixed => $x, $y) == $y
 ```
 
 ### Composition
@@ -47,7 +47,7 @@ $functor->map(fn($x) => $x, $y) == $y
 Mapping the composition of two functions or composing the mapping of those functions should be the same thing
 
 ```php
-$functor->map(fn($x) => $f($g($x)), $y) == $functor->map(fn($x) => $f($x), $functor->map(fn($x) => $g($x), $y))
+$functor->map(fn(mixed $x): mixed => $f($g($x)), $y) == $functor->map(fn(mixed $x): mixed => $f($x), $functor->map(fn(mixed $x): mixed => $g($x), $y))
 ```
 
 ## Implemented instances

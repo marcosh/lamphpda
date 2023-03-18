@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
-use ArrayIterator;
 use IteratorAggregate;
 use Marcosh\LamPHPda\Brand\TraversableBrand;
 use Marcosh\LamPHPda\HK\HK1;
@@ -21,17 +20,13 @@ use Traversable as PhpTraversable;
  *
  * @psalm-immutable
  */
-final class Traversable implements IteratorAggregate, DefaultFoldable
+final class Traversable implements \IteratorAggregate, DefaultFoldable
 {
-    /** @var PhpTraversable<A> */
-    private PhpTraversable $traversable;
-
     /**
      * @param PhpTraversable<A> $traversable
      */
-    private function __construct(PhpTraversable $traversable)
+    private function __construct(private readonly PhpTraversable $traversable)
     {
-        $this->traversable = $traversable;
     }
 
     /**
@@ -56,7 +51,7 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
     public static function fromArray(array $array): self
     {
         /** @psalm-suppress ImpureMethodCall */
-        return new self(new ArrayIterator($array));
+        return new self(new \ArrayIterator($array));
     }
 
     /**
@@ -89,7 +84,7 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
      *
      * @psalm-mutation-free
      */
-    public function ifoldr(Foldable $foldable, callable $f, $b)
+    public function ifoldr(Foldable $foldable, callable $f, mixed $b): mixed
     {
         return $foldable->foldr($f, $b, $this);
     }
@@ -102,7 +97,7 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
      *
      * @psalm-mutation-free
      */
-    public function foldr(callable $f, $b)
+    public function foldr(callable $f, mixed $b): mixed
     {
         return $this->ifoldr(new TraversableFoldable(), $f, $b);
     }

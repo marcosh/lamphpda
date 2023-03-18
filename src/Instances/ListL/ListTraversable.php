@@ -29,7 +29,7 @@ final class ListTraversable implements Traversable
      *
      * @psalm-pure
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         return (new ListFoldable())->foldr($f, $b, $a);
     }
@@ -69,13 +69,13 @@ final class ListTraversable implements Traversable
              * @param HK1<F, HK1<ListBrand, B>> $d
              * @return HK1<F, HK1<ListBrand, B>>
              */
-            static fn ($c, $d): HK1 => (new ExtraApply($applicative))->lift2(
+            static fn (mixed $c, mixed $d): HK1 => (new ExtraApply($applicative))->lift2(
                 /**
                  * @param B $h
                  * @param HK1<ListBrand, B> $t
                  * @return HK1<ListBrand, B>
                  */
-                static fn ($h, $t): HK1 => ListL::fromBrand($t)->append($h),
+                static fn (mixed $h, mixed $t): HK1 => ListL::fromBrand($t)->append($h),
                 $f($c),
                 $d
             ),

@@ -28,7 +28,7 @@ final class EitherFoldable implements Foldable
      *
      * @psalm-pure
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         $eitherA = Either::fromBrand($a);
 
@@ -37,12 +37,12 @@ final class EitherFoldable implements Foldable
              * @param C $_
              * @return B
              */
-            static fn ($_) => $b,
+            static fn (mixed $_): mixed => $b,
             /**
              * @param A $a
              * @return B
              */
-            static fn ($a) => $f($a, $b)
+            static fn (mixed $a): mixed => $f($a, $b)
         );
     }
 }

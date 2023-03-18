@@ -33,20 +33,12 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class Pair implements DefaultFunctor, HK2Covariant
 {
-    /** @var A */
-    private $left;
-
-    /** @var B */
-    private $right;
-
     /**
      * @param A $left
      * @param B $right
      */
-    private function __construct($left, $right)
+    private function __construct(private readonly mixed $left, private readonly mixed $right)
     {
-        $this->left = $left;
-        $this->right = $right;
     }
 
     /**
@@ -58,7 +50,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function pair($left, $right): self
+    public static function pair(mixed $left, mixed $right): self
     {
         return new self($left, $right);
     }
@@ -96,7 +88,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
      * @param callable(A, B): C $f
      * @return C
      */
-    public function eval(callable $f)
+    public function eval(callable $f): mixed
     {
         /** @psalm-suppress ImpureFunctionCall */
         return $f($this->left, $this->right);
@@ -105,7 +97,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
     /**
      * @return A
      */
-    public function first()
+    public function first(): mixed
     {
         return $this->eval(
             /**
@@ -113,14 +105,14 @@ final class Pair implements DefaultFunctor, HK2Covariant
              * @param B $_
              * @return A
              */
-            static fn ($a, $_) => $a
+            static fn (mixed $a, mixed $_): mixed => $a
         );
     }
 
     /**
      * @return B
      */
-    public function second()
+    public function second(): mixed
     {
         return $this->eval(
             /**
@@ -128,7 +120,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
              * @param B $b
              * @return B
              */
-            static fn ($_, $b) => $b
+            static fn (mixed $_, mixed $b): mixed => $b
         );
     }
 
@@ -184,7 +176,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): self
+    public static function ipure(Applicative $applicative, mixed $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -198,7 +190,7 @@ final class Pair implements DefaultFunctor, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function pure(Monoid $monoid, $a): self
+    public static function pure(Monoid $monoid, mixed $a): self
     {
         return self::ipure(new PairApplicative($monoid), $a);
     }

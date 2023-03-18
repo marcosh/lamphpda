@@ -35,16 +35,10 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
 final class Identity implements DefaultMonad, DefaultTraversable
 {
     /**
-     * @var A
-     */
-    private $value;
-
-    /**
      * @param A $value
      */
-    private function __construct($value)
+    private function __construct(private readonly mixed $value)
     {
-        $this->value = $value;
     }
 
     /**
@@ -54,7 +48,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function wrap($value): self
+    public static function wrap(mixed $value): self
     {
         return new self($value);
     }
@@ -75,7 +69,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
     /**
      * @return A
      */
-    public function unwrap()
+    public function unwrap(): mixed
     {
         return $this->value;
     }
@@ -138,7 +132,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): self
+    public static function ipure(Applicative $applicative, mixed $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -152,7 +146,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function pure($a): self
+    public static function pure(mixed $a): self
     {
         return self::ipure(new IdentityApplicative(), $a);
     }
@@ -191,7 +185,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress ArgumentTypeCoercion
      */
-    public function ifoldr(Foldable $foldable, callable $f, $b)
+    public function ifoldr(Foldable $foldable, callable $f, mixed $b): mixed
     {
         return $foldable->foldr($f, $b, $this);
     }
@@ -202,7 +196,7 @@ final class Identity implements DefaultMonad, DefaultTraversable
      * @param B $b
      * @return B
      */
-    public function foldr(callable $f, $b)
+    public function foldr(callable $f, mixed $b): mixed
     {
         return $this->ifoldr(new IdentityFoldable(), $f, $b);
     }

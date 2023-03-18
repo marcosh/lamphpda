@@ -59,7 +59,7 @@ final class EitherApplicative implements Applicative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Either
+    public function pure(mixed $a): Either
     {
         return Either::right($a);
     }

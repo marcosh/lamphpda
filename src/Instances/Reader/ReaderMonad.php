@@ -59,7 +59,7 @@ final class ReaderMonad implements Monad
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function pure($a): Reader
+    public function pure(mixed $a): Reader
     {
         return (new ReaderApplicative())->pure($a);
     }
@@ -83,7 +83,7 @@ final class ReaderMonad implements Monad
             /**
              * @param E $env
              */
-            static fn ($env) => Reader::fromBrand($f($readerA->runReader($env)))->runReader($env)
+            static fn (mixed $env): mixed => Reader::fromBrand($f($readerA->runReader($env)))->runReader($env)
         );
     }
 }

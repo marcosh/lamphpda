@@ -70,7 +70,7 @@ final class State implements DefaultMonad
      * @param S $state
      * @return Pair<S, A>
      */
-    public function runState($state): Pair
+    public function runState(mixed $state): Pair
     {
         /** @psalm-suppress ImpureFunctionCall */
         return ($this->runState)($state);
@@ -80,7 +80,7 @@ final class State implements DefaultMonad
      * @param S $state
      * @return A
      */
-    public function evalState($state)
+    public function evalState(mixed $state): mixed
     {
         return $this->runState($state)->second();
     }
@@ -89,7 +89,7 @@ final class State implements DefaultMonad
      * @param S $state
      * @return S
      */
-    public function execState($state)
+    public function execState(mixed $state): mixed
     {
         return $this->runState($state)->first();
     }
@@ -145,7 +145,7 @@ final class State implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): self
+    public static function ipure(Applicative $applicative, mixed $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -158,7 +158,7 @@ final class State implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function pure($a): self
+    public static function pure(mixed $a): self
     {
         return self::ipure(new StateApplicative(), $a);
     }

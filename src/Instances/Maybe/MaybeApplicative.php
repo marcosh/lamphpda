@@ -57,7 +57,7 @@ final class MaybeApplicative implements Applicative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Maybe
+    public function pure(mixed $a): Maybe
     {
         return Maybe::just($a);
     }

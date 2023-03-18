@@ -39,7 +39,7 @@ final class StateFunctor implements Functor
              * @param S $state
              * @return Pair<S, B>
              */
-            static fn ($state) => $stateA->runState($state)->map($f)
+            static fn (mixed $state): Pair => $stateA->runState($state)->map($f)
         );
     }
 }

@@ -15,15 +15,11 @@ use Marcosh\LamPHPda\Typeclass\Monad;
  */
 final class ExtraMonad
 {
-    /** @var Monad<F> */
-    private Monad $monad;
-
     /**
      * @param Monad<F> $monad
      */
-    public function __construct(Monad $monad)
+    public function __construct(private readonly Monad $monad)
     {
-        $this->monad = $monad;
     }
 
     /**

@@ -16,15 +16,11 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class ExtraTraversable
 {
-    /** @var Traversable<T> */
-    private $traversable;
-
     /**
      * @param Traversable<T> $traversable
      */
-    public function __construct(Traversable $traversable)
+    public function __construct(private readonly Traversable $traversable)
     {
-        $this->traversable = $traversable;
     }
 
     /**

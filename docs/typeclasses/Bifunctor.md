@@ -63,13 +63,13 @@ variables
 ### Identity
 
 ```php
-$bifunctor->biMap(fn($x) => $x, fn($x) => $x, $a) == $a
+$bifunctor->biMap(fn(mixed $x): mixed => $x, fn(mixed $x): mixed => $x, $a) == $a
 ```
 
 ### Composition
 
 ```php
-$bifunctor->biMap(fn($x) => $f($g($x)), fn($x) => $h($k($x)), $a) == $bifunctor->biMap(fn($x) => $f($x), fn($x) => $h($x), $bifunctor->biMap(fn($x) => $g($x), fn($x) => $k($x)), $a)
+$bifunctor->biMap(fn(mixed $x): mixed => $f($g($x)), fn(mixed $x): mixed => $h($k($x)), $a) == $bifunctor->biMap(fn(mixed $x): mixed => $f($x), fn(mixed $x): mixed => $h($x), $bifunctor->biMap(fn(mixed $x): mixed => $g($x), fn(mixed $x): mixed => $k($x)), $a)
 ```
 
 ## Implemented instances

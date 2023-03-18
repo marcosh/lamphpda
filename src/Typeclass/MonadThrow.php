@@ -24,5 +24,5 @@ interface MonadThrow extends Monad
      * @param E $e
      * @return HK1<F, A>
      */
-    public function throwError($e): HK1;
+    public function throwError(mixed $e): HK1;
 }

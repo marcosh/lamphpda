@@ -15,15 +15,11 @@ use Marcosh\LamPHPda\Typeclass\Bifunctor;
  */
 final class ExtraBifunctor
 {
-    /** @var Bifunctor<F> */
-    private Bifunctor $bifunctor;
-
     /**
      * @param Bifunctor<F> $bifunctor
      */
-    public function __construct(Bifunctor $bifunctor)
+    public function __construct(private readonly Bifunctor $bifunctor)
     {
-        $this->bifunctor = $bifunctor;
     }
 
     /**
@@ -62,7 +58,7 @@ final class ExtraBifunctor
              * @param A $a
              * @return A
              */
-            static fn ($a) => $a,
+            static fn (mixed $a) => $a,
             $g,
             $hk2
         );

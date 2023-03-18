@@ -19,15 +19,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class PairApply implements Apply
 {
-    /** @var Semigroup<C> */
-    private Semigroup $semigroup;
-
     /**
      * @param Semigroup<C> $semigroup
      */
-    public function __construct(Semigroup $semigroup)
+    public function __construct(private readonly Semigroup $semigroup)
     {
-        $this->semigroup = $semigroup;
     }
 
     /**
@@ -66,13 +62,13 @@ final class PairApply implements Apply
              * @param callable(A): B $f
              * @return Pair<C, B>
              */
-            fn ($cf, callable $f) => $pairA->eval(
+            fn (mixed $cf, callable $f): Pair => $pairA->eval(
                 /**
                  * @param C $ca
                  * @param A $a
                  * @return Pair<C, B>
                  */
-                fn ($ca, callable $a) => Pair::pair($this->semigroup->append($cf, $ca), $f($a))
+                fn (mixed $ca, callable $a): Pair => Pair::pair($this->semigroup->append($cf, $ca), $f($a))
             )
         );
     }

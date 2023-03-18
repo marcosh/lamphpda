@@ -20,5 +20,5 @@ interface Semigroup
      *
      * @psalm-pure
      */
-    public function append($a, $b);
+    public function append(mixed $a, mixed $b): mixed;
 }

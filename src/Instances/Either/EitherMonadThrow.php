@@ -62,7 +62,7 @@ final class EitherMonadThrow implements MonadThrow
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Either
+    public function pure(mixed $a): Either
     {
         return (new EitherApplicative())->pure($a);
     }

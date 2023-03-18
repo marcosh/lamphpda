@@ -35,7 +35,7 @@ final class PairFunctor implements Functor
              * @param A $b
              * @return Pair<C, B>
              */
-            static fn ($c, $b) => Pair::pair($c, $f($b))
+            static fn (mixed $c, mixed $b): Pair => Pair::pair($c, $f($b))
         );
     }
 }

@@ -57,7 +57,7 @@ final class LinkedListMonad implements Monad
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): LinkedList
+    public function pure(mixed $a): LinkedList
     {
         return (new LinkedListApplicative())->pure($a);
     }
@@ -83,7 +83,7 @@ final class LinkedListMonad implements Monad
              * @param LinkedList<B> $l
              * @return LinkedList<B>
              */
-            static fn ($element, LinkedList $l) => $l->append(LinkedList::fromBrand($f($element))),
+            static fn (mixed $element, LinkedList $l): LinkedList => $l->append(LinkedList::fromBrand($f($element))),
             LinkedList::empty()
         );
     }

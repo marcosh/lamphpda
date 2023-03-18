@@ -24,7 +24,7 @@ final class MaybeFoldable implements Foldable
      * @param HK1<MaybeBrand, A> $a
      * @return B
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         $maybeA = Maybe::fromBrand($a);
 
@@ -34,7 +34,7 @@ final class MaybeFoldable implements Foldable
              * @param A $a
              * @return B
              */
-            static fn ($a) => $f($a, $b)
+            static fn (mixed $a): mixed => $f($a, $b)
         );
     }
 }

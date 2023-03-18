@@ -57,7 +57,7 @@ final class IdentityMonad implements Monad
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Identity
+    public function pure(mixed $a): Identity
     {
         return (new IdentityApplicative())->pure($a);
     }

@@ -15,15 +15,11 @@ use Marcosh\LamPHPda\Typeclass\Apply;
  */
 final class ExtraApply
 {
-    /** @var Apply<F> */
-    private Apply $apply;
-
     /**
      * @param Apply<F> $apply
      */
-    public function __construct(Apply $apply)
+    public function __construct(private readonly Apply $apply)
     {
-        $this->apply = $apply;
     }
 
     /**
@@ -42,12 +38,12 @@ final class ExtraApply
              * @param A $ca
              * @return callable(B): C
              */
-            static fn ($ca) =>
+            static fn (mixed $ca): \Closure =>
                 /**
                  * @param B $cb
                  * @return C
                  */
-                static fn ($cb) => $f($ca, $cb);
+                static fn (mixed $cb): mixed => $f($ca, $cb);
 
         return $this->apply->apply(
             $this->apply->map($curriedF, $a),
@@ -73,17 +69,17 @@ final class ExtraApply
              * @param A $ca
              * @return callable(B): (callable(C): D)
              */
-            static fn ($ca) =>
+            static fn (mixed $ca): \Closure =>
                 /**
                  * @param B $cb
                  * @return callable(C): D
                  */
-                static fn ($cb) =>
+                static fn (mixed $cb): \Closure =>
                     /**
                      * @param C $cc
                      * @return D
                      */
-                    static fn ($cc) => $f($ca, $cb, $cc);
+                    static fn (mixed $cc): mixed => $f($ca, $cb, $cc);
 
         return $this->apply->apply(
             $this->apply->apply(
@@ -114,22 +110,22 @@ final class ExtraApply
              * @param A $ca
              * @return callable(B): (callable(C): (callable(D): E))
              */
-            static fn ($ca) =>
+            static fn (mixed $ca): \Closure =>
                 /**
                  * @param B $cb
                  * @return callable(C): (callable(D): E)
                  */
-                static fn ($cb) =>
+                static fn (mixed $cb): \Closure =>
                     /**
                      * @param C $cc
                      * @return callable(D): E
                      */
-                    static fn ($cc) =>
+                    static fn (mixed $cc): \Closure =>
                         /**
                          * @param D $cd
                          * @return E
                          */
-                        static fn ($cd) => $f($ca, $cb, $cc, $cd);
+                        static fn (mixed $cd): mixed => $f($ca, $cb, $cc, $cd);
 
         return $this->apply->apply(
             $this->apply->apply(
@@ -165,27 +161,27 @@ final class ExtraApply
              * @param A $ca
              * @return callable(B): (callable(C): (callable(D): (callable(E): G)))
              */
-            static fn ($ca) =>
+            static fn (mixed $ca): \Closure =>
                 /**
                  * @param B $cb
                  * @return callable(C): (callable(D): (callable(E): G))
                  */
-                static fn ($cb) =>
+                static fn (mixed $cb): \Closure =>
                     /**
                      * @param C $cc
                      * @return callable(D): (callable(E): G)
                      */
-                    static fn ($cc) =>
+                    static fn (mixed $cc): \Closure =>
                         /**
                          * @param D $cd
                          * @return callable(E): G
                          */
-                        static fn ($cd) =>
+                        static fn (mixed $cd): \Closure =>
                             /**
                              * @param E $ce
                              * @return G
                              */
-                            static fn ($ce) => $f($ca, $cb, $cc, $cd, $ce);
+                            static fn (mixed $ce): mixed => $f($ca, $cb, $cc, $cd, $ce);
 
         return $this->apply->apply(
             $this->apply->apply(
@@ -226,32 +222,32 @@ final class ExtraApply
              * @param A $ca
              * @return callable(B): (callable(C): (callable(D): (callable(E): (callable(G): H))))
              */
-            static fn ($ca) =>
+            static fn (mixed $ca): \Closure =>
                 /**
                  * @param B $cb
                  * @return callable(C): (callable(D): (callable(E): (callable(G): H)))
                  */
-                static fn ($cb) =>
+                static fn (mixed $cb): \Closure =>
                     /**
                      * @param C $cc
                      * @return callable(D): (callable(E): (callable(G): H))
                      */
-                    static fn ($cc) =>
+                    static fn (mixed $cc): \Closure =>
                         /**
                          * @param D $cd
                          * @return callable(E): (callable(G): H)
                          */
-                        static fn ($cd) =>
+                        static fn (mixed $cd): \Closure =>
                             /**
                              * @param E $ce
                              * @return callable(G): H
                              */
-                            static fn ($ce) =>
+                            static fn (mixed $ce): \Closure =>
                                 /**
                                  * @param G $cg
                                  * @return H
                                  */
-                                static fn ($cg) => $f($ca, $cb, $cc, $cd, $ce, $cg);
+                                static fn (mixed $cg): mixed => $f($ca, $cb, $cc, $cd, $ce, $cg);
 
         return $this->apply->apply(
             $this->apply->apply(
@@ -297,37 +293,37 @@ final class ExtraApply
              * @param A $ca
              * @return callable(B): (callable(C): (callable(D): (callable(E): (callable(G): (callable(H): I)))))
              */
-            static fn ($ca) =>
+            static fn (mixed $ca): \Closure =>
                 /**
                  * @param B $cb
                  * @return callable(C): (callable(D): (callable(E): (callable(G): (callable(H): I))))
                  */
-                static fn ($cb) =>
+                static fn (mixed $cb): \Closure =>
                     /**
                      * @param C $cc
                      * @return callable(D): (callable(E): (callable(G): (callable(H): I)))
                      */
-                    static fn ($cc) =>
+                    static fn (mixed $cc): \Closure =>
                         /**
                          * @param D $cd
                          * @return callable(E): (callable(G): (callable(H): I))
                          */
-                        static fn ($cd) =>
+                        static fn (mixed $cd): \Closure =>
                             /**
                              * @param E $ce
                              * @return callable(G): (callable(H): I)
                              */
-                            static fn ($ce) =>
+                            static fn (mixed $ce): \Closure =>
                                 /**
                                  * @param G $cg
                                  * @return callable(H): I
                                  */
-                                static fn ($cg) =>
+                                static fn (mixed $cg): \Closure =>
                                     /**
                                      * @param H $ch
                                      * @return I
                                      */
-                                    static fn ($ch) => $f($ca, $cb, $cc, $cd, $ce, $cg, $ch);
+                                    static fn (mixed $ch): mixed => $f($ca, $cb, $cc, $cd, $ce, $cg, $ch);
 
         return $this->apply->apply(
             $this->apply->apply(
@@ -378,42 +374,42 @@ final class ExtraApply
              * @param A $ca
              * @return callable(B): (callable(C): (callable(D): (callable(E): (callable(G): (callable(H): (callable(I): J))))))
              */
-            static fn ($ca) =>
+            static fn (mixed $ca): \Closure =>
             /**
              * @param B $cb
              * @return callable(C): (callable(D): (callable(E): (callable(G): (callable(H): (callable(I): J)))))
              */
-            static fn ($cb) =>
+            static fn (mixed $cb): \Closure =>
             /**
              * @param C $cc
              * @return callable(D): (callable(E): (callable(G): (callable(H): (callable(I): J))))
              */
-            static fn ($cc) =>
+            static fn (mixed $cc): \Closure =>
             /**
              * @param D $cd
              * @return callable(E): (callable(G): (callable(H): (callable(I): J)))
              */
-            static fn ($cd) =>
+            static fn (mixed $cd): \Closure =>
             /**
              * @param E $ce
              * @return callable(G): (callable(H): (callable(I): J))
              */
-            static fn ($ce) =>
+            static fn (mixed $ce): \Closure =>
             /**
              * @param G $cg
              * @return callable(H): (callable(I): J)
              */
-            static fn ($cg) =>
+            static fn (mixed $cg): \Closure =>
             /**
              * @param H $ch
              * @return callable(I): J
              */
-            static fn ($ch) =>
+            static fn (mixed $ch): \Closure =>
             /**
              * @param I $ci
              * @return J
              */
-            static fn ($ci) => $f($ca, $cb, $cc, $cd, $ce, $cg, $ch, $ci);
+            static fn (mixed $ci): mixed => $f($ca, $cb, $cc, $cd, $ce, $cg, $ch, $ci);
 
         return $this->apply->apply(
             $this->apply->apply(

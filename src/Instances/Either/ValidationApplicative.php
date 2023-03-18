@@ -19,15 +19,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class ValidationApplicative implements Applicative
 {
-    /** @var Semigroup<E> */
-    private Semigroup $semigroup;
-
     /**
      * @param Semigroup<E> $semigroup
      */
-    public function __construct(Semigroup $semigroup)
+    public function __construct(private readonly Semigroup $semigroup)
     {
-        $this->semigroup = $semigroup;
     }
 
     /**
@@ -72,7 +68,7 @@ final class ValidationApplicative implements Applicative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Either
+    public function pure(mixed $a): Either
     {
         return Either::right($a);
     }

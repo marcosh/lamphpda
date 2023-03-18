@@ -19,15 +19,11 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class PairApplicative implements Applicative
 {
-    /** @var Monoid<C> */
-    private Monoid $monoid;
-
     /**
      * @param Monoid<C> $monoid
      */
-    public function __construct(Monoid $monoid)
+    public function __construct(private readonly Monoid $monoid)
     {
-        $this->monoid = $monoid;
     }
 
     /**
@@ -67,7 +63,7 @@ final class PairApplicative implements Applicative
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function pure($a): Pair
+    public function pure(mixed $a): Pair
     {
         return Pair::pair($this->monoid->mempty(), $a);
     }

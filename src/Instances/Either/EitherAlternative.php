@@ -20,15 +20,11 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class EitherAlternative implements Alternative
 {
-    /** @var Monoid<E> */
-    private Monoid $eMonoid;
-
     /**
      * @param Monoid<E> $eMonoid
      */
-    public function __construct(Monoid $eMonoid)
+    public function __construct(private readonly Monoid $eMonoid)
     {
-        $this->eMonoid = $eMonoid;
     }
 
     /**
@@ -72,7 +68,7 @@ final class EitherAlternative implements Alternative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Either
+    public function pure(mixed $a): Either
     {
         return (new EitherApplicative())->pure($a);
     }

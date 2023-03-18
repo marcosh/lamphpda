@@ -57,7 +57,7 @@ final class IdentityApplicative implements Applicative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Identity
+    public function pure(mixed $a): Identity
     {
         return Identity::wrap($a);
     }

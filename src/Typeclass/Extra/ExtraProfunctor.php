@@ -15,15 +15,11 @@ use Marcosh\LamPHPda\Typeclass\Profunctor;
  */
 final class ExtraProfunctor
 {
-    /** @var Profunctor<F> */
-    private Profunctor $profunctor;
-
     /**
      * @param Profunctor<F> $profunctor
      */
-    public function __construct(Profunctor $profunctor)
+    public function __construct(private readonly Profunctor $profunctor)
     {
-        $this->profunctor = $profunctor;
     }
 
     /**

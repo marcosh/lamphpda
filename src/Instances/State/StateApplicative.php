@@ -60,8 +60,8 @@ final class StateApplicative implements Applicative
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function pure($a): State
+    public function pure(mixed $a): State
     {
-        return State::state(static fn ($s) => Pair::pair($s, $a));
+        return State::state(static fn (mixed $s): Pair => Pair::pair($s, $a));
     }
 }

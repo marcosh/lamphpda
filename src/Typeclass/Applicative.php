@@ -25,5 +25,5 @@ interface Applicative extends Apply
      *
      * @psalm-pure
      */
-    public function pure($a): HK1;
+    public function pure(mixed $a): HK1;
 }

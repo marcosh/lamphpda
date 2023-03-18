@@ -42,7 +42,7 @@ final class IdentityTraversable implements Traversable
      * @param HK1<IdentityBrand, A> $a
      * @return B
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         return (new IdentityFoldable())->foldr($f, $b, $a);
     }

@@ -47,7 +47,7 @@ final class LinkedListTraversable implements Traversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         return (new LinkedListFoldable())->foldr($f, $b, $a);
     }
@@ -75,7 +75,7 @@ final class LinkedListTraversable implements Traversable
              * @param HK1<F, LinkedList<B>> $acc
              * @return HK1<F, LinkedList<B>>
              */
-            static fn ($element, HK1 $acc) => (new ExtraApply($applicative))->lift2(
+            static fn (mixed $element, HK1 $acc): mixed => (new ExtraApply($applicative))->lift2(
                 [LinkedList::class, 'cons'],
                 $f($element),
                 $acc

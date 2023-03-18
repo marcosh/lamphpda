@@ -54,13 +54,13 @@ final class MaybeApply implements Apply
              * @param A $value
              * @return Maybe<B>
              */
-            static fn ($value): Maybe => $maybeF->eval(
+            static fn (mixed $value): Maybe => $maybeF->eval(
                 Maybe::nothing(),
                 /**
                  * @psalm-param callable(A): B $g
                  * @psalm-return Maybe<B>
                  */
-                static fn ($g): Maybe => Maybe::just($g($value))
+                static fn (mixed $g): Maybe => Maybe::just($g($value))
             )
         );
     }

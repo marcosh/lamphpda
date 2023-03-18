@@ -60,7 +60,7 @@ final class EitherMonad implements Monad
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Either
+    public function pure(mixed $a): Either
     {
         return (new EitherApplicative())->pure($a);
     }
@@ -85,12 +85,12 @@ final class EitherMonad implements Monad
              * @param C $c
              * @return Either<C, B>
              */
-            static fn ($c) => Either::left($c),
+            static fn (mixed $c): Either => Either::left($c),
             /**
              * @param A $b
              * @return Either<C, B>
              */
-            static fn ($b) => Either::fromBrand($f($b))
+            static fn (mixed $b): Either => Either::fromBrand($f($b))
         );
     }
 }

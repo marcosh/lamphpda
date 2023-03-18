@@ -23,5 +23,5 @@ interface DefaultFoldable extends HK1
      * @param B $b
      * @return B
      */
-    public function foldr(callable $f, $b);
+    public function foldr(callable $f, mixed $b): mixed;
 }

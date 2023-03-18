@@ -57,7 +57,7 @@ final class MaybeMonad implements Monad
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Maybe
+    public function pure(mixed $a): Maybe
     {
         return (new MaybeApplicative())->pure($a);
     }
@@ -83,7 +83,7 @@ final class MaybeMonad implements Monad
              * @param A $a
              * @return Maybe<B>
              */
-            static fn ($a): Maybe => Maybe::fromBrand($f($a))
+            static fn (mixed $a): Maybe => Maybe::fromBrand($f($a))
         );
     }
 }

@@ -38,7 +38,7 @@ final class ReaderFunctor implements Functor
              * @param E $env
              * @return B
              */
-            static fn ($env) => $f($readerA->runReader($env))
+            static fn (mixed $env): mixed => $f($readerA->runReader($env))
         );
     }
 }

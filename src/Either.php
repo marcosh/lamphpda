@@ -25,7 +25,6 @@ use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
-use Throwable;
 
 /**
  * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/Either.md
@@ -41,25 +40,17 @@ use Throwable;
  */
 final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
 {
-    private bool $isRight;
-
-    /** @var null|A */
-    private $leftValue;
-
-    /** @var null|B */
-    private $rightValue;
-
     /**
      * @param null|A $leftValue
      * @param null|B $rightValue
      *
      * @psalm-mutation-free
      */
-    private function __construct(bool $isRight, $leftValue = null, $rightValue = null)
-    {
-        $this->isRight = $isRight;
-        $this->leftValue = $leftValue;
-        $this->rightValue = $rightValue;
+    private function __construct(
+        private readonly bool $isRight,
+        private mixed $leftValue = null,
+        private mixed $rightValue = null
+    ) {
     }
 
     /**
@@ -70,7 +61,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function left($value): self
+    public static function left(mixed $value): self
     {
         return new self(false, $value);
     }
@@ -83,7 +74,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function right($value): self
+    public static function right(mixed $value): self
     {
         return new self(true, null, $value);
     }
@@ -147,19 +138,19 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      * @param A $a
      * @return A
      */
-    public function fromLeft($a)
+    public function fromLeft(mixed $a): mixed
     {
         return $this->eval(
             /**
              * @param A $aa
              * @return A
              */
-            static fn ($aa) => $aa,
+            static fn (mixed $aa): mixed => $aa,
             /**
              * @param B $_
              * @return A
              */
-            static fn ($_) => $a
+            static fn (mixed $_): mixed => $a
         );
     }
 
@@ -167,42 +158,42 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      * @param B $b
      * @return B
      */
-    public function fromRight($b)
+    public function fromRight(mixed $b): mixed
     {
         return $this->eval(
             /**
              * @param A $_
              * @return B
              */
-            static fn ($_) => $b,
+            static fn (mixed $_): mixed => $b,
             /**
              * @param B $bb
              * @return B
              */
-            static fn ($bb) => $bb
+            static fn (mixed $bb): mixed => $bb
         );
     }
 
     /**
-     * @throws Throwable
      * @return B
+     * @throws \Throwable
      */
-    public function fromRightThrow(Throwable $e)
+    public function fromRightThrow(\Throwable $e): mixed
     {
         return $this->eval(
             /**
              * @param A $_
-             * @throws Throwable
              * @return B
+             * @throws \Throwable
              */
-            static function ($_) use ($e) {
+            static function (mixed $_) use ($e): never {
                 throw $e;
             },
             /**
              * @param B $b
              * @return B
              */
-            static fn ($b) => $b
+            static fn (mixed $b): mixed => $b
         );
     }
 
@@ -213,7 +204,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     {
         return $this->eval(
             static fn (): Maybe => Maybe::nothing(),
-            static fn ($b): Maybe => Maybe::just($b)
+            static fn (mixed $b): Maybe => Maybe::just($b)
         );
     }
 
@@ -289,7 +280,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
              * @param B $b
              * @return B
              */
-            static fn ($b) => $b
+            static fn (mixed $b): mixed => $b
         );
     }
 
@@ -330,7 +321,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): self
+    public static function ipure(Applicative $applicative, mixed $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -345,7 +336,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function pure($a): self
+    public static function pure(mixed $a): self
     {
         return self::ipure(new EitherApplicative(), $a);
     }
@@ -387,7 +378,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function ifoldr(Foldable $foldable, callable $f, $b)
+    public function ifoldr(Foldable $foldable, callable $f, mixed $b): mixed
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return $foldable->foldr($f, $b, $this);
@@ -401,7 +392,7 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
      *
      * @psalm-mutation-free
      */
-    public function foldr(callable $f, $b)
+    public function foldr(callable $f, mixed $b): mixed
     {
         return $this->ifoldr(new EitherFoldable(), $f, $b);
     }

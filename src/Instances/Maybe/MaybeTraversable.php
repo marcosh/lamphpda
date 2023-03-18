@@ -44,7 +44,7 @@ final class MaybeTraversable implements Traversable
      *
      * @psalm-pure
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         return (new MaybeFoldable())->foldr($f, $b, $a);
     }
@@ -76,7 +76,7 @@ final class MaybeTraversable implements Traversable
              * @param A $a
              * @return HK1<F, Maybe<B>>
              */
-            static fn ($a): HK1 => $applicative->map([Maybe::class, 'just'], $f($a))
+            static fn (mixed $a): HK1 => $applicative->map([Maybe::class, 'just'], $f($a))
         );
     }
 }

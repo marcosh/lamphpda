@@ -19,15 +19,11 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class PairMonad implements Monad
 {
-    /** @var Monoid<C> */
-    private Monoid $monoid;
-
     /**
      * @param Monoid<C> $monoid
      */
-    public function __construct(Monoid $monoid)
+    public function __construct(private readonly Monoid $monoid)
     {
-        $this->monoid = $monoid;
     }
 
     /**
@@ -67,7 +63,7 @@ final class PairMonad implements Monad
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function pure($a): Pair
+    public function pure(mixed $a): Pair
     {
         return (new PairApplicative($this->monoid))->pure($a);
     }
@@ -91,13 +87,13 @@ final class PairMonad implements Monad
              * @param A $aa
              * @return Pair<C, B>
              */
-            fn ($ca, $aa) => Pair::fromBrand($f($aa))->eval(
+            fn (mixed $ca, mixed $aa): Pair => Pair::fromBrand($f($aa))->eval(
                 /**
                  * @param C $c
                  * @param B $b
                  * @return Pair<C, B>
                  */
-                fn ($c, $b) => Pair::pair($this->monoid->append($ca, $c), $b)
+                fn (mixed $c, mixed $b): Pair => Pair::pair($this->monoid->append($ca, $c), $b)
             )
         );
     }

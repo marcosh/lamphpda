@@ -53,7 +53,7 @@ final class LinkedListApply implements Apply
              * @param callable(A): B $ff
              * @param LinkedList<B> $l
              */
-            static fn (callable $ff, LinkedList $l) => $l->append($listA->map($ff)),
+            static fn (callable $ff, LinkedList $l): mixed => $l->append($listA->map($ff)),
             LinkedList::empty()
         );
     }

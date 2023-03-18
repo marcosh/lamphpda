@@ -56,7 +56,7 @@ final class StateApply implements Apply
              * @param S $s
              * @return Pair<S, B>
              */
-            static function ($s) use ($stateF, $stateA) {
+            static function (mixed $s) use ($stateF, $stateA) {
                 $fs = $stateF->runState($s);
 
                 return $fs->eval(
@@ -65,12 +65,12 @@ final class StateApply implements Apply
                      * @param callable(A): B $ff
                      * @return Pair<S, B>
                      */
-                    static fn ($s1, callable $ff) => $stateA->runState($s1)->map(
+                    static fn (mixed $s1, callable $ff): Pair => $stateA->runState($s1)->map(
                         /**
                          * @param A $aa
                          * @return B
                          */
-                        static fn ($aa) => $ff($aa)
+                        static fn (mixed $aa): mixed => $ff($aa)
                     )
                 );
             }

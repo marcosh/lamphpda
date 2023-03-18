@@ -70,7 +70,7 @@ final class Reader implements DefaultMonad
      * @param E $environment
      * @return A
      */
-    public function runReader($environment)
+    public function runReader(mixed $environment): mixed
     {
         /** @psalm-suppress ImpureFunctionCall */
         return ($this->action)($environment);
@@ -86,7 +86,7 @@ final class Reader implements DefaultMonad
              * @param E $e
              * @return E
              */
-            static fn ($e) => $e
+            static fn (mixed $e): mixed => $e
         );
     }
 
@@ -141,7 +141,7 @@ final class Reader implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): self
+    public static function ipure(Applicative $applicative, mixed $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -154,7 +154,7 @@ final class Reader implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function pure($a): self
+    public static function pure(mixed $a): self
     {
         return self::ipure(new ReaderApplicative(), $a);
     }

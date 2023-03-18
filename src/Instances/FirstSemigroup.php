@@ -20,7 +20,7 @@ final class FirstSemigroup implements Semigroup
      * @param A $b
      * @return A
      */
-    public function append($a, $b)
+    public function append(mixed $a, mixed $b): mixed
     {
         return $a;
     }

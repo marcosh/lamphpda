@@ -59,8 +59,8 @@ final class ReaderApplicative implements Applicative
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
-    public function pure($a): Reader
+    public function pure(mixed $a): Reader
     {
-        return Reader::reader(static fn ($_) => $a);
+        return Reader::reader(static fn (mixed $_): mixed => $a);
     }
 }

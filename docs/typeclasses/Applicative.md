@@ -17,7 +17,7 @@ interface Applicative extends Apply
      * @param A $a
      * @return F<A>
      */
-    public function pure($a);
+    public function pure(mixed $a);
 }
 ```
 
@@ -34,7 +34,7 @@ The `Applicative` typeclass needs to satisfy four laws in addition to the `Apply
 ### Identity
 
 ```php
-$applicative->apply($applicative->pure(fn($x) => $x), $y) == $y
+$applicative->apply($applicative->pure(fn(mixed $x): mixed => $x), $y) == $y
 ```
 
 ### Composition

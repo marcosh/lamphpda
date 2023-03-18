@@ -26,7 +26,7 @@ final class TraversableFoldable implements Foldable
      *
      * @psalm-pure
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         $arrayA = Traversable::fromBrand($a);
 

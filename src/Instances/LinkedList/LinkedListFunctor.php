@@ -37,7 +37,7 @@ final class LinkedListFunctor implements Functor
              * @param LinkedList<B> $l
              * @return LinkedList<B>
              */
-            static fn ($element, LinkedList $l) => LinkedList::cons($f($element), $l),
+            static fn (mixed $element, LinkedList $l): LinkedList => LinkedList::cons($f($element), $l),
             LinkedList::empty()
         );
     }

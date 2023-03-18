@@ -57,7 +57,7 @@ final class LinkedListApplicative implements Applicative
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): LinkedList
+    public function pure(mixed $a): LinkedList
     {
         return LinkedList::cons($a, LinkedList::empty());
     }

@@ -19,15 +19,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class ValidationApply implements Apply
 {
-    /** @var Semigroup<E> */
-    private Semigroup $semigroup;
-
     /**
      * @param Semigroup<E> $semigroup
      */
-    public function __construct(Semigroup $semigroup)
+    public function __construct(private readonly Semigroup $semigroup)
     {
-        $this->semigroup = $semigroup;
     }
 
     /**
@@ -67,33 +63,33 @@ final class ValidationApply implements Apply
              * @param E $ef
              * @return Either<E, B>
              */
-            fn ($ef): Either => $eitherA->eval(
+            fn (mixed $ef): Either => $eitherA->eval(
                 /**
                  * @param E $ea
                  * @return Either<E, B>
                  */
-                fn ($ea): Either => Either::left($this->semigroup->append($ef, $ea)),
+                fn (mixed $ea): Either => Either::left($this->semigroup->append($ef, $ea)),
                 /**
                  * @param A $_a
                  * @return Either<E, B>
                  */
-                static fn ($_a): Either => Either::left($ef)
+                static fn (mixed $_a): Either => Either::left($ef)
             ),
             /**
              * @param callable(A): B $f
              * @return Either<E, B>
              */
-            static fn ($f): Either => $eitherA->eval(
+            static fn (mixed $f): Either => $eitherA->eval(
                 /**
                  * @param E $e
                  * @return Either<E, B>
                  */
-                static fn ($e): Either => Either::left($e),
+                static fn (mixed $e): Either => Either::left($e),
                 /**
                  * @param A $a
                  * @return Either<E, B>
                  */
-                static fn ($a): Either => Either::right($f($a))
+                static fn (mixed $a): Either => Either::right($f($a))
             )
         );
     }

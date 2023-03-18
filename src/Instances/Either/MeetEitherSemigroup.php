@@ -21,20 +21,12 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class MeetEitherSemigroup implements Semigroup
 {
-    /** @var Semigroup<E> */
-    private Semigroup $eSemigroup;
-
-    /** @var Semigroup<B> */
-    private Semigroup $bSemigroup;
-
     /**
      * @param Semigroup<E> $eSemigroup
      * @param Semigroup<B> $bSemigroup
      */
-    public function __construct(Semigroup $eSemigroup, Semigroup $bSemigroup)
+    public function __construct(private readonly Semigroup $eSemigroup, private readonly Semigroup $bSemigroup)
     {
-        $this->eSemigroup = $eSemigroup;
-        $this->bSemigroup = $bSemigroup;
     }
 
     /**
@@ -51,33 +43,33 @@ final class MeetEitherSemigroup implements Semigroup
              * @param E $ea
              * @return Either<E, B>
              */
-            fn ($ea): Either => $b->eval(
+            fn (mixed $ea): Either => $b->eval(
                 /**
                  * @param E $eb
                  * @return Either<E, B>
                  */
-                fn ($eb): Either => Either::left($this->eSemigroup->append($ea, $eb)),
+                fn (mixed $eb): Either => Either::left($this->eSemigroup->append($ea, $eb)),
                 /**
                  * @param B $vb
                  * @return Either<E, B>
                  */
-                static fn ($vb): Either => Either::right($vb)
+                static fn (mixed $vb): Either => Either::right($vb)
             ),
             /**
              * @param B $va
              * @return Either<E, B>
              */
-            fn ($va): Either => $b->eval(
+            fn (mixed $va): Either => $b->eval(
                 /**
                  * @param E $_
                  * @return Either<E, B>
                  */
-                static fn ($_): Either => Either::right($va),
+                static fn (mixed $_): Either => Either::right($va),
                 /**
                  * @param B $vb
                  * @return Either<E, B>
                  */
-                fn ($vb): Either => Either::right($this->bSemigroup->append($va, $vb))
+                fn (mixed $vb): Either => Either::right($this->bSemigroup->append($va, $vb))
             )
         );
     }

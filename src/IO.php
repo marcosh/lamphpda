@@ -66,7 +66,7 @@ final class IO implements DefaultMonad
     /**
      * @return A
      */
-    public function eval()
+    public function eval(): mixed
     {
         /** @psalm-suppress ImpureFunctionCall */
         return ($this->action)();
@@ -122,7 +122,7 @@ final class IO implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function ipure(Applicative $applicative, $a): self
+    public static function ipure(Applicative $applicative, mixed $a): self
     {
         return self::fromBrand($applicative->pure($a));
     }
@@ -134,7 +134,7 @@ final class IO implements DefaultMonad
      *
      * @psalm-pure
      */
-    public static function pure($a): self
+    public static function pure(mixed $a): self
     {
         return self::ipure(new IOApplicative(), $a);
     }

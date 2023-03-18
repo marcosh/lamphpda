@@ -46,7 +46,7 @@ final class EitherTraversable implements Traversable
      *
      * @psalm-pure
      */
-    public function foldr(callable $f, $b, HK1 $a)
+    public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
         return (new EitherFoldable())->foldr($f, $b, $a);
     }
@@ -74,7 +74,7 @@ final class EitherTraversable implements Traversable
              * @param C $c
              * @return HK1<F, Either<C, B>>
              */
-            static function ($c) use ($applicative): HK1 {
+            static function (mixed $c) use ($applicative): HK1 {
                 /** @var Either<C, B> $eitherCB */
                 $eitherCB = Either::left($c);
 
@@ -84,7 +84,7 @@ final class EitherTraversable implements Traversable
              * @param A $a
              * @return HK1<F, Either<C, B>>
              */
-            static fn ($a): HK1 => $applicative->map($right, $f($a))
+            static fn (mixed $a): HK1 => $applicative->map($right, $f($a))
         );
     }
 }

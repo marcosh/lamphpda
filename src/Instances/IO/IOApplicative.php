@@ -51,8 +51,8 @@ final class IOApplicative implements Applicative
      *
      * @psalm-pure
      */
-    public function pure($a): IO
+    public function pure(mixed $a): IO
     {
-        return IO::action(static fn () => $a);
+        return IO::action(static fn (): mixed => $a);
     }
 }

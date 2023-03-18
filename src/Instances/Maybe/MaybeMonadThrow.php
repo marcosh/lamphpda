@@ -59,7 +59,7 @@ final class MaybeMonadThrow implements MonadThrow
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Maybe
+    public function pure(mixed $a): Maybe
     {
         return (new MaybeApplicative())->pure($a);
     }

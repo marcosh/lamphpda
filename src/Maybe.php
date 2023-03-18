@@ -34,18 +34,11 @@ use Marcosh\LamPHPda\Typeclass\Traversable;
  */
 final class Maybe implements DefaultMonad, DefaultTraversable
 {
-    private bool $isJust;
-
-    /** @var null|A */
-    private $value;
-
     /**
      * @param null|A $value
      */
-    private function __construct(bool $isJust, $value = null)
+    private function __construct(private readonly bool $isJust, private readonly mixed $value = null)
     {
-        $this->isJust = $isJust;
-        $this->value = $value;
     }
 
     /**
@@ -91,7 +84,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param null|B $a
      * @return Maybe<B>
      */
-    public static function fromNullable($a): self
+    public static function fromNullable(mixed $a): self
     {
         if (null === $a) {
             return self::nothing();
@@ -109,7 +102,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     public function eval(
         $ifNothing,
         callable $ifJust
-    ) {
+    ): mixed {
         if ($this->isJust) {
             /**
              * @psalm-suppress PossiblyNullArgument
@@ -125,7 +118,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param A $a
      * @return A
      */
-    public function withDefault($a)
+    public function withDefault(mixed $a): mixed
     {
         return $this->eval(
             $a,
@@ -133,7 +126,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
              * @param A $a
              * @return A
              */
-            static fn ($a) => $a
+            static fn (mixed $a): mixed => $a
         );
     }
 
@@ -141,7 +134,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param callable(): A $a
      * @return A
      */
-    public function withLazyDefault(callable $a)
+    public function withLazyDefault(callable $a): mixed
     {
         // This can be implemented in terms of eval(), however the actual implementation is optimized:
         // return $this->eval($ifNothing, fn($value) => fn() => $ifJust($value))();
@@ -159,11 +152,11 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param B $b
      * @return Either<B, A>
      */
-    public function toEither($b): Either
+    public function toEither(mixed $b): Either
     {
         return $this->eval(
             Either::left($b),
-            static fn ($a): Either => Either::right($a)
+            static fn (mixed $a): Either => Either::right($a)
         );
     }
 
@@ -237,7 +230,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public static function pure($a): self
+    public static function pure(mixed $a): self
     {
         return self::ipure(new MaybeApplicative(), $a);
     }
@@ -273,7 +266,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param B $b
      * @return B
      */
-    public function ifoldr(Foldable $foldable, callable $f, $b)
+    public function ifoldr(Foldable $foldable, callable $f, mixed $b)
     {
         /** @psalm-suppress ArgumentTypeCoercion */
         return $foldable->foldr($f, $b, $this);
@@ -285,7 +278,7 @@ final class Maybe implements DefaultMonad, DefaultTraversable
      * @param B $b
      * @return B
      */
-    public function foldr(callable $f, $b)
+    public function foldr(callable $f, mixed $b): mixed
     {
         return $this->ifoldr(new MaybeFoldable(), $f, $b);
     }

@@ -40,7 +40,7 @@ $applicative->apply($applicative->pure(fn(mixed $x): mixed => $x), $y) == $y
 ### Composition
 
 ```php
-$applicative->apply($applicative->apply($applicative->apply($applicative->pure(fn ($f, $g) => fn ($x) => $f($g($x))), $a), $b), $c) == $applicative->apply($a, $applicative->apply($b, $c))
+$applicative->apply($applicative->apply($applicative->apply($applicative->pure(fn (mixed $f, mixed $g): Closure => fn (mixed $x): mixed => $f($g($x))), $a), $b), $c) == $applicative->apply($a, $applicative->apply($b, $c))
 ```
 
 ### Homomorphism
@@ -52,7 +52,7 @@ $applicative->apply($applicative->pure($f), $applicative->pure($x)) == $applicat
 ### Interchange
 
 ```php
-$applicative->apply($f, $applicative->pure($x)) == $applicative->apply(fn (callable $g) => $g($x), $f)
+$applicative->apply($f, $applicative->pure($x)) == $applicative->apply(fn (callable $g): mixed => $g($x), $f)
 ```
 
 ## Implemented instances

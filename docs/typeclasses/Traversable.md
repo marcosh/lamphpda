@@ -54,7 +54,7 @@ $t($traversable->traverse($applicative, $f, $x)) == $traversable->traverse($appl
 ### Identity
 
 ```php
-$traversable->traverse(new IdentityApplicative(), fn(mixed $x): mixed => new Identity($x), $y) == new Identity($y)
+$traversable->traverse(new IdentityApplicative(), fn($x) => new Identity($x), $y) == new Identity($y)
 ```
 
 ### Composition

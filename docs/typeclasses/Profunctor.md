@@ -66,12 +66,12 @@ contravariant type variable.
 ### Identity
 
 ```php
-$profunctor->diMap(fn(mixed $x): mixed => $x, fn(mixed $x): mixed => $x, $a) == $a
+$profunctor->diMap(fn($x) => $x, fn($x) => $x, $a) == $a
 ```
 
 ### Composition
 
 ```php
-$profunctor->diMap(fn(mixed $x): mixed => $f($g($x)), fn(mixed $x): mixed => $h($k($x)), $a) == $profunctor->diMap(fn(mixed $x): mixed => $g($x), fn(mixed $x): mixed => $h($x), $profunctor->diMap(fn(mixed $x): mixed => $f($x), fn(mixed $x): mixed => $k($x)), $a)
+$profunctor->diMap(fn($x) => $f($g($x)), fn($x) => $h($k($x)), $a) == $profunctor->diMap(fn($x) => $g($x), fn($x) => $h($x), $profunctor->diMap(fn($x) => $f($x), fn($x) => $k($x)), $a)
 ```
 

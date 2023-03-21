@@ -65,13 +65,13 @@ $monad->bind($monad->pure($a), $f) == $f($a)
 ### Right identity
 
 ```php
-$monad->bind($a, fn(mixed $x): mixed => $monad->pure($x)) == $a
+$monad->bind($a, fn($x) => $monad->pure($x)) == $a
 ```
 
 ### Associativity
 
 ```php
-$monad->bind($a, fn(mixed $x): mixed => $monad->bind($f($x), $g)) == $monad->bind($monad->bind($a, $g), $g)
+$monad->bind($a, fn($x) => $monad->bind($f($x), $g)) == $monad->bind($monad->bind($a, $g), $g)
 ```
 
 ## Implemented instances

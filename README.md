@@ -15,8 +15,8 @@ are:
 
 - a safe usage of sum types, following [http://marcosh.github.io/post/2017/10/27/maybe-in-php-2.html](http://marcosh.github.io/post/2017/10/27/maybe-in-php-2.html)
 - the usage of higher kinded types to increase reusability and type safety
-    (see [http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-issue.html](http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-issue.html)
-    and [http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-solution.html](http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-solution.html))
+  (see [http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-issue.html](http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-issue.html)
+  and [http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-solution.html](http://marcosh.github.io/post/2020/04/15/higher-kinded-types-php-solution.html))
 
 ## Installation
 
@@ -31,6 +31,14 @@ compilation step, ensuring that all the types are aligned.
 
 To benefit from this library, it is compulsory that your code runs through a
 Psalm check.
+
+## Development
+
+This library includes a `flake.nix` file, enabling you to access a development
+environment equipped with PHP 8.1 and Composer. To utilize it, simply execute
+`nix develop` within the directory. For those using `direnv`
+(with `nix-direnv`), a preconfigured `.envrc` file is also provided, which will
+automatically load the environment upon entering the library directory.
 
 ## Decision record
 

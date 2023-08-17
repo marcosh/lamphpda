@@ -13,22 +13,10 @@ use Marcosh\LamPHPda\HK\HK1;
  * @template F of Brand
  *
  * @extends Applicative<F>
+ * @extends Plus<F>
  *
  * @psalm-immutable
  */
-interface Alternative extends Applicative
+interface Alternative extends Applicative, Plus
 {
-    /**
-     * @template A
-     * @return HK1<F, A>
-     */
-    public function empty();
-
-    /**
-     * @template A
-     * @param HK1<F, A> $a
-     * @param HK1<F, A> $b
-     * @return HK1<F, A>
-     */
-    public function alt(HK1 $a, HK1 $b): HK1;
 }

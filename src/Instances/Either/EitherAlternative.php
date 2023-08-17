@@ -7,7 +7,6 @@ namespace Marcosh\LamPHPda\Instances\Either;
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\Either;
 use Marcosh\LamPHPda\HK\HK1;
-use Marcosh\LamPHPda\Instances\FirstSemigroup;
 use Marcosh\LamPHPda\Typeclass\Alternative;
 use Marcosh\LamPHPda\Typeclass\Monoid;
 
@@ -81,7 +80,7 @@ final class EitherAlternative implements Alternative
      */
     public function empty(): Either
     {
-        return Either::left($this->eMonoid->mempty());
+        return (new EitherPlus($this->eMonoid))->empty();
     }
 
     /**
@@ -94,9 +93,6 @@ final class EitherAlternative implements Alternative
      */
     public function alt(HK1 $a, HK1 $b): Either
     {
-        $aEither = Either::fromBrand($a);
-        $bEither = Either::fromBrand($b);
-
-        return (new MeetEitherSemigroup($this->eMonoid, new FirstSemigroup()))->append($aEither, $bEither);
+        return (new EitherAlt($this->eMonoid))->alt($a, $b);
     }
 }

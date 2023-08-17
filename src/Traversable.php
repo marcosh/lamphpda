@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Marcosh\LamPHPda;
 
-use ArrayIterator;
 use IteratorAggregate;
 use Marcosh\LamPHPda\Brand\TraversableBrand;
 use Marcosh\LamPHPda\HK\HK1;
@@ -21,7 +20,7 @@ use Traversable as PhpTraversable;
  *
  * @psalm-immutable
  */
-final class Traversable implements IteratorAggregate, DefaultFoldable
+final class Traversable implements \IteratorAggregate, DefaultFoldable
 {
     /** @var PhpTraversable<A> */
     private PhpTraversable $traversable;
@@ -56,7 +55,7 @@ final class Traversable implements IteratorAggregate, DefaultFoldable
     public static function fromArray(array $array): self
     {
         /** @psalm-suppress ImpureMethodCall */
-        return new self(new ArrayIterator($array));
+        return new self(new \ArrayIterator($array));
     }
 
     /**

@@ -7,8 +7,8 @@ namespace Marcosh\LamPHPda\Instances\Either;
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\Either;
 use Marcosh\LamPHPda\HK\HK1;
-use Marcosh\LamPHPda\Typeclass\Plus;
 use Marcosh\LamPHPda\Typeclass\Monoid;
+use Marcosh\LamPHPda\Typeclass\Plus;
 
 /**
  * @template E

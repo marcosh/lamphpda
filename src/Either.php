@@ -25,7 +25,6 @@ use Marcosh\LamPHPda\Typeclass\Foldable;
 use Marcosh\LamPHPda\Typeclass\Functor;
 use Marcosh\LamPHPda\Typeclass\Monad;
 use Marcosh\LamPHPda\Typeclass\Traversable;
-use Throwable;
 
 /**
  * @see https://github.com/marcosh/lamphpda/tree/master/docs/data-structures/Either.md
@@ -184,16 +183,16 @@ final class Either implements DefaultMonad, DefaultTraversable, HK2Covariant
     }
 
     /**
-     * @throws Throwable
      * @return B
+     * @throws \Throwable
      */
-    public function fromRightThrow(Throwable $e)
+    public function fromRightThrow(\Throwable $e)
     {
         return $this->eval(
             /**
              * @param A $_
-             * @throws Throwable
              * @return B
+             * @throws \Throwable
              */
             static function ($_) use ($e) {
                 throw $e;

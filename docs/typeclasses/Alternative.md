@@ -4,70 +4,15 @@ The `Alternative` typeclass provides monoid-like operations on type constructors
 
 ## Parent
 
-The `Alternative` typeclass extends the `Applicative` typeclass
+The `Alternative` typeclass extends the `Applicative` typeclass and the `Plus` typeclass.
 
 ## API
 
-The `Alternative` typeclass provides two methods, an associative binary operation and an identity element.
-
-```php
-interface Alternative extends Applicative
-{
-    /**
-     * @return F<A>
-     */
-    public function empty();
-
-    /**
-     * @param F<A> $a
-     * @param F<A> $b
-     * @return F<A>
-     */
-    public function alt($a, $b);
-}
-```
-
-Their simplified type is
-
-```
-empty :: () -> F<A>
-alt :: F<A> -> F<A> -> F<A>
-```
+The `Alternative` typeclass do not expose any new method with respect to `Applicative` and `Plus`.
 
 ## Laws
 
-The `Alternative` typeclass require several laws to hold, in addition to the ones required by the `Functor`, `Apply` and
-`Applicative` typeclasses.
-
-### Associativity
-
-```php
-$alternative->alt($alternative->alt($x, $y), $z) == $alternative->alt($x, $alternative->alt($y, $z))
-```
-
-### Distributivity with respect to map
-
-```php
-$alternative->map($f, $alternative->alt($x, $y)) == $alternative->alt($alternative->map($f, $x), $alternative->map($f, $y))
-```
-
-### Left identity
-
-```php
-$alternative->alt($alternative->empty(), $x) == $x
-```
-
-### Right identity
-
-```php
-$alternative->alt($x, $alternative->empty()) == $x
-```
-
-### Annihilation with respect to map
-
-```php
-$alternative->map($f, $alternative->empty()) == $alternative->empty()
-```
+The `Alternative` typeclass require more laws to hold, in addition to the ones required by the `Applicative` and `Plus` typeclasses.
 
 ### Distributivity with respect to apply
 

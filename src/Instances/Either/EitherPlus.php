@@ -7,17 +7,17 @@ namespace Marcosh\LamPHPda\Instances\Either;
 use Marcosh\LamPHPda\Brand\EitherBrand;
 use Marcosh\LamPHPda\Either;
 use Marcosh\LamPHPda\HK\HK1;
-use Marcosh\LamPHPda\Typeclass\Alternative;
+use Marcosh\LamPHPda\Typeclass\Plus;
 use Marcosh\LamPHPda\Typeclass\Monoid;
 
 /**
  * @template E
  *
- * @implements Alternative<EitherBrand<E>>
+ * @implements Plus<EitherBrand<E>>
  *
  * @psalm-immutable
  */
-final class EitherAlternative implements Alternative
+final class EitherPlus implements Plus
 {
     /** @var Monoid<E> */
     private Monoid $eMonoid;
@@ -48,32 +48,15 @@ final class EitherAlternative implements Alternative
 
     /**
      * @template A
-     * @template B
-     * @param HK1<EitherBrand<E>, callable(A): B> $f
      * @param HK1<EitherBrand<E>, A> $a
-     * @return Either<E, B>
-     *
-     * @psalm-pure
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function apply(HK1 $f, HK1 $a): Either
-    {
-        return (new EitherApply())->apply($f, $a);
-    }
-
-    /**
-     * @template A
-     * @param A $a
+     * @param HK1<EitherBrand<E>, A> $b
      * @return Either<E, A>
      *
-     * @psalm-pure
-     *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function pure($a): Either
+    public function alt(HK1 $a, HK1 $b): Either
     {
-        return (new EitherApplicative())->pure($a);
+        return (new EitherAlt($this->eMonoid))->alt($a, $b);
     }
 
     /**
@@ -84,19 +67,6 @@ final class EitherAlternative implements Alternative
      */
     public function empty(): Either
     {
-        return (new EitherPlus($this->eMonoid))->empty();
-    }
-
-    /**
-     * @template A
-     * @param HK1<EitherBrand<E>, A> $a
-     * @param HK1<EitherBrand<E>, A> $b
-     * @return Either<E, A>
-     *
-     * @psalm-suppress LessSpecificImplementedReturnType
-     */
-    public function alt(HK1 $a, HK1 $b): Either
-    {
-        return (new EitherAlt($this->eMonoid))->alt($a, $b);
+        return Either::left($this->eMonoid->mempty());
     }
 }

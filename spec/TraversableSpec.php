@@ -13,9 +13,16 @@ describe('Traversable', function () {
     });
 
     it('folds a list using the elements and the unit', function () {
-        $maybe = Traversable::fromArray([1, 2, 3]);
+        $list = Traversable::fromArray([1, 2, 3]);
         $f = fn($x, $y) => $x + $y;
 
-        expect($maybe->foldr($f, 0))->toBe(6);
+        expect($list->foldr($f, 0))->toBe(6);
+    });
+
+    it('folds a list of string concatenating them', function () {
+        $list = Traversable::fromArray(["hello", " ", "everyone", "!"]);
+        $f = fn($x, $y) => $x . $y;
+
+        expect($list->foldr($f, ""))->toBe("hello everyone!");
     });
 });

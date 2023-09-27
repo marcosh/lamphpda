@@ -32,8 +32,15 @@ final class TraversableFoldable implements Foldable
 
         $ret = $b;
 
+        $reverseArrayA = [];
+
         /** @psalm-suppress ImpureMethodCall */
         foreach ($arrayA as $element) {
+            $reverseArrayA = array_merge([$element], $reverseArrayA);
+        }
+
+        /** @psalm-suppress ImpureMethodCall */
+        foreach ($reverseArrayA as $element) {
             /** @psalm-suppress ImpureFunctionCall */
             $ret = $f($element, $ret);
         }

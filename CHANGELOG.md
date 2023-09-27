@@ -8,11 +8,19 @@ and this project adheres to [Semantic versioning](http://semver.org/).
 ## [3.0.0] - 2023-09-27
 
 - added `flake.nix` to provide a development environment
+- introduce `OppositeSemigroup` and `OppositMonoid`
+- do not flip arguments on `ListL/ConcatenationMonoid`
+- introduce `Alt` and `Plus` typeclasses
+- define `ConstantSemigroup`
 
 ## [2.0.0] - 2023-03-21
 
 - use `mixed` type annotations
 - restrict `PHP` version to `>= 8.1`
+## [1.4.0] - 2023-09-27
+
+- introduce `OppositeSemigroup` and `OppositMonoid`
+- do not flip arguments on `ListL/ConcatenationMonoid`
 
 ## [1.3.0] - 2023-08-23
 

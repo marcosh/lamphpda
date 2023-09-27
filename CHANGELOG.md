@@ -12,6 +12,7 @@ and this project adheres to [Semantic versioning](http://semver.org/).
 - do not flip arguments on `ListL/ConcatenationMonoid`
 - introduce `Alt` and `Plus` typeclasses
 - define `ConstantSemigroup`
+- fix `foldr` behavior for lists
 
 ## [2.0.0] - 2023-03-21
 

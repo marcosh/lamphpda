@@ -28,14 +28,25 @@ final class ListFoldable implements Foldable
      */
     public function foldr(callable $f, mixed $b, HK1 $a): mixed
     {
-        $aList = ListL::fromBrand($a);
+        $aList = ListL::fromBrand($a)->asNativeList();
 
-        /** @psalm-suppress ImpureMethodCall */
-        foreach ($aList as $aElement) {
-            /** @psalm-suppress ImpureFunctionCall */
-            $b = $f($aElement, $b);
+        if ([] === $aList) {
+            return $b;
         }
 
-        return $b;
+        $head = array_shift($aList);
+
+        /**
+         * @psalm-suppress ImpureFunctionCall
+         * @psalm-suppress ImpureVariable
+         */
+        return $f(
+            $head,
+            $this->foldr(
+                $f,
+                $b,
+                new ListL($aList)
+            )
+        );
     }
 }

@@ -27,7 +27,7 @@ final class ConcatenationMonoid implements Monoid
      * @param list<A> $b
      * @return list<A>
      */
-    public function append($a, $b)
+    public function append(mixed $a, mixed $b): mixed
     {
         return [...$a, ...$b];
     }

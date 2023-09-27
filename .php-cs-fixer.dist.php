@@ -12,5 +12,6 @@ return $config->setRules([
     'phpdoc_align' => ['align' => 'left'],
     'phpdoc_to_comment' => false,
     'concat_space' => ['spacing' => 'one'],
-    'static_lambda' => true
+    'static_lambda' => true,
+    'single_line_empty_body' => false
 ])->setFinder($finder);

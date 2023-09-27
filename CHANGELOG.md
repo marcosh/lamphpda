@@ -9,6 +9,7 @@ and this project adheres to [Semantic versioning](http://semver.org/).
 
 - introduce `OppositeSemigroup` and `OppositMonoid`
 - do not flip arguments on `ListL/ConcatenationMonoid`
+- correct `foldr` implementation for `ListL` and `Traversable`
 
 ## [1.3.0] - 2023-08-23
 

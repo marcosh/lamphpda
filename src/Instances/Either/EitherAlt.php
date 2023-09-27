@@ -20,15 +20,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class EitherAlt implements Alt
 {
-    /** @var Semigroup<E> */
-    private Semigroup $eSemigroup;
-
     /**
      * @param Semigroup<E> $eSemigroup
      */
-    public function __construct(Semigroup $eSemigroup)
+    public function __construct(private readonly Semigroup $eSemigroup)
     {
-        $this->eSemigroup = $eSemigroup;
     }
 
     /**

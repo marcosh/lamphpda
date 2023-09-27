@@ -15,15 +15,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class OppositeSemigroup implements Semigroup
 {
-    /** @var Semigroup<A> */
-    private Semigroup $semigroup;
-
     /**
      * @param Semigroup<A> $semigroup
      */
-    public function __construct(Semigroup $semigroup)
+    public function __construct(private readonly Semigroup $semigroup)
     {
-        $this->semigroup = $semigroup;
     }
 
     /**

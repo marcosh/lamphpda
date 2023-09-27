@@ -19,15 +19,11 @@ use Marcosh\LamPHPda\Typeclass\Plus;
  */
 final class EitherPlus implements Plus
 {
-    /** @var Monoid<E> */
-    private Monoid $eMonoid;
-
     /**
      * @param Monoid<E> $eMonoid
      */
-    public function __construct(Monoid $eMonoid)
+    public function __construct(private readonly Monoid $eMonoid)
     {
-        $this->eMonoid = $eMonoid;
     }
 
     /**

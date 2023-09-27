@@ -15,15 +15,11 @@ use Marcosh\LamPHPda\Typeclass\Monoid;
  */
 final class OppositeMonoid implements Monoid
 {
-    /** @var Monoid<A> */
-    private Monoid $monoid;
-
     /**
      * @param Monoid<A> $monoid
      */
-    public function __construct(Monoid $monoid)
+    public function __construct(private readonly Monoid $monoid)
     {
-        $this->monoid = $monoid;
     }
 
     /**

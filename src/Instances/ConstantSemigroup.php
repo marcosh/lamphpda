@@ -15,15 +15,11 @@ use Marcosh\LamPHPda\Typeclass\Semigroup;
  */
 final class ConstantSemigroup implements Semigroup
 {
-    /** @var A */
-    private $c;
-
     /**
      * @param A $c
      */
-    public function __construct($c)
+    public function __construct(private readonly $c)
     {
-        $this->c = $c;
     }
 
     /**

@@ -52,9 +52,9 @@ final class ListL implements \IteratorAggregate, HK1
      * @param A $a
      * @return ListL<A>
      */
-    public function append(mixed $a): self
+    public function prepend(mixed $a): self
     {
-        return new self([...$this->list, ...[$a]]);
+        return new self([...[$a], ...$this->list]);
     }
 
     /**

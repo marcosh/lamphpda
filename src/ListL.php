@@ -56,9 +56,9 @@ final class ListL implements \IteratorAggregate, HK1
      * @param A $a
      * @return ListL<A>
      */
-    public function append($a): self
+    public function prepend($a): self
     {
-        return new self(array_merge($this->list, [$a]));
+        return new self(array_merge([$a], $this->list));
     }
 
     /**

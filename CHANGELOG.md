@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic versioning](http://semver.org/).
 
+## [1.4.1] - 2023-09-28
+
+- fix `Traversable` instance for `ListL`
+
 ## [1.4.0] - 2023-09-27
 
 - introduce `OppositeSemigroup` and `OppositMonoid`

@@ -94,6 +94,21 @@ final class Maybe implements DefaultMonad, DefaultTraversable
     }
 
     /**
+     * @return null|A
+     */
+    public function toNullable()
+    {
+        return $this->eval(
+            null,
+            /**
+             * @param A $a
+             * @return null|A
+             */
+            static fn (mixed $a): mixed => $a
+        );
+    }
+
+    /**
      * @template B
      * @param B $ifNothing
      * @param callable(A): B $ifJust

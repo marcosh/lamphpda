@@ -184,4 +184,14 @@ describe('Maybe', function () {
             return Either::right($a);
         }))->toEqual(Either::right(Maybe::just(42)));
     });
+
+    it('maps a just to nullable and back correctly', function () {
+        $maybe = Maybe::Just(42);
+        expect(Maybe::fromNullable($maybe->toNullable()))->toEqual($maybe);
+    });
+
+    it('maps a nothing to nullable and back correctly', function () {
+        $maybe = Maybe::Nothing();
+        expect(Maybe::fromNullable($maybe->toNullable()))->toEqual($maybe);
+    });
 });

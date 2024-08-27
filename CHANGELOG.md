@@ -5,9 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic versioning](http://semver.org/).
 
-## [unreleased]
+## [3.1.0]
 
 - add `voidRight` in `ExtraFunctor`
+- add `toNullable` in `Maybe`
 
 ## [3.0.1] - 2023-09-28
 

@@ -27,7 +27,7 @@ final class OppositeSemigroup implements Semigroup
      * @param A $b
      * @return A
      */
-    public function append($a, $b)
+    public function append($a, $b): mixed
     {
         return $this->semigroup->append($b, $a);
     }

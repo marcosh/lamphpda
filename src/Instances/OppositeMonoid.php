@@ -25,7 +25,7 @@ final class OppositeMonoid implements Monoid
     /**
      * @return A
      */
-    public function mempty()
+    public function mempty(): mixed
     {
         return $this->monoid->mempty();
     }
@@ -35,7 +35,7 @@ final class OppositeMonoid implements Monoid
      * @param A $b
      * @return A
      */
-    public function append($a, $b)
+    public function append($a, $b): mixed
     {
         return (new OppositeSemigroup($this->monoid))->append($a, $b);
     }

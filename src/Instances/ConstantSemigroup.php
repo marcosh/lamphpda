@@ -18,7 +18,7 @@ final class ConstantSemigroup implements Semigroup
     /**
      * @param A $c
      */
-    public function __construct(private readonly $c)
+    public function __construct(private readonly mixed $c)
     {
     }
 
@@ -27,7 +27,7 @@ final class ConstantSemigroup implements Semigroup
      * @param A $b
      * @return A
      */
-    public function append($a, $b)
+    public function append(mixed $a, mixed $b): mixed
     {
         return $this->c;
     }

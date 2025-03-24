@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic versioning](http://semver.org/).
 
+## [3.2.1]
+
+- add `Unit` class
+
 ## [3.1.2]
 
 - fix `CostantSemigroup` types, for compatibility with `Semigroup` interface

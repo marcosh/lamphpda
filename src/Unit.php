@@ -25,7 +25,7 @@ namespace Marcosh\LamPHPda;
  * With `Unit` you can solve this as follows
  *
  * $maybe->eval(
- *   nwe Unit(),
+ *   new Unit(),
  *   function ($a): Unit {
  *     ...
  *     return new Unit();
